@@ -9,7 +9,7 @@ const preloader = document.querySelector('.preloader');
 
 // Isolate and configure texts safely (prevent crashes on inner pages)
 let clubSplitText = null;
-const clubEl = document.querySelector('.club-content h2');
+const clubEl = document.querySelector('.club-content h2.one-line-title');
 if(clubEl) clubSplitText = new SplitType(clubEl, { types: 'chars' });
 
 let footerSplitText = null;
