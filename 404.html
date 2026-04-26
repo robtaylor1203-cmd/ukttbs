@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Not Found - UKTTBS</title>
+  <title>Page Not Found - UKTTBS</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
@@ -39,31 +39,28 @@
     </div>
   </div>
 
-  <main style="display:flex; align-items:center; justify-content:center; min-height:100vh; position:relative;">
-    <div class="hero-bg" style="position:absolute; width:100%; height:100%; background-image: url('nav_club.png'); filter: grayscale(100%); opacity: 0.15; z-index:1;"></div>
-    
-    <div style="text-align: center; position:relative; z-index:2; max-width:600px; padding: 2rem;">
-      <span class="scene__chapter fade-in" style="display:block; letter-spacing:0.2em; font-size:1rem; opacity:0; transform:translateY(20px);">404 ERROR</span>
-      <h1 class="hero-title" style="margin: 2rem 0;">
-        <div class="line"><span class="hero-word" style="font-size:10vw;">PAGE</span></div>
-        <div class="line"><span class="hero-word" style="font-size:10vw;">GONE</span></div>
-      </h1>
-      <p class="fade-in" style="font-size:1.25rem; font-weight:300; line-height:1.6; color:var(--text-secondary); opacity:0; transform:translateY(20px);">
-        The link may be old, or the page has moved. Let's get you back on track.
-      </p>
-
-      <div class="fade-in" style="display:flex; justify-content:center; gap: 1.5rem; margin-top:3rem; opacity:0; transform:translateY(20px);">
-        <a class="cine-btn" href="index.html" style="border:1px solid #fff; padding: 1rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem; color: #fff;" class="magnetic">
-          Back to Home
-        </a>
+  <main>
+    <section class="hero" style="height: 100vh;">
+      <div class="hero-bg" style="background-image: url('hero-estate.png');"></div>
+      <div class="hero-content">
+        <span class="fade-in" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem; opacity: 0; transform: translateY(20px);">404 · Page not found</span>
+        <h1 class="hero-title">
+          <div class="line"><span class="hero-word" style="font-size: clamp(4rem, 12vw, 10rem);">LOST</span></div>
+        </h1>
+        <p class="fade-in" style="font-size: 1.15rem; font-weight: 300; color: rgba(255,255,255,0.6); margin-top: 2rem; opacity: 0; transform: translateY(20px);">
+          The link may be old, or the page has moved. Let's get you back.
+        </p>
+        <div class="fade-in" style="margin-top: 3rem; opacity: 0; transform: translateY(20px);">
+          <a href="index.html" class="magnetic" style="border: 1px solid #fff; padding: 1rem 3rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #000; background: #fff; font-size: 0.85rem; font-weight: 600;">Back to home</a>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 
-  <!-- GSAP & Lenis -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

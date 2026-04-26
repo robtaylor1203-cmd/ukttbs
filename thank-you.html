@@ -39,33 +39,29 @@
     </div>
   </div>
 
-  <main style="display:flex; align-items:center; justify-content:center; min-height:100vh; position:relative;">
-    <div class="hero-bg" style="position:absolute; width:100%; height:100%; background-image: url('nav_club.png'); filter: grayscale(100%); opacity: 0.15; z-index:1;"></div>
-    
-    <div style="text-align: center; position:relative; z-index:2; max-width:600px; padding: 2rem;">
-      <span class="scene__chapter fade-in" style="display:block; letter-spacing:0.2em; font-size:1rem; opacity:0; transform:translateY(20px);">CONFIRMATION</span>
-      <h1 class="hero-title" style="margin: 2rem 0;">
-        <div class="line" style="overflow:visible;" id="heading-container"><span class="hero-word" id="heading" style="font-size: clamp(2rem, 10vw, 5rem); white-space: normal;">Payment received.</span></div>
-      </h1>
-      <p id="body" class="fade-in" style="font-size:1.25rem; font-weight:300; line-height:1.6; color:var(--text-secondary); opacity:0; transform:translateY(20px);">
-        A confirmation is on its way to your inbox. You can view everything in your account area whenever you need it.
-      </p>
-
-      <div class="fade-in" style="display:flex; flex-wrap:wrap; justify-content:center; gap: 1.5rem; margin-top:3rem; opacity:0; transform:translateY(20px);">
-        <a class="cine-btn" href="account.html" style="border:1px solid #fff; padding: 1rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem; color: #fff;" class="magnetic">
-          Go To My Account
-        </a>
-        <a class="cine-btn" href="index.html" style="border:1px solid rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem; color: #fff;" class="magnetic">
-          Back To Home
-        </a>
+  <main>
+    <section class="hero" style="height: 100vh;">
+      <div class="hero-bg" style="background-image: url('club_cheers.png');"></div>
+      <div class="hero-content">
+        <span class="fade-in" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem; opacity: 0; transform: translateY(20px);">Confirmation</span>
+        <h1 class="hero-title" style="margin-bottom: 2rem;">
+          <div class="line" style="overflow: visible;"><span class="hero-word" id="heading" style="font-size: clamp(2.5rem, 7vw, 6rem); white-space: nowrap;">Payment received.</span></div>
+        </h1>
+        <p id="body" class="fade-in" style="font-size: 1.15rem; font-weight: 300; color: rgba(255,255,255,0.65); max-width: 550px; margin: 0 auto; line-height: 1.7; opacity: 0; transform: translateY(20px);">
+          A confirmation is on its way to your inbox. You can view everything in your account area whenever you need it.
+        </p>
+        <div class="fade-in" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 3rem; opacity: 0; transform: translateY(20px);">
+          <a href="account.html" class="magnetic" style="border: 1px solid #fff; padding: 1rem 2.5rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #000; background: #fff; font-size: 0.85rem; font-weight: 600;">My Account</a>
+          <a href="index.html" class="magnetic" style="border: 1px solid rgba(255,255,255,0.25); padding: 1rem 2.5rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; font-size: 0.85rem; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='transparent'">Back to home</a>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 
-  <!-- GSAP & Lenis -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="app.js"></script>
 
   <script src="/assets/js/config.js"></script>
