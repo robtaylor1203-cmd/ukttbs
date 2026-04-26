@@ -73,7 +73,7 @@
       </p>
       <div style="display: flex; gap: 1rem;">
         <a href="mailto:info@ukttbs.co.uk?subject=Spring%20Party%20Tickets" class="magnetic" style="flex: 1; text-align: center; background: #fff; color: #000; padding: 1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;">Enquire about tickets</a>
-        <a href="raffle.html" class="magnetic" style="flex: 1; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Enter raffle</a>
+        <a href="#" onclick="event.preventDefault(); openRaffleModal('spring')" class="magnetic" style="flex: 1; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Enter raffle</a>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
       </p>
       <div style="display: flex; gap: 1rem;">
         <a href="mailto:info@ukttbs.co.uk?subject=Autumn%20Party%20Tickets" class="magnetic" style="flex: 1; text-align: center; background: #c9a96e; color: #000; padding: 1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;">Get tickets</a>
-        <a href="raffle.html" class="magnetic" style="flex: 1; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Enter raffle</a>
+        <a href="#" onclick="event.preventDefault(); openRaffleModal('autumn')" class="magnetic" style="flex: 1; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Enter raffle</a>
       </div>
     </div>
   </div>
@@ -243,20 +243,8 @@
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="club-hundred" style="min-height: 45vh; padding: 10vh 0;">
-      <div class="club-bg parallax-img" style="background-image: url('club_cheers.png'); filter: brightness(0.25);"></div>
-      <div class="club-content" style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <h2 class="fade-in-up" style="font-size: clamp(2rem, 4.5vw, 3.5rem); text-transform: uppercase; line-height: 1.15; margin-bottom: 1.5rem;">
-          Bring a friend.<br>
-          <em style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">Make a memory.</em>
-        </h2>
-        <div class="fade-in-up" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;">
-          <a href="mailto:info@ukttbs.co.uk?subject=Event%20enquiry" class="magnetic" style="border: 1px solid #fff; padding: 1rem 2.5rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #000; background: #fff; font-size: 0.85rem; font-weight: 600;">Enquire about tickets</a>
-          <a href="raffle.html" class="magnetic" style="border: 1px solid rgba(255,255,255,0.25); padding: 1rem 2.5rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; font-size: 0.85rem; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='transparent'">Enter the raffle</a>
-        </div>
-      </div>
-    </section>
+
+
   </main>
 
   <section class="parallax-footer">
@@ -275,5 +263,96 @@
   <script src="app.js"></script>
   <script src="/assets/js/config.js"></script>
   <script type="module" src="/assets/js/events.js"></script>
+
+  <!-- RAFFLE PURCHASE MODAL -->
+  <div class="glass-overlay" id="modal-raffle" onclick="if(event.target===this)this.classList.remove('active')">
+    <div class="glass-modal" style="max-width: 520px;">
+      <button class="glass-modal__close" onclick="this.closest('.glass-overlay').classList.remove('active')"><i class="ri-close-line"></i></button>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 1rem;">Raffle Tickets</span>
+      <h2 style="font-size: 1.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Win prizes, support welfare</h2>
+
+      <!-- Event selector -->
+      <div style="margin-bottom: 1.5rem;">
+        <label style="font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">Event</label>
+        <select id="raffle-event" style="width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 0.9rem 1rem; border-radius: 8px; font-size: 0.95rem; appearance: none; cursor: pointer;">
+          <option value="spring" style="background: #111;">Spring Cocktail Party — April 2026</option>
+          <option value="autumn" style="background: #111;">Autumn Cocktail Party — October 2026</option>
+        </select>
+      </div>
+
+      <!-- Quantity -->
+      <div style="margin-bottom: 1.5rem;">
+        <label style="font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">Number of tickets</label>
+        <div style="display: flex; align-items: center; gap: 0;">
+          <button onclick="raffleUpdateQty(-1)" style="width: 48px; height: 48px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: 1.25rem; cursor: pointer; border-radius: 8px 0 0 8px;">−</button>
+          <input type="number" id="raffle-qty" value="5" min="1" max="100" style="width: 80px; height: 48px; text-align: center; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-left: none; border-right: none; color: #fff; font-size: 1.1rem; font-weight: 600;" oninput="raffleUpdateTotal()">
+          <button onclick="raffleUpdateQty(1)" style="width: 48px; height: 48px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: 1.25rem; cursor: pointer; border-radius: 0 8px 8px 0;">+</button>
+        </div>
+      </div>
+
+      <!-- Price breakdown -->
+      <div style="background: rgba(255,255,255,0.04); padding: 1.25rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Price per ticket</span>
+          <span style="color: #fff; font-weight: 500;">£1.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Quantity</span>
+          <span style="color: #fff; font-weight: 500;" id="raffle-qty-display">5</span>
+        </div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between;">
+          <span style="color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem;">Total</span>
+          <span style="color: #c9a96e; font-weight: 700; font-size: 1.25rem;" id="raffle-total">£5.00</span>
+        </div>
+      </div>
+
+      <p style="color: rgba(255,255,255,0.35); font-size: 0.8rem; margin-bottom: 1.5rem;">
+        <i class="ri-lock-line" style="margin-right: 0.25rem;"></i> Secure checkout via Stripe. Tickets emailed instantly and added to your account.
+      </p>
+
+      <button id="raffle-buy-btn" onclick="raffleBuy()" style="width: 100%; background: #c9a96e; color: #000; padding: 1.1rem; border: none; border-radius: 50px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; cursor: pointer; transition: opacity 0.3s;">
+        Buy 5 tickets — £5.00
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function openRaffleModal(event) {
+      document.getElementById('raffle-event').value = event;
+      document.getElementById('modal-raffle').classList.add('active');
+    }
+
+    function raffleUpdateQty(delta) {
+      const input = document.getElementById('raffle-qty');
+      let val = Math.max(1, Math.min(100, Number(input.value || 1) + delta));
+      input.value = val;
+      raffleUpdateTotal();
+    }
+
+    function raffleUpdateTotal() {
+      const qty = Math.max(1, Math.min(100, Number(document.getElementById('raffle-qty').value) || 1));
+      const total = (qty * 1).toFixed(2);
+      document.getElementById('raffle-qty-display').textContent = qty;
+      document.getElementById('raffle-total').textContent = '£' + total;
+      document.getElementById('raffle-buy-btn').textContent = 'Buy ' + qty + ' ticket' + (qty > 1 ? 's' : '') + ' — £' + total;
+    }
+
+    async function raffleBuy() {
+      const btn = document.getElementById('raffle-buy-btn');
+      const qty = Math.max(1, Math.min(100, Number(document.getElementById('raffle-qty').value) || 1));
+      btn.disabled = true;
+      btn.textContent = 'Redirecting to checkout…';
+      btn.style.opacity = '0.6';
+      try {
+        const { startCheckout } = await import('/assets/js/checkout.js');
+        await startCheckout({ kind: 'raffle', quantity: qty });
+      } catch (e) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        raffleUpdateTotal();
+        alert(e.message || 'Something went wrong — please try again.');
+      }
+    }
+  </script>
 </body>
 </html>

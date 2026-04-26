@@ -7,6 +7,93 @@
   <meta name="description" content="Manage your UKTTBS tickets, raffle entries and 100 Club membership.">
   <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    /* ── ACCOUNT PAGE STYLES ── */
+    .acct-shell { display: flex; min-height: 100vh; background: #020202; }
+    .acct-sidebar { width: 280px; background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
+    .acct-sidebar__brand { padding: 0 1.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .acct-sidebar__brand a { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; }
+    .acct-sidebar__user { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .acct-sidebar__user strong { color: #fff; display: block; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .acct-sidebar__user span { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+    .acct-nav { list-style: none; padding: 1rem 0; flex: 1; }
+    .acct-nav li a { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.5rem; color: rgba(255,255,255,0.5); font-size: 0.9rem; font-weight: 500; transition: all 0.3s; border-left: 3px solid transparent; }
+    .acct-nav li a:hover, .acct-nav li a.active { color: #fff; background: rgba(255,255,255,0.03); border-left-color: #c9a96e; }
+    .acct-nav li a i { font-size: 1.15rem; color: #c9a96e; width: 20px; text-align: center; }
+    .acct-signout { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .acct-signout button { background: none; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); padding: 0.6rem 1.5rem; border-radius: 50px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.3s; width: 100%; }
+    .acct-signout button:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+    .acct-main { flex: 1; padding: 3rem 4rem; overflow-y: auto; }
+    .acct-panel { display: none; }
+    .acct-panel.active { display: block; }
+    .acct-header { margin-bottom: 2.5rem; }
+    .acct-header h2 { font-size: 2rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 0.5rem; }
+    .acct-header p { color: rgba(255,255,255,0.5); font-weight: 300; font-size: 1rem; }
+    .acct-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; transition: border-color 0.3s; }
+    .acct-card:hover { border-color: rgba(201,169,110,0.15); }
+    .acct-card h4 { color: #fff; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .acct-card h4 i { color: #c9a96e; }
+    .acct-stat { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .acct-stat > div { flex: 1; min-width: 120px; }
+    .acct-stat__num { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 0.25rem; }
+    .acct-stat__label { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+    .acct-table { width: 100%; border-collapse: collapse; }
+    .acct-table th { text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .acct-table td { padding: 0.85rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+    .acct-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .acct-badge--active { background: rgba(76,175,80,0.15); color: #66bb6a; }
+    .acct-badge--paid { background: rgba(201,169,110,0.15); color: #c9a96e; }
+    .acct-badge--won { background: rgba(255,215,0,0.15); color: #ffd700; }
+    .msg-filters { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .msg-filter { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s; }
+    .msg-filter:hover, .msg-filter.active { background: rgba(201,169,110,0.1); border-color: rgba(201,169,110,0.25); color: #c9a96e; }
+    .msg-item { display: flex; gap: 1rem; padding: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.3s; cursor: pointer; }
+    .msg-item:hover { background: rgba(255,255,255,0.02); }
+    .msg-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(201,169,110,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .msg-icon i { color: #c9a96e; font-size: 1.1rem; }
+    .msg-body { flex: 1; }
+    .msg-body strong { color: #fff; font-size: 0.9rem; display: block; margin-bottom: 0.25rem; }
+    .msg-body p { color: rgba(255,255,255,0.45); font-size: 0.85rem; line-height: 1.5; }
+    .msg-date { color: rgba(255,255,255,0.3); font-size: 0.75rem; white-space: nowrap; flex-shrink: 0; }
+    .join-cta { display: flex; gap: 1rem; align-items: center; padding: 2rem; background: rgba(201,169,110,0.04); border: 1px solid rgba(201,169,110,0.15); border-radius: 12px; }
+    .join-cta__text { flex: 1; }
+    .join-cta__text h4 { color: #fff; margin-bottom: 0.5rem; }
+    .join-cta__text p { color: rgba(255,255,255,0.5); font-size: 0.9rem; font-weight: 300; }
+
+    /* ── LOGIN OVERLAY ── */
+    .login-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; }
+    .login-card { width: 100%; max-width: 440px; padding: 3rem 2.5rem; background: rgba(15,15,15,0.95); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; }
+    .login-card h2 { font-size: 1.75rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 0.5rem; }
+    .login-card .login-sub { color: rgba(255,255,255,0.5); font-size: 0.95rem; font-weight: 300; margin-bottom: 2rem; }
+    .login-field { margin-bottom: 1rem; }
+    .login-field label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; }
+    .login-field input { width: 100%; padding: 0.9rem 1rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-size: 0.95rem; transition: border-color 0.3s; box-sizing: border-box; }
+    .login-field input:focus { outline: none; border-color: #c9a96e; }
+    .login-btn { width: 100%; padding: 1rem; background: #c9a96e; color: #000; border: none; border-radius: 50px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: opacity 0.3s; margin-bottom: 1.5rem; }
+    .login-btn:hover { opacity: 0.9; }
+    .login-divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .login-divider span { color: rgba(255,255,255,0.25); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .login-divider::before, .login-divider::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .sso-grid { display: flex; gap: 0.75rem; }
+    .sso-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: rgba(255,255,255,0.7); font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+    .sso-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff; }
+    .sso-btn i { font-size: 1.15rem; }
+    .login-toggle { text-align: center; margin-top: 1.5rem; color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+    .login-toggle a { color: #c9a96e; cursor: pointer; border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+    .login-toggle a:hover { border-color: #c9a96e; }
+    .login-error { background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.2); color: #ef9a9a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem; display: none; }
+
+    @media (max-width: 900px) {
+      .acct-shell { flex-direction: column; }
+      .acct-sidebar { width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
+      .acct-sidebar__brand, .acct-sidebar__user { display: none; }
+      .acct-nav { display: flex; gap: 0; padding: 0; overflow-x: auto; }
+      .acct-nav li a { padding: 0.7rem 1rem; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; font-size: 0.8rem; }
+      .acct-nav li a.active { border-bottom-color: #c9a96e; }
+      .acct-signout { border: none; padding: 0.5rem; }
+      .acct-main { padding: 2rem 1.5rem; }
+    }
+  </style>
 </head>
 <body class="loading">
 
@@ -40,76 +127,196 @@
     </div>
   </div>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero" style="height: 60vh;">
-      <div class="hero-bg" style="background-image: url('panel2.png');"></div>
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">My Account</span></div>
-        </h1>
-        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">Manage your ties to the trade</p>
+  <!-- ═══════ LOGIN OVERLAY (shown when signed out) ═══════ -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-card">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase;">UKTTBS</span>
       </div>
-    </section>
+      <h2 id="login-heading">Welcome back.</h2>
+      <p class="login-sub" id="login-sub">Sign in to manage your tickets, raffle entries and 100 Club membership.</p>
 
-    <!-- ACCOUNT CONTENT -->
-    <section style="background: #020202; padding: 8vh 5vw;">
-      <div style="max-width: 620px; margin: 0 auto;">
+      <div class="login-error" id="login-error"></div>
 
-        <!-- SIGNED OUT STATE -->
-        <div data-signed-out class="fade-in" style="opacity:0; transform:translateY(20px);">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem;">Sign in</span>
-          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; text-transform: uppercase; line-height: 1.1; margin-bottom: 1.5rem; color: #fff;">
-            Welcome back.
-          </h2>
-          <p style="font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 2rem;">
-            Access your tickets, raffle entries, 100 Club subscription and AGM notices.
-          </p>
-          <div id="signin-mount" style="background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);"></div>
+      <form id="login-form" onsubmit="handleAuth(event)">
+        <div class="login-field">
+          <label for="login-email">Email address</label>
+          <input type="email" id="login-email" placeholder="you@example.com" required autocomplete="email">
         </div>
-
-        <!-- SIGNED IN STATE -->
-        <div data-signed-in class="hidden fade-in">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem;">Dashboard</span>
-          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; text-transform: uppercase; line-height: 1.1; margin-bottom: 0.75rem; color: #fff;">
-            Welcome back.
-          </h2>
-          <p style="font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.5); margin-bottom: 3rem;">
-            Signed in as <strong data-email style="color: #fff;">—</strong>
-          </p>
-
-          <!-- Orders / tickets -->
-          <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; margin-bottom: 3rem;">
-            <h3 style="color:#fff; font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem;">
-              <i class="ri-ticket-2-line" style="color: #c9a96e; margin-right: 0.5rem;"></i> Your tickets & entries
-            </h3>
-            <div data-orders><p style="color: rgba(255,255,255,0.4); font-weight: 300;">Loading…</p></div>
-          </div>
-
-          <!-- 100 Club -->
-          <div style="border-top: 1px solid rgba(201,169,110,0.15); padding-top: 2rem; margin-bottom: 3rem;">
-            <h3 style="color: #c9a96e; font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem;">
-              <i class="ri-vip-crown-line" style="margin-right: 0.5rem;"></i> 100 Club Membership
-            </h3>
-            <div data-hundred-status><p style="color: rgba(255,255,255,0.4); font-weight: 300;">Loading…</p></div>
-            <a data-portal-link href="#" class="hidden" style="display:inline-block; margin-top:1rem; border-bottom:1px solid #c9a96e; color:#c9a96e; font-size: 0.9rem;">Manage billing</a>
-          </div>
-
-          <button data-signout style="margin-top: 1rem; background: transparent; border: 1px solid rgba(255,255,255,0.15); padding: 0.75rem 2rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; border-radius: 50px; cursor: pointer; transition: border-color 0.3s, color 0.3s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.4)'; this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='rgba(255,255,255,0.5)'">Sign out</button>
+        <div class="login-field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
         </div>
+        <div class="login-field" id="login-name-field" style="display: none;">
+          <label for="login-name">Full name</label>
+          <input type="text" id="login-name" placeholder="Your full name" autocomplete="name">
+        </div>
+        <button type="submit" class="login-btn" id="login-submit">Sign in</button>
+      </form>
 
+      <div class="login-divider"><span>or continue with</span></div>
+
+      <div class="sso-grid">
+        <button class="sso-btn" onclick="ssoLogin('google')"><i class="ri-google-fill"></i> Google</button>
+        <button class="sso-btn" onclick="ssoLogin('apple')"><i class="ri-apple-fill"></i> Apple</button>
+        <button class="sso-btn" onclick="ssoLogin('facebook')"><i class="ri-facebook-fill"></i> Facebook</button>
       </div>
-    </section>
-  </main>
 
-  <section class="parallax-footer">
-    <div class="footer-bg" style="background-image: url('panel2.png');"></div>
-    <div class="parallax-footer-content">
-      <h2 class="uppercase">Rooted in 1962.</h2>
-      <p>&copy; 2026 UKTTBS. All rights reserved.</p>
-      <p class="footer-sponsor">Digital infrastructure and hosting proudly donated by <a href="https://teatrade.co.uk/" target="_blank" class="magnetic sponsor-link">TeaTrade</a>.</p>
+      <div class="login-toggle">
+        <span id="login-toggle-text">Don't have an account?</span>
+        <a onclick="toggleAuthMode()" id="login-toggle-link">Create one</a>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- ═══════ DASHBOARD SHELL (shown when signed in) ═══════ -->
+  <div class="acct-shell" id="dashboard" style="display: none;">
+    <!-- SIDEBAR -->
+    <aside class="acct-sidebar">
+      <div class="acct-sidebar__brand"><a href="index.html">UKTTBS.</a></div>
+      <div class="acct-sidebar__user">
+        <strong data-user-name>Member</strong>
+        <span data-user-email>—</span>
+      </div>
+      <ul class="acct-nav">
+        <li><a href="#" class="active" data-tab="overview"><i class="ri-dashboard-line"></i> Overview</a></li>
+        <li><a href="#" data-tab="hundred"><i class="ri-vip-crown-line"></i> 100 Club</a></li>
+        <li><a href="#" data-tab="raffle"><i class="ri-ticket-2-line"></i> Raffle Tickets</a></li>
+        <li><a href="#" data-tab="circulars"><i class="ri-mail-line"></i> Circulars</a></li>
+        <li><a href="#" data-tab="settings"><i class="ri-settings-3-line"></i> Settings</a></li>
+      </ul>
+      <div class="acct-signout">
+        <button data-signout>Sign out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="acct-main">
+
+      <!-- ── OVERVIEW ── -->
+      <div class="acct-panel active" id="panel-overview">
+        <div class="acct-header">
+          <h2>Dashboard</h2>
+          <p>Welcome back, <strong data-user-name-main style="color: #fff;">Member</strong>.</p>
+        </div>
+
+        <div class="acct-stat">
+          <div>
+            <div class="acct-stat__num" data-stat-tickets>0</div>
+            <div class="acct-stat__label">Raffle tickets</div>
+          </div>
+          <div>
+            <div class="acct-stat__num" data-stat-events>0</div>
+            <div class="acct-stat__label">Events attended</div>
+          </div>
+          <div>
+            <div class="acct-stat__num" data-stat-club>—</div>
+            <div class="acct-stat__label">100 Club</div>
+          </div>
+          <div>
+            <div class="acct-stat__num" data-stat-messages>0</div>
+            <div class="acct-stat__label">Circulars</div>
+          </div>
+        </div>
+
+        <div class="acct-card">
+          <h4><i class="ri-history-line"></i> Recent Activity</h4>
+          <div data-recent-activity>
+            <p style="color: rgba(255,255,255,0.4); font-weight: 300;">Loading…</p>
+          </div>
+        </div>
+
+        <div class="acct-card">
+          <h4><i class="ri-links-line"></i> Quick Actions</h4>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="events.html" style="padding: 0.7rem 1.5rem; background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.2); border-radius: 50px; color: #c9a96e; font-size: 0.85rem; font-weight: 500;">Buy event tickets</a>
+            <a href="100-club.html" style="padding: 0.7rem 1.5rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 500;">Join 100 Club</a>
+            <a href="events.html" style="padding: 0.7rem 1.5rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 500;">Enter raffle</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 100 CLUB ── -->
+      <div class="acct-panel" id="panel-hundred">
+        <div class="acct-header">
+          <h2><i class="ri-vip-crown-line" style="color: #c9a96e;"></i> 100 Club</h2>
+          <p>Your monthly prize draw membership.</p>
+        </div>
+
+        <div data-hundred-content>
+          <p style="color: rgba(255,255,255,0.4); font-weight: 300;">Loading…</p>
+        </div>
+      </div>
+
+      <!-- ── RAFFLE TICKETS ── -->
+      <div class="acct-panel" id="panel-raffle">
+        <div class="acct-header">
+          <h2><i class="ri-ticket-2-line" style="color: #c9a96e;"></i> Raffle Tickets</h2>
+          <p>Your raffle entries and prizes.</p>
+        </div>
+
+        <div data-raffle-content>
+          <p style="color: rgba(255,255,255,0.4); font-weight: 300;">Loading…</p>
+        </div>
+      </div>
+
+      <!-- ── CIRCULARS ── -->
+      <div class="acct-panel" id="panel-circulars">
+        <div class="acct-header">
+          <h2><i class="ri-mail-line" style="color: #c9a96e;"></i> Circulars</h2>
+          <p>Notices, AGM papers and Society updates.</p>
+        </div>
+
+        <div class="msg-filters">
+          <button class="msg-filter active" onclick="filterMessages('all', this)">All</button>
+          <button class="msg-filter" onclick="filterMessages('notice', this)">Notices</button>
+          <button class="msg-filter" onclick="filterMessages('agm', this)">AGM</button>
+          <button class="msg-filter" onclick="filterMessages('event', this)">Events</button>
+          <button class="msg-filter" onclick="filterMessages('welfare', this)">Welfare</button>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <input type="text" id="msg-search" placeholder="Search circulars…" oninput="searchMessages(this.value)" style="width: 100%; padding: 0.8rem 1rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #fff; font-size: 0.9rem; box-sizing: border-box;" />
+        </div>
+
+        <div class="acct-card" style="padding: 0; overflow: hidden;">
+          <div data-messages-list id="messages-list">
+            <div style="padding: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-weight: 300;">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SETTINGS ── -->
+      <div class="acct-panel" id="panel-settings">
+        <div class="acct-header">
+          <h2><i class="ri-settings-3-line" style="color: #c9a96e;"></i> Settings</h2>
+          <p>Manage your account preferences.</p>
+        </div>
+
+        <div class="acct-card">
+          <h4><i class="ri-user-line"></i> Profile</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem;">Full name</label>
+              <input type="text" data-settings-name style="width: 100%; padding: 0.8rem 1rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: #fff; font-size: 0.9rem; box-sizing: border-box;" />
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem;">Email</label>
+              <input type="email" data-settings-email disabled style="width: 100%; padding: 0.8rem 1rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; color: rgba(255,255,255,0.4); font-size: 0.9rem; box-sizing: border-box;" />
+            </div>
+          </div>
+          <button onclick="saveProfile()" style="padding: 0.7rem 2rem; background: #c9a96e; color: #000; border: none; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; cursor: pointer;">Save changes</button>
+        </div>
+
+        <div class="acct-card">
+          <h4><i class="ri-shield-check-line"></i> Security</h4>
+          <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; font-weight: 300; margin-bottom: 1rem;">Change your password or manage connected accounts.</p>
+          <button onclick="resetPassword()" style="padding: 0.7rem 2rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 50px; font-size: 0.85rem; cursor: pointer;">Send password reset email</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -120,24 +327,114 @@
   <script src="/assets/js/config.js"></script>
   <script type="module">
     import { supabase, formatEventDate, formatMoney } from "/assets/js/supabase.js";
-    import { mountSignIn, signOut, getSession } from "/assets/js/auth.js";
 
-    const signedOut = document.querySelector("[data-signed-out]");
-    const signedIn  = document.querySelector("[data-signed-in]");
+    let isSignUp = false;
 
-    async function render() {
-      const session = await getSession();
-      if (!session) {
-        signedOut.classList.remove("hidden");
-        signedIn.classList.add("hidden");
-        mountSignIn(document.getElementById("signin-mount"));
+    // ── AUTH ──
+    window.toggleAuthMode = function() {
+      isSignUp = !isSignUp;
+      document.getElementById('login-heading').textContent = isSignUp ? 'Create account.' : 'Welcome back.';
+      document.getElementById('login-sub').textContent = isSignUp ? 'Join the Society to manage tickets, raffle entries and more.' : 'Sign in to manage your tickets, raffle entries and 100 Club membership.';
+      document.getElementById('login-submit').textContent = isSignUp ? 'Create account' : 'Sign in';
+      document.getElementById('login-toggle-text').textContent = isSignUp ? 'Already have an account?' : "Don't have an account?";
+      document.getElementById('login-toggle-link').textContent = isSignUp ? 'Sign in' : 'Create one';
+      document.getElementById('login-name-field').style.display = isSignUp ? 'block' : 'none';
+      document.getElementById('login-error').style.display = 'none';
+    };
+
+    window.handleAuth = async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('login-submit');
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const errEl = document.getElementById('login-error');
+      btn.disabled = true;
+      btn.textContent = isSignUp ? 'Creating…' : 'Signing in…';
+      errEl.style.display = 'none';
+
+      try {
+        let result;
+        if (isSignUp) {
+          const name = document.getElementById('login-name').value;
+          result = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
+        } else {
+          result = await supabase.auth.signInWithPassword({ email, password });
+        }
+        if (result.error) throw result.error;
+      } catch (err) {
+        errEl.textContent = err.message || 'Authentication failed.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = isSignUp ? 'Create account' : 'Sign in';
+      }
+    };
+
+    window.ssoLogin = async function(provider) {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo: location.origin + '/account.html' }
+      });
+      if (error) alert(error.message);
+    };
+
+    // ── NAVIGATION ──
+    document.querySelectorAll('[data-tab]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const tab = link.dataset.tab;
+        document.querySelectorAll('.acct-nav a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        document.querySelectorAll('.acct-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('panel-' + tab)?.classList.add('active');
+      });
+    });
+
+    // ── MESSAGES ──
+    let allMessages = [];
+
+    window.filterMessages = function(type, btn) {
+      document.querySelectorAll('.msg-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMessages(type === 'all' ? allMessages : allMessages.filter(m => m.type === type));
+    };
+
+    window.searchMessages = function(query) {
+      const q = query.toLowerCase();
+      renderMessages(allMessages.filter(m => m.subject.toLowerCase().includes(q) || m.body.toLowerCase().includes(q)));
+    };
+
+    function renderMessages(msgs) {
+      const el = document.getElementById('messages-list');
+      if (!msgs.length) {
+        el.innerHTML = '<div style="padding: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-weight: 300;">No circulars found.</div>';
         return;
       }
-      signedOut.classList.add("hidden");
-      signedIn.classList.remove("hidden");
-      document.querySelector("[data-email]").textContent = session.user.email;
+      el.innerHTML = msgs.map(m => `
+        <div class="msg-item" data-type="${m.type}">
+          <div class="msg-icon"><i class="ri-${m.type === 'agm' ? 'government-line' : m.type === 'event' ? 'calendar-event-line' : m.type === 'welfare' ? 'heart-pulse-line' : 'notification-3-line'}"></i></div>
+          <div class="msg-body">
+            <strong>${m.subject}</strong>
+            <p>${m.body}</p>
+          </div>
+          <div class="msg-date">${m.date}</div>
+        </div>
+      `).join('');
+    }
 
-      // Orders / tickets / raffle
+    // ── RENDER DASHBOARD ──
+    async function renderDashboard(session) {
+      document.getElementById('login-overlay').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'flex';
+
+      const name = session.user.user_metadata?.full_name || session.user.email.split('@')[0];
+      const email = session.user.email;
+      document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = name);
+      document.querySelector('[data-user-name-main]').textContent = name;
+      document.querySelector('[data-user-email]').textContent = email;
+      document.querySelector('[data-settings-name]').value = name;
+      document.querySelector('[data-settings-email]').value = email;
+
+      // Orders
       const { data: orders } = await supabase
         .from("orders")
         .select("id, kind, created_at, amount_pence, quantity, status, event:events(title, starts_at)")
@@ -145,51 +442,139 @@
         .order("created_at", { ascending: false })
         .limit(20);
 
-      const ordersEl = document.querySelector("[data-orders]");
+      const raffleOrders = (orders || []).filter(o => o.kind === 'raffle');
+      const ticketOrders = (orders || []).filter(o => o.kind === 'tickets');
+      const totalRaffleTickets = raffleOrders.reduce((s, o) => s + (o.quantity || 0), 0);
+
+      document.querySelector('[data-stat-tickets]').textContent = totalRaffleTickets;
+      document.querySelector('[data-stat-events]').textContent = ticketOrders.length;
+
+      // Recent activity
+      const actEl = document.querySelector('[data-recent-activity]');
       if (!orders || orders.length === 0) {
-        ordersEl.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-weight: 300;">You haven't purchased anything yet. <a href="/events.html" style="color: #fff; border-bottom: 1px solid #fff;">Browse events →</a></p>`;
+        actEl.innerHTML = '<p style="color: rgba(255,255,255,0.5); font-weight: 300;">No activity yet. <a href="/events.html" style="color: #c9a96e;">Browse events →</a></p>';
       } else {
-        ordersEl.innerHTML = orders.map(o => `
-          <div style="display:flex;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,0.06)">
-            <div>
-              <strong style="color: #fff;">${o.kind === "tickets" ? "Tickets" : o.kind === "raffle" ? "Raffle" : "100 Club"}</strong>
-              ${o.event ? `<div style="font-size:.85rem; color: rgba(255,255,255,0.5);">${o.event.title} — ${formatEventDate(o.event.starts_at)}</div>` : ""}
-              <div style="font-size:.8rem; color: rgba(255,255,255,0.35);">${new Date(o.created_at).toLocaleDateString("en-GB")}</div>
-            </div>
-            <div style="text-align:right">
-              <strong style="color: #fff;">${formatMoney(o.amount_pence)}</strong>
-              <div style="font-size:.85rem; color: rgba(255,255,255,0.5);">×${o.quantity}</div>
-            </div>
-          </div>
-        `).join("");
+        actEl.innerHTML = '<table class="acct-table"><thead><tr><th>Type</th><th>Event</th><th>Date</th><th>Amount</th></tr></thead><tbody>' +
+          orders.slice(0, 8).map(o => `
+            <tr>
+              <td><span class="acct-badge acct-badge--paid">${o.kind}</span></td>
+              <td>${o.event ? o.event.title : '—'}</td>
+              <td>${new Date(o.created_at).toLocaleDateString('en-GB')}</td>
+              <td style="color: #fff; font-weight: 600;">${formatMoney(o.amount_pence)} <span style="color: rgba(255,255,255,0.4); font-weight: 400;">×${o.quantity}</span></td>
+            </tr>
+          `).join('') + '</tbody></table>';
       }
 
-      // 100 Club subscription
+      // Raffle panel
+      const raffleEl = document.querySelector('[data-raffle-content]');
+      if (raffleOrders.length === 0) {
+        raffleEl.innerHTML = `
+          <div class="join-cta">
+            <div class="join-cta__text">
+              <h4>No raffle entries yet</h4>
+              <p>Enter the raffle at our next event for a chance to win fantastic prizes. Every ticket is just £1.</p>
+            </div>
+            <a href="/events.html" style="padding: 0.7rem 1.5rem; background: #c9a96e; color: #000; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; white-space: nowrap;">Enter raffle</a>
+          </div>`;
+      } else {
+        raffleEl.innerHTML = `
+          <div class="acct-stat" style="margin-bottom: 2rem;">
+            <div><div class="acct-stat__num">${totalRaffleTickets}</div><div class="acct-stat__label">Total tickets</div></div>
+            <div><div class="acct-stat__num">${raffleOrders.length}</div><div class="acct-stat__label">Purchases</div></div>
+          </div>
+          <div class="acct-card" style="padding: 0; overflow: hidden;">
+            <table class="acct-table"><thead><tr><th>Event</th><th>Tickets</th><th>Cost</th><th>Date</th></tr></thead><tbody>` +
+            raffleOrders.map(o => `
+              <tr>
+                <td>${o.event ? o.event.title : '—'}</td>
+                <td style="color: #fff; font-weight: 600;">×${o.quantity}</td>
+                <td>${formatMoney(o.amount_pence)}</td>
+                <td>${new Date(o.created_at).toLocaleDateString('en-GB')}</td>
+              </tr>
+            `).join('') + '</tbody></table></div>';
+      }
+
+      // 100 Club
       const { data: sub } = await supabase
         .from("subscriptions")
         .select("tier, status, current_period_end, stripe_customer_portal_url")
         .eq("status", "active")
         .maybeSingle();
 
-      const sEl = document.querySelector("[data-hundred-status]");
-      const portal = document.querySelector("[data-portal-link]");
+      document.querySelector('[data-stat-club]').textContent = sub ? 'Active' : '—';
+      const hundredEl = document.querySelector('[data-hundred-content]');
       if (sub) {
-        sEl.innerHTML = `
-          <p style="margin-bottom: 0.5rem; color: #fff;"><strong>Active</strong> — ${sub.tier} plan</p>
-          <p style="font-size:.85rem; color: rgba(255,255,255,0.5);">Renews ${new Date(sub.current_period_end).toLocaleDateString("en-GB")}</p>
-        `;
-        if (sub.stripe_customer_portal_url) {
-          portal.classList.remove("hidden");
-          portal.href = sub.stripe_customer_portal_url;
-        }
+        hundredEl.innerHTML = `
+          <div class="acct-card">
+            <h4><i class="ri-checkbox-circle-line"></i> Active Membership</h4>
+            <div class="acct-stat">
+              <div><div class="acct-stat__num" style="color: #c9a96e;">${sub.tier}</div><div class="acct-stat__label">Plan</div></div>
+              <div><div class="acct-stat__num">${new Date(sub.current_period_end).toLocaleDateString('en-GB')}</div><div class="acct-stat__label">Renews</div></div>
+            </div>
+            ${sub.stripe_customer_portal_url ? `<a href="${sub.stripe_customer_portal_url}" style="padding: 0.7rem 1.5rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; color: #fff; font-size: 0.85rem; display: inline-block;">Manage billing</a>` : ''}
+          </div>`;
       } else {
-        sEl.innerHTML = `<p style="color: rgba(255,255,255,0.5); font-weight: 300;">Not yet a member. <a href="/100-club.html" style="color: #c9a96e; border-bottom: 1px solid #c9a96e;">Join the 100 Club →</a></p>`;
+        hundredEl.innerHTML = `
+          <div class="join-cta">
+            <div class="join-cta__text">
+              <h4>Not yet a member</h4>
+              <p>Join the 100 Club for £10/month or £120/year. Every subscription funds welfare and enters you into monthly prize draws.</p>
+            </div>
+            <a href="/100-club.html" style="padding: 0.7rem 1.5rem; background: #c9a96e; color: #000; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; white-space: nowrap;">Join now</a>
+          </div>`;
+      }
+
+      // Circulars (demo data — will be replaced with Supabase query)
+      allMessages = [
+        { type: 'notice', subject: 'Spring Party 2026 — Save the Date', body: 'Our Spring cocktail party returns in April. Tickets available soon.', date: '12 Mar 2026' },
+        { type: 'agm', subject: 'AGM 2025 Minutes Published', body: 'The minutes from our 2025 Annual General Meeting are now available.', date: '28 Nov 2025' },
+        { type: 'event', subject: 'Autumn Party Sold Out', body: 'Thank you for your incredible support — the October event is fully booked.', date: '15 Sep 2025' },
+        { type: 'welfare', subject: 'Welfare Update — Q3 2025', body: 'A summary of the Society\'s welfare activity during July–September 2025.', date: '01 Oct 2025' },
+        { type: 'notice', subject: '100 Club Winners — September', body: 'Congratulations to this month\'s 100 Club prize winner!', date: '30 Sep 2025' },
+        { type: 'agm', subject: 'AGM 2025 — Notice of Meeting', body: 'You are invited to the Annual General Meeting on 22 November 2025.', date: '01 Nov 2025' },
+      ];
+      document.querySelector('[data-stat-messages]').textContent = allMessages.length;
+      renderMessages(allMessages);
+    }
+
+    // ── SETTINGS ──
+    window.saveProfile = async function() {
+      const name = document.querySelector('[data-settings-name]').value;
+      await supabase.auth.updateUser({ data: { full_name: name } });
+      document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = name);
+      document.querySelector('[data-user-name-main]').textContent = name;
+      alert('Profile updated.');
+    };
+
+    window.resetPassword = async function() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      await supabase.auth.resetPasswordForEmail(session.user.email, { redirectTo: location.origin + '/account.html' });
+      alert('Password reset email sent.');
+    };
+
+    // ── SIGN OUT ──
+    document.querySelector('[data-signout]')?.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      location.reload();
+    });
+
+    // ── INIT ──
+    async function init() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        renderDashboard(session);
+      } else {
+        document.getElementById('login-overlay').style.display = 'flex';
+        document.getElementById('dashboard').style.display = 'none';
       }
     }
 
-    document.querySelector("[data-signout]")?.addEventListener("click", signOut);
-    supabase.auth.onAuthStateChange(() => render());
-    render();
+    supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) renderDashboard(session);
+    });
+
+    init();
   </script>
 </body>
 </html>

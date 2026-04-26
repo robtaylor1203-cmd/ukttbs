@@ -100,107 +100,43 @@
       </div>
     </section>
 
-    <!-- SUBSCRIBE WIDGET + WHY IT MATTERS (overlaid on same bg) -->
-    <section class="club-hundred" style="height: auto; min-height: auto; background: #020202; padding: 8vh 5vw 0;" id="join">
-      <div class="club-bg parallax-img" style="background-image: url('panel3.png'); opacity: 0.08; filter: grayscale(100%);"></div>
-      <div class="club-content" style="max-width: 1100px; margin: 0 auto;">
-        <div class="hundred-stage fade-in-up">
-          <!-- LEFT: orbit visual -->
-          <div class="hundred__orbit" data-reveal="fade">
-            <svg viewBox="0 0 400 400" width="100%" height="100%" aria-hidden="true">
-              <defs>
-                <radialGradient id="orbitGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.3"/>
-                  <stop offset="70%" stop-color="#c9a96e" stop-opacity="0"/>
-                </radialGradient>
-              </defs>
-              <circle cx="200" cy="200" r="180" fill="url(#orbitGlow)"/>
-              <circle class="orbit__ring" cx="200" cy="200" r="160" fill="none" stroke="#c9a96e" stroke-width="1" stroke-dasharray="3 8" opacity="0.5"/>
-              <circle class="orbit__ring" cx="200" cy="200" r="120" fill="none" stroke="#c9a96e" stroke-width="1" stroke-dasharray="2 6" opacity="0.3"/>
-              <g class="orbit__dots">
-                <circle class="orbit__dot" cx="360" cy="200" r="4" fill="#c9a96e"/>
-                <circle class="orbit__dot" cx="200" cy="40"  r="4" fill="#c9a96e" opacity="0.7"/>
-                <circle class="orbit__dot" cx="40"  cy="200" r="4" fill="#c9a96e" opacity="0.5"/>
-                <circle class="orbit__dot" cx="200" cy="360" r="4" fill="#c9a96e" opacity="0.8"/>
-              </g>
-              <text x="200" y="195" text-anchor="middle" fill="#f1ece0" font-style="italic" font-weight="300" font-size="48" style="font-family: Fraunces, serif;">
-                £<tspan data-price-svg>120</tspan>
-              </text>
-              <text x="200" y="230" text-anchor="middle" fill="#c9a96e" font-size="12" letter-spacing="2">
-                <tspan data-unit-svg>/ YEAR</tspan>
-              </text>
-            </svg>
-          </div>
 
-          <!-- RIGHT: tier panel -->
-          <div class="hundred__panel" style="text-align: left;">
-            <div style="margin-bottom: 2rem;">
-              <h2 style="font-size: clamp(2.5rem, 4vw, 4rem); text-transform: uppercase; line-height: 1;">Subscribe to the<br><em class="gold">100 club.</em></h2>
-            </div>
-            
-            <div class="hundred__toggle" data-tier-toggle data-reveal="up" style="margin-bottom: 2rem; display:inline-flex; border:1px solid rgba(255,255,255,0.2); border-radius:50px; padding:0.25rem;">
-              <button type="button" data-tier="annual" aria-pressed="true" style="background:#fff; color:#000; padding:0.5rem 1.5rem; border-radius:50px; border:none; font-weight:600; cursor:pointer; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em;">Annual</button>
-              <button type="button" data-tier="monthly" aria-pressed="false" style="background:transparent; color:#fff; padding:0.5rem 1.5rem; border-radius:50px; border:none; font-weight:600; cursor:pointer; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em;">Monthly</button>
-            </div>
-            
-            <div class="hundred__price" data-reveal="up" data-reveal-delay="0.1" style="font-size: 2.5rem; font-weight: 300; margin-bottom: 0.5rem;">
-              <span data-price>£120</span> <span data-unit style="font-size:1rem; opacity:0.6;">/ year</span>
-            </div>
-            
-            <p class="hundred__note" data-note data-reveal="up" data-reveal-delay="0.2" style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">
-              12 monthly draws · cancel anytime at renewal
-            </p>
-            
-            <div data-reveal="up" data-reveal-delay="0.3" style="margin: 2rem 0;">
-              <a href="#" class="magnetic" data-join-hundred data-tier="annual" style="background:#c9a96e; padding: 1.25rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem; font-weight: 600; display:inline-block; color: #000; transition: transform 0.3s;">
-                <span data-join-label>Subscribe Now</span>
-              </a>
-            </div>
-            
-            <ul class="hundred__bullets" data-reveal="stagger" style="color: rgba(255,255,255,0.6); line-height: 1.8; font-weight: 300; font-size: 1rem; padding-left: 1.25rem;">
-              <li>One entry per subscription per monthly draw.</li>
-              <li>100% of funds directly support welfare work.</li>
-              <li>Winners drawn live and notified by email.</li>
-              <li>Managed securely via Stripe — pause or cancel any time.</li>
-            </ul>
-          </div>
+
+
+    <!-- WHY IT MATTERS — with background image -->
+    <section style="position: relative; background: #050505; padding: 10vh 5vw; overflow: hidden;">
+      <div style="position: absolute; inset: 0; background: url('panel3.png') center/cover no-repeat; opacity: 0.12; filter: grayscale(100%); z-index: 0;"></div>
+      <div style="max-width: 1000px; margin: 0 auto; position: relative; z-index: 1;">
+        <div class="fade-in" style="text-align: center; margin-bottom: 3rem;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem;">Why it matters</span>
+          <h2 style="font-size: clamp(2.5rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1;">
+            Every subscription is<br>
+            <span style="color: #c9a96e;">someone's safety net.</span>
+          </h2>
+          <p style="max-width: 600px; margin: 2rem auto 0; font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
+            The 100 Club is our single most reliable source of income. While events come twice a year, your subscription works twelve months a year — quietly funding the welfare calls, the emergency grants, and the regular check-ins that keep our community whole.
+          </p>
         </div>
 
-        <!-- WHY IT MATTERS — overlaid on same parallax bg -->
-        <div style="max-width: 1000px; margin: 0 auto; padding-top: 8vh;">
-          <div class="fade-in" style="text-align: center; margin-bottom: 3rem;">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem;">Why it matters</span>
-            <h2 style="font-size: clamp(2.5rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1;">
-              Every subscription is<br>
-              <span style="color: #c9a96e;">someone's safety net.</span>
-            </h2>
-            <p style="max-width: 600px; margin: 2rem auto 0; font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
-              The 100 Club is our single most reliable source of income. While events come twice a year, your subscription works twelve months a year — quietly funding the welfare calls, the emergency grants, and the regular check-ins that keep our community whole.
-            </p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+          <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
+            <i class="ri-heart-pulse-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
+            <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Confidential Welfare</h4>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Direct financial support for members facing unexpected hardship — boiler repairs, funeral costs, emergency bills.</p>
           </div>
-
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding-bottom: 8vh;">
-            <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
-              <i class="ri-heart-pulse-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
-              <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Confidential Welfare</h4>
-              <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Direct financial support for members facing unexpected hardship — boiler repairs, funeral costs, emergency bills.</p>
-            </div>
-            <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
-              <i class="ri-phone-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
-              <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Regular Check-ins</h4>
-              <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Keeping the phone line warm so no one is forgotten. A friendly voice, a doorstep visit, a quiet act of care.</p>
-            </div>
-            <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
-              <i class="ri-file-list-3-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
-              <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Practical Advocacy</h4>
-              <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Navigating grants, pensions, council support and benefits applications on behalf of members who need guidance.</p>
-            </div>
+          <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
+            <i class="ri-phone-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
+            <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Regular Check-ins</h4>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Keeping the phone line warm so no one is forgotten. A friendly voice, a doorstep visit, a quiet act of care.</p>
+          </div>
+          <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
+            <i class="ri-file-list-3-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
+            <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Practical Advocacy</h4>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Navigating grants, pensions, council support and benefits applications on behalf of members who need guidance.</p>
           </div>
         </div>
-
       </div>
     </section>
-
 
 
     <!-- HOW THE DRAW WORKS — step by step -->
