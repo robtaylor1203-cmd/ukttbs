@@ -97,6 +97,20 @@ a { text-decoration: none; color: inherit; }
 .scroll-indicator { position: absolute; bottom: -10vh; left: 50%; transform: translateX(-50%); width: 1px; height: 80px; background: rgba(255,255,255,0.2); }
 .scroll-dot { width: 5px; height: 5px; background: #fff; border-radius: 50%; transform: translateX(-2px); animation: dropDown 2s infinite ease-in-out; }
 @keyframes dropDown { 0% { transform: translate(-2px,0); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(-2px, 80px); opacity: 0; } }
+/* SUB HERO (Inner Pages) */
+.sub-hero { position: relative; height: 60vh; width: 100vw; display: flex; align-items: center; justify-content: center; overflow: hidden; background-color: #050505; }
+.sub-hero-title { font-size: 5vw; font-weight: 800; letter-spacing: -0.03em; text-transform: uppercase; transform: translateY(110%); }
+
+/* INNER PAGE CONTENT STRUCTURE */
+.page-content { padding: 6rem 4rem; max-width: 900px; margin: 0 auto; color: var(--text-secondary); line-height: 1.8; font-size: 1.15rem; font-weight: 300; }
+.page-content p { margin-bottom: 2rem; opacity: 0; transform: translateY(20px); }
+.page-content h2 { color: #fff; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.02em; text-transform: uppercase; }
+.page-content .scene__chapter { font-size: 0.9rem; color: rgba(255,255,255,0.4); display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.page-content em.gold { color: #fff; font-style: italic; opacity: 0.8; }
+.page-content .pillars { margin-top: 4rem; }
+.page-content .pillar { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2rem; margin-bottom: 2rem; }
+.page-content .pillar__num { font-size: 0.9rem; color: rgba(255,255,255,0.4); display: block; margin-bottom: 0.5rem; text-transform: uppercase;}
+.page-content .pillar h3 { color: #fff; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
 
 /* HORIZONTAL SCROLL */
 .horizontal-scroll { width: 100vw; height: 100vh; overflow: hidden; position: relative; background-color: #020202; }

@@ -1,183 +1,198 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin · UK Tea Trade Benevolent Society</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - UKTTBS</title>
   <meta name="robots" content="noindex, nofollow">
+  
   <link rel="stylesheet" href="/assets/css/app.css">
-  <meta name="theme-color" content="#0b120e">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <style>
+    /* Reset old app.css conflicts for the dark layout */
+    body { background-color: #030303; color: #ededed; }
+    .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; }
+    .table th { color: #fff; border-bottom: 2px solid rgba(255,255,255,0.2); }
+    .table td { border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .dialog__body { background: #111; color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+    .dialog__footer { background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.2); }
+    input, select, textarea { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 0.5rem; width: 100%; box-sizing: border-box; }
+    label { display: block; margin-top: 1rem; margin-bottom: 0.25rem; font-size: 0.9rem; color: rgba(255,255,255,0.6); }
+    .span-2 { grid-column: span 2; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .dialog__body h2 { color: #fff; }
+  </style>
 </head>
-<body>
+<body class="loading">
+
+  <div class="preloader"><div class="counter">0%</div></div>
+  <div class="film-grain"></div>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <nav class="navbar fade-in">
+    <div class="logo"><a href="index.html" class="magnetic">UKTTBS.</a></div>
+    <button class="menu-toggle magnetic" aria-label="Toggle menu">
+      <div class="hamburger"><span></span><span></span></div>
+    </button>
+  </nav>
+
+  <div class="menu-overlay">
+    <div class="menu-bg"></div>
+    <div class="menu-inner">
+      <ul class="nav-links">
+        <li><a href="about.html" class="magnetic" data-img="panel1.png"><span class="nav-num">01</span> Our History</a></li>
+        <li><a href="mission.html" class="magnetic" data-img="panel2.png"><span class="nav-num">02</span> The Trade</a></li>
+        <li><a href="ethics.html" class="magnetic" data-img="panel3.png"><span class="nav-num">03</span> Ethics</a></li>
+        <li><a href="events.html" class="magnetic" data-img="panel4.png"><span class="nav-num">04</span> Events</a></li>
+        <li><a href="team.html" class="magnetic" data-img="panel5.png"><span class="nav-num">05</span> The Team</a></li>
+        <li><a href="100-club.html" class="magnetic" data-img="club_cheers.png"><span class="nav-num">06</span> 100 Club</a></li>
+      </ul>
+      <div class="nav-footer">
+        <a href="account.html" class="magnetic">My Account</a>
+        <a href="mailto:info@ukttbs.co.uk" class="magnetic">Get in Touch</a>
+      </div>
+    </div>
+  </div>
 
   <main>
-    <section class="section admin-hero">
-      <div class="container">
-        <span class="eyebrow">Internal</span>
-        <h1 style="font-size:clamp(2.5rem, 2rem + 2vw, 4rem)">Admin</h1>
+    <section class="sub-hero" style="height:40vh;">
+      <div class="hero-bg" style="background-image: url('nav_club.png');"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <div class="line"><span class="hero-word">Admin</span></div>
+          <div class="line"><span class="hero-word">Panel</span></div>
+        </h1>
       </div>
     </section>
 
-    <section class="section" style="padding-top:0">
-      <div class="container">
+    <section class="page-content" style="max-width: 1000px; padding-top:2rem;">
+      <!-- Signed-out state -->
+      <div data-view="signed-out" class="hidden">
+        <div class="card" style="max-width:520px; margin:0 auto;">
+          <h3 class="mt-0" style="color: #fff; font-size:1.5rem; margin-bottom:1rem;">Staff sign-in</h3>
+          <p class="muted">Admin access is restricted to authorised trustees and staff.</p>
+          <div id="signin-mount" style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1);"></div>
+        </div>
+      </div>
 
-        <!-- Signed-out state -->
-        <div data-view="signed-out" class="hidden">
-          <div class="card" style="max-width:520px">
-            <h3 class="mt-0">Staff sign-in</h3>
-            <p class="muted">Admin access is restricted to authorised trustees and staff.</p>
-            <div id="signin-mount"></div>
-          </div>
+      <!-- Not-an-admin state -->
+      <div data-view="not-admin" class="hidden text-center">
+        <div class="alert alert--error" style="background: rgba(255,0,0,0.1); border: 1px solid red; color: #fff; padding: 1.5rem; margin-bottom: 2rem;">
+          <strong>Access denied.</strong> This account is signed in but not authorised for admin access.
+        </div>
+        <button class="cine-btn" data-signout style="border:1px solid #fff; padding: 0.5rem 1.5rem; color:#fff; background:transparent;">Sign out</button>
+      </div>
+
+      <!-- Admin UI -->
+      <div data-view="admin" class="hidden fade-in">
+        <div class="admin-toolbar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+          <p class="muted" style="margin:0">Signed in as <strong data-email style="color:#fff;">—</strong></p>
+          <button class="cine-btn" data-signout style="border:1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; color:#fff; background:transparent;">Sign out</button>
         </div>
 
-        <!-- Not-an-admin state -->
-        <div data-view="not-admin" class="hidden">
-          <div class="alert alert--error">
-            <strong>Access denied.</strong> This account is signed in but not authorised for admin access.
-          </div>
-          <button class="btn btn--ghost" data-signout><span>Sign out</span></button>
+        <!-- EVENTS -->
+        <div class="admin-toolbar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem;">
+          <h2 style="margin:0; font-size: 2rem; color: #fff;">Events</h2>
+          <button data-new-event style="background: #c9a96e; color: #000; border: none; padding: 0.5rem 1rem; font-weight: 600; cursor: pointer; border-radius:4px;">+ New event</button>
         </div>
-
-        <!-- Admin UI -->
-        <div data-view="admin" class="hidden">
-          <div class="admin-toolbar">
-            <p class="muted" style="margin:0">Signed in as <strong data-email>—</strong></p>
-            <button class="btn btn--ghost btn--sm" data-signout><span>Sign out</span></button>
-          </div>
-
-          <!-- EVENTS -->
-          <div class="admin-toolbar">
-            <h2 style="margin:0">Events</h2>
-            <button class="btn" data-new-event><span>+ New event</span></button>
-          </div>
-          <table class="table">
+        <div style="overflow-x:auto;">
+          <table class="table" style="width:100%; text-align:left; border-collapse: collapse;">
             <thead>
-              <tr><th>Event</th><th>Price</th><th>Raffle</th><th>Status</th><th></th></tr>
+              <tr><th style="padding:1rem;">Event</th><th style="padding:1rem;">Price</th><th style="padding:1rem;">Raffle</th><th style="padding:1rem;">Status</th><th style="padding:1rem;"></th></tr>
             </thead>
             <tbody data-events>
-              <tr><td colspan="5" class="muted">Loading…</td></tr>
-            </tbody>
-          </table>
-
-          <!-- ORDERS -->
-          <h2 style="margin-top:4rem">Recent orders</h2>
-          <table class="table">
-            <thead>
-              <tr><th>Date</th><th>Email</th><th>Item</th><th>Qty</th><th>Amount</th><th>Status</th></tr>
-            </thead>
-            <tbody data-orders>
-              <tr><td colspan="6" class="muted">Loading…</td></tr>
-            </tbody>
-          </table>
-
-          <!-- SUBSCRIPTIONS -->
-          <h2 style="margin-top:4rem">100 Club subscribers</h2>
-          <table class="table">
-            <thead>
-              <tr><th>Member</th><th>Tier</th><th>Renews</th><th>Status</th></tr>
-            </thead>
-            <tbody data-subs>
-              <tr><td colspan="4" class="muted">Loading…</td></tr>
+              <tr><td colspan="5" class="muted" style="padding:1rem;">Loading…</td></tr>
             </tbody>
           </table>
         </div>
 
+        <!-- ORDERS -->
+        <h2 style="margin-top:5rem; margin-bottom: 1.5rem; font-size: 2rem; color: #fff;">Recent orders</h2>
+        <div style="overflow-x:auto;">
+          <table class="table" style="width:100%; text-align:left; border-collapse: collapse;">
+            <thead>
+              <tr><th style="padding:1rem;">Date</th><th style="padding:1rem;">Email</th><th style="padding:1rem;">Item</th><th style="padding:1rem;">Qty</th><th style="padding:1rem;">Amount</th><th style="padding:1rem;">Status</th></tr>
+            </thead>
+            <tbody data-orders>
+              <tr><td colspan="6" class="muted" style="padding:1rem;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SUBSCRIPTIONS -->
+        <h2 style="margin-top:5rem; margin-bottom: 1.5rem; font-size: 2rem; color: #fff;">100 Club subscribers</h2>
+        <div style="overflow-x:auto;">
+          <table class="table" style="width:100%; text-align:left; border-collapse: collapse;">
+            <thead>
+              <tr><th style="padding:1rem;">Member</th><th style="padding:1rem;">Tier</th><th style="padding:1rem;">Renews</th><th style="padding:1rem;">Status</th></tr>
+            </thead>
+            <tbody data-subs>
+              <tr><td colspan="4" class="muted" style="padding:1rem;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   </main>
 
   <!-- Event form dialog -->
-  <dialog id="event-dialog">
-    <div class="dialog__body">
-      <h2 data-title>New event</h2>
+  <dialog id="event-dialog" style="background:transparent; border:none; padding:0; width:90%; max-width:600px; max-height:90vh;">
+    <div class="dialog__body" style="padding:2rem;">
+      <h2 data-title style="margin-top:0; font-size:1.8rem; margin-bottom:1.5rem;">New event</h2>
       <form id="event-form">
         <div class="form-grid">
-          <label class="span-2">Title
-            <input name="title" required placeholder="Spring Cocktail Party">
-          </label>
-          <label>Slug (URL)
-            <input name="slug" placeholder="auto-from-title">
-          </label>
-          <label>Status
+          <label class="span-2">Title <input name="title" required placeholder="Spring Cocktail Party"></label>
+          <label>Slug (URL) <input name="slug" placeholder="auto-from-title"></label>
+          <label>Status 
             <select name="status">
               <option value="draft">Draft</option>
               <option value="published">Published</option>
               <option value="archived">Archived</option>
             </select>
           </label>
-          <label class="span-2">Description
-            <textarea name="description" placeholder="Short blurb for the listing"></textarea>
+          <label class="span-2">Description <textarea name="description" placeholder="Short blurb for the listing" rows="3"></textarea></label>
+          <label>Venue <input name="venue" placeholder="The Ivy Asia, St Paul's"></label>
+          <label>City <input name="city" placeholder="London"></label>
+          <label>Starts <input name="starts_at" type="datetime-local" required></label>
+          <label>Ends (optional) <input name="ends_at" type="datetime-local"></label>
+          <label>Ticket price (£) <input name="ticket_price" type="number" min="0" step="0.01" value="75"></label>
+          <label>Tickets available (blank = unlimited) <input name="tickets_available" type="number" min="0" step="1"></label>
+          <label class="span-2 check" style="display:flex; align-items:center; gap:0.5rem; margin-top:2rem;">
+            <input type="checkbox" name="raffle_enabled" checked style="width:auto;"> Raffle enabled for this event
           </label>
-          <label>Venue
-            <input name="venue" placeholder="The Ivy Asia, St Paul's">
-          </label>
-          <label>City
-            <input name="city" placeholder="London">
-          </label>
-          <label>Starts
-            <input name="starts_at" type="datetime-local" required>
-          </label>
-          <label>Ends (optional)
-            <input name="ends_at" type="datetime-local">
-          </label>
-          <label>Ticket price (£)
-            <input name="ticket_price" type="number" min="0" step="0.01" value="75">
-          </label>
-          <label>Tickets available (blank = unlimited)
-            <input name="tickets_available" type="number" min="0" step="1">
-          </label>
-          <label class="span-2 check">
-            <input type="checkbox" name="raffle_enabled" checked>
-            Raffle enabled for this event
-          </label>
-          <label class="span-2">Image URL (optional)
-            <input name="image_url" type="url" placeholder="https://…">
-          </label>
+          <label class="span-2">Image URL (optional) <input name="image_url" type="url" placeholder="https://…"></label>
         </div>
       </form>
     </div>
-    <div class="dialog__footer">
-      <button type="button" class="btn btn--ghost" onclick="document.getElementById('event-dialog').close()"><span>Cancel</span></button>
-      <button type="submit" form="event-form" class="btn"><span>Save</span></button>
+    <div class="dialog__footer" style="padding:1.5rem; display:flex; justify-content:flex-end; gap:1rem;">
+      <button type="button" onclick="document.getElementById('event-dialog').close()" style="background:transparent; color:#fff; border:1px solid #555; padding:0.5rem 1rem; cursor:pointer;">Cancel</button>
+      <button type="submit" form="event-form" style="background:#c9a96e; color:#000; border:none; padding:0.5rem 1rem; font-weight:600; cursor:pointer;">Save</button>
     </div>
   </dialog>
 
   <!-- Raffle dialog -->
-  <dialog id="raffle-dialog">
-    <div class="dialog__body">
-      <h2 data-title>Raffle</h2>
+  <dialog id="raffle-dialog" style="background:transparent; border:none; padding:0; width:90%; max-width:500px;">
+    <div class="dialog__body" style="padding:2rem; min-height:300px;">
+      <h2 data-title style="margin-top:0; margin-bottom:1.5rem;">Raffle</h2>
       <div data-entries-list><p class="muted">Loading…</p></div>
-      <div data-winner></div>
+      <div data-winner style="margin-top:2rem;"></div>
     </div>
-    <div class="dialog__footer">
-      <button type="button" class="btn btn--ghost" onclick="document.getElementById('raffle-dialog').close()"><span>Close</span></button>
-      <button type="button" class="btn" data-draw><span>🎲 Draw a winner</span></button>
+    <div class="dialog__footer" style="padding:1.5rem; display:flex; justify-content:space-between;">
+      <button type="button" onclick="document.getElementById('raffle-dialog').close()" style="background:transparent; color:#fff; border:1px solid #555; padding:0.5rem 1rem; cursor:pointer;">Close</button>
+      <button type="button" data-draw style="background:#00d1b2; color:#000; border:none; padding:0.5rem 1rem; font-weight:600; cursor:pointer;">🎲 Draw a winner</button>
     </div>
   </dialog>
 
-  <footer class="site-foot">
-    <div class="container site-foot__inner">
-      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
-      <nav class="site-foot__links" aria-label="Footer">
-        <a href="/about.html">About</a>
-        <a href="/events.html">Events</a>
-        <a href="/100-club.html">100 Club</a>
-        <a href="/raffle.html">Raffle</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="mailto:info@ukttbs.co.uk">Contact</a>
-      </nav>
-      <div class="site-foot__meta">
-        © 1962–<span id="foot-year"></span> · Charity 208709
-      </div>
-    </div>
-  </footer>
-  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  <!-- GSAP & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script src="app.js"></script>
 
   <script src="/assets/js/config.js"></script>
-  <script type="module" src="/assets/js/main.js"></script>
   <script type="module" src="/assets/js/admin.js"></script>
 </body>
 </html>

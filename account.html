@@ -1,69 +1,106 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your account · UK Tea Trade Benevolent Society</title>
-  <meta name="description" content="Sign in to your UKTTBS member account.">
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <meta name="theme-color" content="#0b120e">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account - UKTTBS</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-<body>
-  <main>
-    <section class="section">
-      <div class="container container--narrow">
-        <div data-signed-out>
-          <span class="eyebrow">Member account</span>
-          <h1>Sign in</h1>
-          <p class="lede">Access your tickets, raffle entries, 100 Club subscription and AGM notices.</p>
-          <div class="card mt-4" id="signin-mount"></div>
-        </div>
+<body class="loading">
 
-        <div data-signed-in class="hidden">
-          <span class="eyebrow">Member account</span>
-          <h1>Welcome back.</h1>
-          <p class="lede">Signed in as <strong data-email>—</strong></p>
+  <div class="preloader"><div class="counter">0%</div></div>
+  <div class="film-grain"></div>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
 
-          <div class="grid grid--2 mt-4">
-            <div class="card">
-              <h3 class="mt-0">Your tickets &amp; raffle entries</h3>
-              <div data-orders><p class="muted">Loading…</p></div>
-            </div>
-            <div class="card card--gold">
-              <h3 class="mt-0">100 Club membership</h3>
-              <div data-hundred-status><p class="muted">Loading…</p></div>
-              <a class="btn btn--ghost mt-2 hidden" data-portal-link href="#">Manage billing</a>
-            </div>
-          </div>
+  <nav class="navbar fade-in">
+    <div class="logo"><a href="index.html" class="magnetic">UKTTBS.</a></div>
+    <button class="menu-toggle magnetic" aria-label="Toggle menu">
+      <div class="hamburger"><span></span><span></span></div>
+    </button>
+  </nav>
 
-          <button class="btn btn--ghost mt-4" data-signout>Sign out</button>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-foot">
-    <div class="container site-foot__inner">
-      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
-      <nav class="site-foot__links" aria-label="Footer">
-        <a href="/about.html">About</a>
-        <a href="/events.html">Events</a>
-        <a href="/100-club.html">100 Club</a>
-        <a href="/raffle.html">Raffle</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="mailto:info@ukttbs.co.uk">Contact</a>
-      </nav>
-      <div class="site-foot__meta">
-        © 1962–<span id="foot-year"></span> · Charity 208709
+  <div class="menu-overlay">
+    <div class="menu-bg"></div>
+    <div class="menu-inner">
+      <ul class="nav-links">
+        <li><a href="about.html" class="magnetic" data-img="panel1.png"><span class="nav-num">01</span> Our History</a></li>
+        <li><a href="mission.html" class="magnetic" data-img="panel2.png"><span class="nav-num">02</span> The Trade</a></li>
+        <li><a href="ethics.html" class="magnetic" data-img="panel3.png"><span class="nav-num">03</span> Ethics</a></li>
+        <li><a href="events.html" class="magnetic" data-img="panel4.png"><span class="nav-num">04</span> Events</a></li>
+        <li><a href="team.html" class="magnetic" data-img="panel5.png"><span class="nav-num">05</span> The Team</a></li>
+        <li><a href="100-club.html" class="magnetic" data-img="club_cheers.png"><span class="nav-num">06</span> 100 Club</a></li>
+      </ul>
+      <div class="nav-footer">
+        <a href="account.html" class="magnetic">My Account</a>
+        <a href="mailto:info@ukttbs.co.uk" class="magnetic">Get in Touch</a>
       </div>
     </div>
-  </footer>
-  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  </div>
 
+  <main>
+    <section class="sub-hero">
+      <div class="hero-bg" style="background-image: url('nav_club.png');"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <div class="line"><span class="hero-word">Member</span></div>
+          <div class="line"><span class="hero-word">Account</span></div>
+        </h1>
+        <p class="fade-in">Manage your ties to the trade.</p>
+      </div>
+    </section>
+
+    <section class="page-content" style="max-width: 600px;">
+      
+      <!-- DEFAULT LOGGED OUT STATE -->
+      <div data-signed-out class="fade-in" style="opacity:0;transform:translateY(20px);">
+        <h2>Sign in</h2>
+        <p>Access your tickets, raffle entries, 100 Club subscription and AGM notices.</p>
+        <div id="signin-mount" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; margin-top: 2rem; border: 1px solid rgba(255,255,255,0.1);"></div>
+      </div>
+
+      <!-- LOGGED IN STATE -->
+      <div data-signed-in class="hidden fade-in">
+        <h2>Welcome back.</h2>
+        <p>Signed in as <strong data-email style="color: #fff;">—</strong></p>
+
+        <div style="margin-top: 3rem;">
+          <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="color:#fff; font-size:1.5rem; margin-bottom: 1rem; text-transform: uppercase;">Your tickets &amp; raffle entries</h3>
+            <div data-orders><p style="color: rgba(255,255,255,0.5);">Loading…</p></div>
+          </div>
+          
+          <div style="background: rgba(201,169,110,0.1); padding: 2rem; border-radius: 12px; border: 1px solid rgba(201,169,110,0.3);">
+            <h3 style="color:#c9a96e; font-size:1.5rem; margin-bottom: 1rem; text-transform: uppercase;">100 Club membership</h3>
+            <div data-hundred-status><p style="color: rgba(255,255,255,0.5);">Loading…</p></div>
+            <a data-portal-link href="#" class="hidden" style="display:inline-block; margin-top:1rem; border-bottom:1px solid #c9a96e; color:#c9a96e;">Manage billing</a>
+          </div>
+        </div>
+
+        <button data-signout class="cine-btn" style="margin-top: 3rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; color: #fff; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 5px;">Sign out</button>
+      </div>
+
+    </section>
+  </main>
+
+  <section class="parallax-footer">
+    <div class="footer-bg" style="background-image: url('nav_club.png');"></div>
+    <div class="parallax-footer-content">
+      <h2 class="uppercase">Rooted in 1962.</h2>
+      <p>&copy; 2026 UKTTBS. All rights reserved.</p>
+      <p class="footer-sponsor">Digital infrastructure and hosting proudly donated by <a href="https://teatrade.co.uk/" target="_blank" class="magnetic sponsor-link">TeaTrade</a>.</p>
+    </div>
+  </section>
+
+  <!-- GSAP & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="app.js"></script>
+  
   <script src="/assets/js/config.js"></script>
-  <script type="module" src="/assets/js/main.js"></script>
   <script type="module">
     import { supabase, formatEventDate, formatMoney } from "/assets/js/supabase.js";
     import { mountSignIn, signOut, getSession } from "/assets/js/auth.js";
@@ -93,18 +130,18 @@
 
       const ordersEl = document.querySelector("[data-orders]");
       if (!orders || orders.length === 0) {
-        ordersEl.innerHTML = `<p class="muted">You haven't purchased anything yet. <a href="/events.html">Browse events →</a></p>`;
+        ordersEl.innerHTML = `<p style="color: rgba(255,255,255,0.5);">You haven't purchased anything yet. <a href="/events.html" style="color: #fff; border-bottom: 1px solid #fff;">Browse events →</a></p>`;
       } else {
         ordersEl.innerHTML = orders.map(o => `
-          <div style="display:flex;justify-content:space-between;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--hairline)">
+          <div style="display:flex;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,0.1)">
             <div>
-              <strong>${o.kind === "tickets" ? "Tickets" : o.kind === "raffle" ? "Raffle" : "100 Club"}</strong>
-              ${o.event ? `<div class="muted" style="font-size:.85rem">${o.event.title} — ${formatEventDate(o.event.starts_at)}</div>` : ""}
-              <div class="muted" style="font-size:.8rem">${new Date(o.created_at).toLocaleDateString("en-GB")}</div>
+              <strong style="color: #fff;">${o.kind === "tickets" ? "Tickets" : o.kind === "raffle" ? "Raffle" : "100 Club"}</strong>
+              ${o.event ? `<div style="font-size:.85rem; color: rgba(255,255,255,0.6);">${o.event.title} — ${formatEventDate(o.event.starts_at)}</div>` : ""}
+              <div style="font-size:.8rem; color: rgba(255,255,255,0.4);">${new Date(o.created_at).toLocaleDateString("en-GB")}</div>
             </div>
             <div style="text-align:right">
-              <strong>${formatMoney(o.amount_pence)}</strong>
-              <div class="muted" style="font-size:.85rem">×${o.quantity}</div>
+              <strong style="color: #fff;">${formatMoney(o.amount_pence)}</strong>
+              <div style="font-size:.85rem; color: rgba(255,255,255,0.6);">×${o.quantity}</div>
             </div>
           </div>
         `).join("");
@@ -121,15 +158,15 @@
       const portal = document.querySelector("[data-portal-link]");
       if (sub) {
         sEl.innerHTML = `
-          <p class="mb-0"><strong>Active</strong> — ${sub.tier} plan</p>
-          <p class="muted" style="font-size:.85rem">Renews ${new Date(sub.current_period_end).toLocaleDateString("en-GB")}</p>
+          <p style="margin-bottom: 0.5rem; color: #fff;"><strong>Active</strong> — ${sub.tier} plan</p>
+          <p style="font-size:.85rem; color: rgba(255,255,255,0.6);">Renews ${new Date(sub.current_period_end).toLocaleDateString("en-GB")}</p>
         `;
         if (sub.stripe_customer_portal_url) {
           portal.classList.remove("hidden");
           portal.href = sub.stripe_customer_portal_url;
         }
       } else {
-        sEl.innerHTML = `<p class="muted">Not yet a member. <a href="/100-club.html">Join the 100 Club →</a></p>`;
+        sEl.innerHTML = `<p style="color: rgba(255,255,255,0.5);">Not yet a member. <a href="/100-club.html" style="color: #c9a96e; border-bottom: 1px solid #c9a96e;">Join the 100 Club →</a></p>`;
       }
     }
 

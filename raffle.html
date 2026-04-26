@@ -1,125 +1,133 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Raffle · UK Tea Trade Benevolent Society</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raffle - UKTTBS</title>
   <meta name="description" content="A little flutter for a very good cause — the UKTTBS annual raffle.">
-  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
-  <link rel="stylesheet" href="/assets/css/app.css">
-  <link rel="stylesheet" href="/assets/css/cinematic.css">
-  <link rel="stylesheet" href="/assets/css/scenes.css">
-  <meta name="theme-color" content="#0b120e">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Raffle - UKTTBS">
+  <meta property="og:description" content="A little flutter for a very good cause — the UKTTBS annual raffle.">
+  <meta property="og:image" content="nav_club.png">
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-<body data-cine>
 
-  <main>
+<body class="loading">
 
-    <!-- =========================================================
-         SCENE 1 — RAFFLE HERO
-         ========================================================= -->
-    <section class="scene scene--center" data-scene="reveals" style="min-height:92vh">
-      <div class="parallax" aria-hidden="true">
-        <div class="parallax__layer" data-depth="0.08" style="background:radial-gradient(900px 540px at 50% 55%, rgba(201,169,110,0.2) 0%, transparent 70%)"></div>
-        <div class="parallax__layer parallax__layer--fog" data-depth="0.18"></div>
-      </div>
-      <div class="scene__inner cap-container" style="text-align:center">
-        <span class="scene__chapter" data-reveal="up">The annual raffle</span>
-        <h1 class="cine-display" data-reveal="words">
-          A little flutter, <em class="gold">a lot of good.</em>
-        </h1>
-        <p class="cine-lede" style="margin-inline:auto" data-reveal="up" data-reveal-delay="0.2">
-          Our raffle is a highlight of each gathering — a few pounds per
-          ticket, with every penny fuelling our welfare work.
-        </p>
-        <div style="margin-top:2.5rem" data-reveal="up" data-reveal-delay="0.35">
-          <a class="cine-btn cine-btn--solid" href="#tickets" data-magnetic="0.3">
-            <span>Buy tickets</span><span class="arrow">↓</span>
-          </a>
-        </div>
-      </div>
-    </section>
+  <div class="preloader"><div class="counter">0%</div></div>
+  <div class="film-grain"></div>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
 
-    <!-- =========================================================
-         SCENE 2 — HOW IT WORKS
-         ========================================================= -->
-    <section class="scene" data-scene="reveals">
-      <div class="scene__inner cap-container">
-        <header style="max-width:720px;margin-bottom:clamp(2rem,5vh,4rem)">
-          <span class="scene__chapter" data-reveal="up">How it works</span>
-          <h2 class="cine-display" data-reveal="words">Three steps. <em class="gold">That's it.</em></h2>
-        </header>
-        <div class="pillars" data-reveal="stagger">
-          <article class="pillar" data-tilt>
-            <span class="pillar__num">01</span>
-            <h3>Choose your tickets</h3>
-            <p>Pick a bundle below. Every ticket gives you a fresh chance at winning.</p>
-          </article>
-          <article class="pillar" data-tilt>
-            <span class="pillar__num">02</span>
-            <h3>Secure checkout</h3>
-            <p>Pay securely via Stripe. Your ticket numbers arrive by email, straight away.</p>
-          </article>
-          <article class="pillar" data-tilt>
-            <span class="pillar__num">03</span>
-            <h3>Drawn at our next event</h3>
-            <p>Winners are announced live at our Spring or Autumn party — and notified personally.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+  <nav class="navbar fade-in">
+    <div class="logo"><a href="index.html" class="magnetic">UKTTBS.</a></div>
+    <button class="menu-toggle magnetic" aria-label="Toggle menu">
+      <div class="hamburger"><span></span><span></span></div>
+    </button>
+  </nav>
 
-    <!-- =========================================================
-         SCENE 3 — TICKET PURCHASE (hydrated by /assets/js/raffle.js)
-         ========================================================= -->
-    <section class="scene" data-scene="reveals" id="tickets">
-      <div class="scene__inner cap-container">
-        <header style="max-width:720px;margin-bottom:clamp(2rem,5vh,4rem)">
-          <span class="scene__chapter" data-reveal="up">Buy tickets</span>
-          <h2 class="cine-display" data-reveal="words">Make it count.</h2>
-        </header>
-        <div data-raffle data-reveal="up"></div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         SCENE 4 — CLOSING CTA
-         ========================================================= -->
-    <section class="scene scene--short scene--center" data-scene="reveals">
-      <div class="scene__inner">
-        <h2 class="cine-display" data-reveal="words">Prefer a regular gift? <em class="gold">Join the 100 Club.</em></h2>
-        <div style="margin-top:2.5rem" data-reveal="up" data-reveal-delay="0.2">
-          <a class="cine-btn cine-btn--solid" href="/100-club.html" data-magnetic="0.3">
-            <span>Explore the 100 Club</span><span class="arrow">→</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-foot">
-    <div class="container site-foot__inner">
-      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
-      <nav class="site-foot__links" aria-label="Footer">
-        <a href="/about.html">About</a>
-        <a href="/events.html">Events</a>
-        <a href="/100-club.html">100 Club</a>
-        <a href="/raffle.html">Raffle</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="mailto:info@ukttbs.co.uk">Contact</a>
-      </nav>
-      <div class="site-foot__meta">
-        © 1962–<span id="foot-year"></span> · Charity 208709
+  <div class="menu-overlay">
+    <div class="menu-bg"></div>
+    <div class="menu-inner">
+      <ul class="nav-links">
+        <li><a href="about.html" class="magnetic" data-img="panel1.png"><span class="nav-num">01</span> Our History</a></li>
+        <li><a href="mission.html" class="magnetic" data-img="panel2.png"><span class="nav-num">02</span> The Trade</a></li>
+        <li><a href="ethics.html" class="magnetic" data-img="panel3.png"><span class="nav-num">03</span> Ethics</a></li>
+        <li><a href="events.html" class="magnetic" data-img="panel4.png"><span class="nav-num">04</span> Events</a></li>
+        <li><a href="team.html" class="magnetic" data-img="panel5.png"><span class="nav-num">05</span> The Team</a></li>
+        <li><a href="100-club.html" class="magnetic" data-img="club_cheers.png"><span class="nav-num">06</span> 100 Club</a></li>
+      </ul>
+      <div class="nav-footer">
+        <a href="account.html" class="magnetic">My Account</a>
+        <a href="mailto:info@ukttbs.co.uk" class="magnetic">Get in Touch</a>
       </div>
     </div>
-  </footer>
-  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  </div>
+
+  <main>
+    <section class="sub-hero">
+      <div class="hero-bg" style="background-image: url('nav_club.png');"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <div class="line"><span class="hero-word">The</span></div>
+          <div class="line"><span class="hero-word">Annual</span></div>
+          <div class="line"><span class="hero-word">Raffle</span></div>
+        </h1>
+        <p class="fade-in">A little flutter, a lot of good.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <span class="scene__chapter fade-in">The annual raffle</span>
+      <h2 class="fade-in">A little flutter,<br><em class="gold">a lot of good.</em></h2>
+      <p class="fade-in" style="opacity:0;transform:translateY(20px);">Our raffle is a highlight of each gathering — a few pounds per ticket, with every penny fuelling our welfare work.</p>
+
+      <div style="margin-top: 5rem;">
+        <span class="scene__chapter fade-in">How it works</span>
+        <h2 class="fade-in" style="font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 3rem;">Three steps. <em class="gold">That's it.</em></h2>
+        
+        <div class="pillars">
+          <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
+            <span class="pillar__num">01</span>
+            <h3>Choose your tickets</h3>
+            <p style="margin-bottom:0">Pick a bundle below. Every ticket gives you a fresh chance at winning.</p>
+          </article>
+          
+          <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
+            <span class="pillar__num">02</span>
+            <h3>Secure checkout</h3>
+            <p style="margin-bottom:0">Pay securely via Stripe. Your ticket numbers arrive by email, straight away.</p>
+          </article>
+          
+          <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
+            <span class="pillar__num">03</span>
+            <h3>Drawn at our next event</h3>
+            <p style="margin-bottom:0">Winners are announced live at our Spring or Autumn party — and notified personally.</p>
+          </article>
+        </div>
+      </div>
+
+      <div style="margin-top: 5rem;">
+        <span class="scene__chapter fade-in">Buy tickets</span>
+        <h2 class="fade-in" style="font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 2rem;">Make it count.</h2>
+        
+        <!-- Raffle Stripe Render Target -->
+        <div data-raffle class="fade-in" style="opacity:0;transform:translateY(20px);"></div>
+      </div>
+
+      <div style="margin-top: 5rem; text-align: center;">
+        <span class="scene__chapter fade-in">Regular Giving</span>
+        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">Prefer a regular gift? <em class="gold">Join the 100 Club.</em></h2>
+        
+        <div style="display:flex; justify-content:center; gap: 1.5rem; margin-top:2rem;" class="fade-in">
+          <a class="cine-btn" href="100-club.html" style="border:1px solid #fff; padding: 1rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem;" class="magnetic">
+            Explore the 100 Club
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="parallax-footer">
+    <div class="footer-bg" style="background-image: url('nav_club.png');"></div>
+    <div class="parallax-footer-content">
+      <h2 class="uppercase">Rooted in 1962.</h2>
+      <p>&copy; 2026 UKTTBS. All rights reserved.</p>
+      <p class="footer-sponsor">Digital infrastructure and hosting proudly donated by <a href="https://teatrade.co.uk/" target="_blank" class="magnetic sponsor-link">TeaTrade</a>.</p>
+    </div>
+  </section>
+
+  <!-- GSAP & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  
   <script src="/assets/js/config.js"></script>
-  <script type="module" src="/assets/js/main.js"></script>
   <script type="module" src="/assets/js/raffle.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

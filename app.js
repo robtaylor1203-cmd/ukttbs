@@ -7,22 +7,28 @@ let progress = 0;
 const counterEl = document.querySelector('.counter');
 const preloader = document.querySelector('.preloader');
 
-// Isolate and configure texts
-// Note: We bypass SplitType on the Hero H1 completely to stop layout shifts
-// We only use SplitType for specific other titles like the 100 Club and Footer
-const clubSplitText = new SplitType(document.querySelector('.club-content h2'), { types: 'chars' });
-const footerSplitText = new SplitType(document.querySelector('.parallax-footer h2'), { types: 'chars' });
-gsap.set([clubSplitText.chars, footerSplitText.chars], { y: 110 });
+// Isolate and configure texts safely (prevent crashes on inner pages)
+let clubSplitText = null;
+const clubEl = document.querySelector('.club-content h2');
+if(clubEl) clubSplitText = new SplitType(clubEl, { types: 'chars' });
+
+let footerSplitText = null;
+const footEl = document.querySelector('.parallax-footer h2');
+if(footEl) footerSplitText = new SplitType(footEl, { types: 'chars' });
+
+if(clubSplitText) gsap.set(clubSplitText.chars, { y: 110 });
+if(footerSplitText) gsap.set(footerSplitText.chars, { y: 110 });
 
 // For Horizontal huge titles, we will split them inline so they stagger wildly:
 const hugeTitles = document.querySelectorAll('.huge-title');
 const hugeSplits = [];
-hugeTitles.forEach(title => {
-    const split = new SplitType(title, { types: 'chars' });
-    hugeSplits.push(split);
-    // Setting insane starting states for braver animations
-    gsap.set(split.chars, { opacity: 0, scale: 2.5, rotationY: 90, z: -500 });
-});
+if(hugeTitles.length) {
+  hugeTitles.forEach(title => {
+      const split = new SplitType(title, { types: 'chars' });
+      hugeSplits.push(split);
+      gsap.set(split.chars, { opacity: 0, scale: 2.5, rotationY: 90, z: -500 });
+  });
+}
 
 // Instant kick-off so user doesn't wait
 progress = 1;
@@ -61,12 +67,18 @@ function initSite() {
   initParticles();
   
   // Clean Hero reveal without random resizing
-  gsap.to('.hero-word', {
-    y: 0, stagger: 0.15, duration: 1.2, ease: "power4.out", delay: 0.1
-  });
+  const hw = document.querySelector('.hero-word');
+  if(hw) {
+    gsap.to('.hero-word', {
+      y: 0, stagger: 0.15, duration: 1.2, ease: "power4.out", delay: 0.1
+    });
+  }
   
   // Safely fade in without snapping FOUC
-  gsap.to(".fade-in", {opacity: 1, y:0, duration: 1, delay: 0.8, stagger: 0.2});
+  const fins = document.querySelectorAll('.fade-in');
+  if(fins.length) {
+    gsap.to(".fade-in", {opacity: 1, y:0, duration: 1, delay: 0.8, stagger: 0.2});
+  }
 }
 
 // ==========================================
@@ -239,97 +251,99 @@ function initMenuOverlay() {
 // ==========================================
 function initScrollAnims() {
   // Hero
-  gsap.to(".hero-bg", {
-    scale: 1.2, ease: "none",
-    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
-  });
-  
-  // Note: Hero content fadeout triggers
-  gsap.to(".hero-content", {
-    y: -150, opacity: 0, ease: "none",
-    scrollTrigger: { trigger: ".hero", start: "top top", end: "center top", scrub: true }
-  });
+  const heroBg = document.querySelector(".hero-bg");
+  if(heroBg) {
+    gsap.to(".hero-bg", {
+      scale: 1.2, ease: "none",
+      scrollTrigger: { trigger: ".hero, .sub-hero", start: "top top", end: "bottom top", scrub: true }
+    });
+    
+    gsap.to(".hero-content", {
+      y: -150, opacity: 0, ease: "none",
+      scrollTrigger: { trigger: ".hero, .sub-hero", start: "top top", end: "center top", scrub: true }
+    });
+  }
 
   // Horizontal Protocol
   const pinWrap = document.querySelector(".pin-wrap");
-  const panels = gsap.utils.toArray(".panel");
-  const progressLine = document.querySelector(".timeline-progress");
+  if (pinWrap) {
+    const panels = gsap.utils.toArray(".panel");
+    const progressLine = document.querySelector(".timeline-progress");
 
-  gsap.set(pinWrap, { width: `${100 * panels.length}vw` });
+    gsap.set(pinWrap, { width: `${100 * panels.length}vw` });
 
-  const horizontalTween = gsap.to(panels, {
-    xPercent: -100 * (panels.length - 1),
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".horizontal-scroll", 
-      pin: true, 
-      scrub: 1,
-      end: () => "+=" + window.innerWidth * panels.length,
-      onUpdate: (self) => {
-        gsap.to(progressLine, { width: `${self.progress * 100}%`, duration: 0.1 });
-      }
-    }
-  });
-
-  // Advanced Panel Effects Mapping
-  panels.forEach((panel, i) => {
-    // Reveal panel images from behind the veil scaling up
-    const imgInner = panel.querySelector('.img-inner');
-    gsap.fromTo(imgInner, 
-      { scale: 1.5, opacity: 0 },
-      {
-        scale: 1, opacity: 1, duration: 1.5, ease: "power2.out",
-        scrollTrigger: {
-          trigger: panel,
-          containerAnimation: horizontalTween,
-          start: "left 70%",
-          toggleActions: "play none none reverse"
+    const horizontalTween = gsap.to(panels, {
+      xPercent: -100 * (panels.length - 1),
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".horizontal-scroll", 
+        pin: true, 
+        scrub: 1,
+        end: () => "+=" + window.innerWidth * panels.length,
+        onUpdate: (self) => {
+          if (progressLine) gsap.to(progressLine, { width: `${self.progress * 100}%`, duration: 0.1 });
         }
       }
-    );
+    });
 
-    // Bigger, Bolder, Braver Text Reveals
-    if (hugeSplits[i]) {
-      gsap.to(hugeSplits[i].chars, {
-        opacity: 1,
-        scale: 1,
-        rotationY: 0,
-        z: 0,
-        stagger: 0.1,
-        duration: 2,
-        ease: "expo.out",
-        scrollTrigger: {
-          trigger: panel,
-          containerAnimation: horizontalTween,
-          start: "left 55%", 
-          toggleActions: "play none none reverse"
-        }
-      });
-    }
+    // Advanced Panel Effects Mapping
+    panels.forEach((panel, i) => {
+      const imgInner = panel.querySelector('.img-inner');
+      if (imgInner) {
+        gsap.fromTo(imgInner, 
+          { scale: 1.5, opacity: 0 },
+          {
+            scale: 1, opacity: 1, duration: 1.5, ease: "power2.out",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: horizontalTween,
+              start: "left 70%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      }
 
-    // Content Box Slide Up
-    const contentBox = panel.querySelector(".content-box");
-    gsap.fromTo(contentBox, 
-       { y: 50, opacity: 0 },
-       { y: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: panel, containerAnimation: horizontalTween, start: "left 60%", toggleActions: "play none none reverse" } }
-    );
-  });
+      if (hugeSplits[i]) {
+        gsap.to(hugeSplits[i].chars, {
+          opacity: 1, scale: 1, rotationY: 0, z: 0, stagger: 0.1, duration: 2, ease: "expo.out",
+          scrollTrigger: {
+            trigger: panel, containerAnimation: horizontalTween, start: "left 55%", toggleActions: "play none none reverse"
+          }
+        });
+      }
+
+      const contentBox = panel.querySelector(".content-box");
+      if (contentBox) {
+        gsap.fromTo(contentBox, 
+           { y: 50, opacity: 0 },
+           { y: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: panel, containerAnimation: horizontalTween, start: "left 60%", toggleActions: "play none none reverse" } }
+        );
+      }
+    });
+  }
 
   // Vertical 100 Club
-  gsap.fromTo(".club-bg", { y: "-20%" }, { y: "20%", ease: "none", scrollTrigger: { trigger: ".club-hundred", start: "top bottom", end: "bottom top", scrub: true } });
-  gsap.to(clubSplitText.chars, {
-     y: 0, stagger: 0.05, duration: 0.8, ease: "power4.out",
-     scrollTrigger: { trigger: ".club-hundred", start: "top 75%", toggleActions: "play none none reverse" }
-  });
-  gsap.to(".fade-in-up", {
-     y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", scrollTrigger: { trigger: ".club-hundred", start: "top 60%" }
-  });
+  const clubBg = document.querySelector(".club-bg");
+  if(clubBg && clubSplitText) {
+    gsap.fromTo(".club-bg", { y: "-20%" }, { y: "20%", ease: "none", scrollTrigger: { trigger: ".club-hundred", start: "top bottom", end: "bottom top", scrub: true } });
+    gsap.to(clubSplitText.chars, {
+       y: 0, stagger: 0.05, duration: 0.8, ease: "power4.out",
+       scrollTrigger: { trigger: ".club-hundred", start: "top 75%", toggleActions: "play none none reverse" }
+    });
+    gsap.to(".fade-in-up", {
+       y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", scrollTrigger: { trigger: ".club-hundred", start: "top 60%" }
+    });
+  }
 
   // Marquee
-  gsap.to(".marquee-content", {
-    xPercent: -50, ease: "none",
-    scrollTrigger: { trigger: ".raffle-section", start: "top bottom", end: "bottom top", scrub: 1 }
-  });
+  const marquee = document.querySelector(".marquee-content");
+  if(marquee) {
+    gsap.to(".marquee-content", {
+      xPercent: -50, ease: "none",
+      scrollTrigger: { trigger: ".raffle-section", start: "top bottom", end: "bottom top", scrub: 1 }
+    });
+  }
 
   // Parallax Footer
   gsap.fromTo(".footer-bg", { y: "-20%" }, { y: "20%", ease: "none", scrollTrigger: { trigger: ".parallax-footer", start: "top bottom", end: "bottom top", scrub: true } });
