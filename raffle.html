@@ -48,67 +48,82 @@
   </div>
 
   <main>
-    <section class="sub-hero">
-      <div class="hero-bg" style="background-image: url('nav_club.png');"></div>
+    <!-- MASSIVE HERO -->
+    <section class="hero" style="height: 100vh;">
+      <div class="hero-bg" style="background-image: url('nav_club.png'); filter: brightness(0.6);"></div>
       <div class="hero-content">
         <h1 class="hero-title">
-          <div class="line"><span class="hero-word">The</span></div>
-          <div class="line"><span class="hero-word">Annual</span></div>
-          <div class="line"><span class="hero-word">Raffle</span></div>
+          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">Annual Raffle</span></div>
         </h1>
-        <p class="fade-in">A little flutter, a lot of good.</p>
+        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">A little flutter, a lot of good.</p>
+        <div class="scroll-indicator fade-in"><div class="scroll-dot"></div></div>
       </div>
     </section>
 
-    <section class="page-content">
-      <span class="scene__chapter fade-in">The annual raffle</span>
-      <h2 class="fade-in">A little flutter,<br><em class="gold">a lot of good.</em></h2>
-      <p class="fade-in" style="opacity:0;transform:translateY(20px);">Our raffle is a highlight of each gathering — a few pounds per ticket, with every penny fuelling our welfare work.</p>
-
-      <div style="margin-top: 5rem;">
-        <span class="scene__chapter fade-in">How it works</span>
-        <h2 class="fade-in" style="font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 3rem;">Three steps. <em class="gold">That's it.</em></h2>
+    <!-- EXPECTATIONS BLOCK (Grid) -->
+    <section style="background: #020202; padding: 20vh 5vw;">
+      <div style="max-width: 1200px; margin: 0 auto;">
         
-        <div class="pillars">
-          <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-            <span class="pillar__num">01</span>
-            <h3>Choose your tickets</h3>
-            <p style="margin-bottom:0">Pick a bundle below. Every ticket gives you a fresh chance at winning.</p>
-          </article>
-          
-          <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-            <span class="pillar__num">02</span>
-            <h3>Secure checkout</h3>
-            <p style="margin-bottom:0">Pay securely via Stripe. Your ticket numbers arrive by email, straight away.</p>
-          </article>
-          
-          <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-            <span class="pillar__num">03</span>
-            <h3>Drawn at our next event</h3>
-            <p style="margin-bottom:0">Winners are announced live at our Spring or Autumn party — and notified personally.</p>
-          </article>
+        <div class="fade-in" style="margin-bottom: 8rem; text-align: center;">
+          <div class="scene__chapter" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">How it works</div>
+          <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 1;">
+            Three steps. <br>
+            <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">That's it.</em>
+          </h2>
         </div>
-      </div>
-
-      <div style="margin-top: 5rem;">
-        <span class="scene__chapter fade-in">Buy tickets</span>
-        <h2 class="fade-in" style="font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 2rem;">Make it count.</h2>
         
-        <!-- Raffle Stripe Render Target -->
-        <div data-raffle class="fade-in" style="opacity:0;transform:translateY(20px);"></div>
-      </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+          
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">01</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Choose tickets</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Pick a bundle below. Every ticket gives you a fresh chance at winning.</p>
+          </article>
 
-      <div style="margin-top: 5rem; text-align: center;">
-        <span class="scene__chapter fade-in">Regular Giving</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">Prefer a regular gift? <em class="gold">Join the 100 Club.</em></h2>
-        
-        <div style="display:flex; justify-content:center; gap: 1.5rem; margin-top:2rem;" class="fade-in">
-          <a class="cine-btn" href="100-club.html" style="border:1px solid #fff; padding: 1rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem;" class="magnetic">
-            Explore the 100 Club
-          </a>
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">02</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Secure checkout</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Pay securely via Stripe. Your ticket numbers arrive by email, straight away.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">03</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Drawn Live</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Winners are announced live at our Spring or Autumn party — and notified personally.</p>
+          </article>
+
         </div>
       </div>
     </section>
+
+    <!-- BUY TICKETS BLOCK -->
+    <section class="club-hundred" style="height: auto; min-height: 80vh; background: #050505; padding-top: 15vh; padding-bottom: 15vh;">
+      <div class="club-bg parallax-img" style="background-image: url('panel1.png'); opacity: 0.1; filter: grayscale(100%);"></div>
+      <div class="club-content" style="max-width: 1000px; margin: 0 auto; text-align: center; px: 2rem;">
+        <div class="scene__chapter fade-in-up" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Buy tickets</div>
+        <h2 style="font-size: clamp(2rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 5rem;">
+          Make it <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">count.</em>
+        </h2>
+        
+        <!-- Live Data Hydration Hook -->
+        <div data-raffle class="fade-in-up" style="margin-bottom: 2rem; text-align:left;"></div>
+      </div>
+    </section>
+
+    <!-- JOIN CTA BLOCK -->
+    <section class="club-hundred" style="height: 60vh;">
+      <div class="club-bg parallax-img" style="background-image: url('nav_club.png'); filter: brightness(0.3) blur(2px);"></div>
+      <div class="club-content" style="text-align: center; padding: 0 2rem;">
+        <h2 style="font-size: clamp(2.5rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 1.5rem;">
+          Prefer a regular gift?<br>
+          <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">Join the 100 club.</em>
+        </h2>
+        <div class="fade-in-up" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;">
+          <a href="100-club.html" class="magnetic" style="border: 1px solid #fff; padding: 1rem 3rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #000; background: #fff; font-size: 0.9rem; font-weight: 600; transition: transform 0.3s;">Explore the 100 Club</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <section class="parallax-footer">
@@ -125,9 +140,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
-  
+  <script src="app.js"></script>
+
   <script src="/assets/js/config.js"></script>
   <script type="module" src="/assets/js/raffle.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>

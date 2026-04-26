@@ -48,71 +48,102 @@
   </div>
 
   <main>
-    <section class="sub-hero">
-      <div class="hero-bg" style="background-image: url('panel4.png');"></div>
+    <!-- MASSIVE HERO -->
+    <section class="hero" style="height: 100vh;">
+      <div class="hero-bg" style="background-image: url('panel4.png'); filter: brightness(0.6);"></div>
       <div class="hero-content">
         <h1 class="hero-title">
-          <div class="line"><span class="hero-word">The</span></div>
-          <div class="line"><span class="hero-word">Events</span></div>
+          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">Upcoming Events</span></div>
         </h1>
-        <p class="fade-in">Two parties a year. One unforgettable community.</p>
+        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">Two parties. One community.</p>
+        <div class="scroll-indicator fade-in"><div class="scroll-dot"></div></div>
       </div>
     </section>
 
-    <section class="page-content">
-      <span class="scene__chapter fade-in">Events · The social calendar</span>
-      <h2 class="fade-in">Two parties a year.<br><em class="gold">One unforgettable community.</em></h2>
-      <p class="fade-in" style="opacity:0;transform:translateY(20px);">Our Spring and Autumn cocktail parties are warm, informal evenings that bring the UK tea trade together.</p>
+    <!-- TYPOGRAPHY INTERSTITIAL -->
+    <section style="background: #020202; padding: 25vh 5vw; text-align: center;">
+      <div class="scene__chapter fade-in" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">The social calendar</div>
+      <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); line-height: 1.1; text-transform: uppercase;">
+        Two parties a year.<br>
+        <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">One unforgettable community.</em>
+      </h2>
+      <p class="fade-in" style="max-width: 600px; margin: 3rem auto 0; font-size: 1.25rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
+        Our Spring and Autumn cocktail parties are warm, informal evenings that bring the UK tea trade together.
+      </p>
+    </section>
 
-      <!-- Events List Anchor for JS hook -->
-      <div style="margin-top: 5rem;" id="events-list">
-        <span class="scene__chapter fade-in">Upcoming</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">What's <em class="gold">next.</em></h2>
+    <!-- EVENTS LIST BLOCK -->
+    <section class="club-hundred" style="height: auto; min-height: 80vh; background: #050505; padding-top: 15vh; padding-bottom: 15vh;" id="events-list">
+      <div class="club-bg parallax-img" style="background-image: url('panel1.png'); opacity: 0.1; filter: grayscale(100%);"></div>
+      <div class="club-content" style="max-width: 1000px; margin: 0 auto; text-align: center; px: 2rem;">
+        <div class="scene__chapter fade-in-up" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Upcoming</div>
+        <h2 style="font-size: clamp(2rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 5rem;">
+          What's <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">next.</em>
+        </h2>
         
-        <div class="cine-events fade-in" data-events-list style="margin-bottom: 2rem;"></div>
+        <!-- Live Data Hydration Hook -->
+        <div class="cine-events fade-in-up" data-events-list style="margin-bottom: 2rem; text-align:left;"></div>
 
-        <div class="cine-events__empty fade-in" data-events-empty hidden>
-          <p style="margin:0; opacity:0;transform:translateY(20px);">
+        <div class="cine-events__empty fade-in-up" data-events-empty hidden>
+          <p style="font-size: 1.2rem; font-weight: 300; color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto;">
             No events announced just yet — check back soon, or
-            <a href="mailto:info@ukttbs.co.uk" style="color:var(--text-primary); text-decoration: underline;" class="magnetic">join the mailing list</a>.
+            <a href="mailto:info@ukttbs.co.uk" style="color: #c9a96e; text-decoration: none; border-bottom: 1px solid #c9a96e;" class="magnetic">join the mailing list</a>.
           </p>
         </div>
       </div>
+    </section>
 
-      <div class="pillars">
-        <span class="scene__chapter fade-in">What to expect</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 3rem;">Cocktails, canapés, <em class="gold">conversation.</em></h2>
+    <!-- EXPECTATIONS BLOCK (Grid) -->
+    <section style="background: #020202; padding: 20vh 5vw;">
+      <div style="max-width: 1200px; margin: 0 auto;">
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Spring</span>
-          <h3>April · London</h3>
-          <p style="margin-bottom:0">An elegant evening to kick off the year — bringing old friends together and welcoming new ones.</p>
-        </article>
+        <div class="fade-in" style="margin-bottom: 8rem; text-align: center;">
+          <div class="scene__chapter" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">What to expect</div>
+          <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 1;">
+            Cocktails, Canapés, <br>
+            <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">Conversation.</em>
+          </h2>
+        </div>
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Autumn</span>
-          <h3>October · London</h3>
-          <p style="margin-bottom:0">A warm, convivial gathering as the season turns — our busiest fundraising night of the year.</p>
-        </article>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+          
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">Spring</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">April · London</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">An elegant evening to kick off the year — bringing old friends together and welcoming new ones.</p>
+          </article>
 
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Always</span>
-          <h3>In support of members</h3>
-          <p style="margin-bottom:0">Every ticket sold directly supports our welfare work. Come for the evening — stay for the cause.</p>
-        </article>
-      </div>
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">Autumn</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">October · London</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">A warm, convivial gathering as the season turns — our busiest fundraising night of the year.</p>
+          </article>
 
-      <div style="margin-top: 5rem; text-align: center;">
-        <span class="scene__chapter fade-in">Get involved</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">Bring a friend. <em class="gold">Make a memory.</em></h2>
-        
-        <div style="display:flex; justify-content:center; gap: 1.5rem; margin-top:2rem;" class="fade-in">
-          <a class="cine-btn" href="mailto:info@ukttbs.co.uk?subject=Event%20enquiry" style="border:1px solid #fff; padding: 1rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem;" class="magnetic">
-            Enquire about tickets
-          </a>
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">Always</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">In support of members</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Every ticket sold directly supports our welfare work. Come for the evening — stay for the cause.</p>
+          </article>
+
         </div>
       </div>
     </section>
+
+    <!-- JOIN CTA BLOCK -->
+    <section class="club-hundred" style="height: 60vh;">
+      <div class="club-bg parallax-img" style="background-image: url('panel4.png'); filter: brightness(0.3) blur(2px);"></div>
+      <div class="club-content" style="text-align: center; padding: 0 2rem;">
+        <h2 style="font-size: clamp(2.5rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 1.5rem;">
+          Bring a friend.<br>
+          <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">Make a memory.</em>
+        </h2>
+        <div class="fade-in-up" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;">
+          <a href="mailto:info@ukttbs.co.uk?subject=Event%20enquiry" class="magnetic" style="border: 1px solid #fff; padding: 1rem 3rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #000; background: #fff; font-size: 0.9rem; font-weight: 600; transition: transform 0.3s;">Enquire about tickets</a>
+          <a href="raffle.html" class="magnetic" style="border: 1px solid rgba(255,255,255,0.3); padding: 1rem 3rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">Support via raffle</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <section class="parallax-footer">
@@ -129,8 +160,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
+  <script src="app.js"></script>
+
   <script src="/assets/js/config.js"></script>
   <script type="module" src="/assets/js/events.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>

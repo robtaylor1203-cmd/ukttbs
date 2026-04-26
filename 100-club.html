@@ -51,101 +51,140 @@
   </div>
 
   <main>
-    <section class="sub-hero">
-      <div class="hero-bg" style="background-image: url('club_cheers.png');"></div>
+    <!-- MASSIVE HERO -->
+    <section class="hero" style="height: 100vh;">
+      <div class="hero-bg" style="background-image: url('club_cheers.png'); filter: brightness(0.6);"></div>
       <div class="hero-content">
         <h1 class="hero-title">
-          <div class="line"><span class="hero-word">The</span></div>
-          <div class="line"><span class="hero-word">100</span></div>
-          <div class="line"><span class="hero-word">Club</span></div>
+          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">The 100 Club</span></div>
         </h1>
-        <p class="fade-in">Win every month. Give every day.</p>
+        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">Win every month. Give every day.</p>
+        <div class="scroll-indicator fade-in"><div class="scroll-dot"></div></div>
       </div>
     </section>
 
-    <!-- WIDGET INTEGRATION -->
-    <section class="page-content" style="padding-top: 4rem;">
-      <div class="hundred-stage fade-in" style="margin-bottom: 5rem;">
-        <!-- LEFT · orbit visual -->
-        <div class="hundred__orbit" data-reveal="fade">
-          <svg viewBox="0 0 400 400" width="100%" height="100%" aria-hidden="true">
-            <defs>
-              <radialGradient id="orbitGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.3"/>
-                <stop offset="70%" stop-color="#c9a96e" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <circle cx="200" cy="200" r="180" fill="url(#orbitGlow)"/>
-            <circle class="orbit__ring" cx="200" cy="200" r="160" fill="none" stroke="#c9a96e" stroke-width="1" stroke-dasharray="3 8" opacity="0.5"/>
-            <circle class="orbit__ring" cx="200" cy="200" r="120" fill="none" stroke="#c9a96e" stroke-width="1" stroke-dasharray="2 6" opacity="0.3"/>
-            <g class="orbit__dots">
-              <circle class="orbit__dot" cx="360" cy="200" r="4" fill="#c9a96e"/>
-              <circle class="orbit__dot" cx="200" cy="40"  r="4" fill="#c9a96e" opacity="0.7"/>
-              <circle class="orbit__dot" cx="40"  cy="200" r="4" fill="#c9a96e" opacity="0.5"/>
-              <circle class="orbit__dot" cx="200" cy="360" r="4" fill="#c9a96e" opacity="0.8"/>
-            </g>
-            <text x="200" y="195" text-anchor="middle" fill="#f1ece0" font-style="italic" font-weight="300" font-size="48">
-              £<tspan data-price-svg>120</tspan>
-            </text>
-            <text x="200" y="230" text-anchor="middle" fill="#817c70" font-size="12" letter-spacing="2">
-              <tspan data-unit-svg>/ YEAR</tspan>
-            </text>
-          </svg>
-        </div>
+    <!-- WIDGET INTEGRATION (LUXURY SECTION) -->
+    <section class="club-hundred" style="height: auto; min-height: 100vh; background: #020202; padding-top: 15vh; padding-bottom: 15vh;" id="join">
+      <div class="club-bg parallax-img" style="background-image: url('panel3.png'); opacity: 0.1; filter: grayscale(100%);"></div>
+      <div class="club-content" style="max-width: 1200px; margin: 0 auto; px: 2rem;">
+        
+        <div class="hundred-stage fade-in-up">
+          <!-- LEFT · orbit visual -->
+          <div class="hundred__orbit" data-reveal="fade">
+            <svg viewBox="0 0 400 400" width="100%" height="100%" aria-hidden="true">
+              <defs>
+                <radialGradient id="orbitGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.3"/>
+                  <stop offset="70%" stop-color="#c9a96e" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <circle cx="200" cy="200" r="180" fill="url(#orbitGlow)"/>
+              <circle class="orbit__ring" cx="200" cy="200" r="160" fill="none" stroke="#c9a96e" stroke-width="1" stroke-dasharray="3 8" opacity="0.5"/>
+              <circle class="orbit__ring" cx="200" cy="200" r="120" fill="none" stroke="#c9a96e" stroke-width="1" stroke-dasharray="2 6" opacity="0.3"/>
+              <g class="orbit__dots">
+                <circle class="orbit__dot" cx="360" cy="200" r="4" fill="#c9a96e"/>
+                <circle class="orbit__dot" cx="200" cy="40"  r="4" fill="#c9a96e" opacity="0.7"/>
+                <circle class="orbit__dot" cx="40"  cy="200" r="4" fill="#c9a96e" opacity="0.5"/>
+                <circle class="orbit__dot" cx="200" cy="360" r="4" fill="#c9a96e" opacity="0.8"/>
+              </g>
+              <text x="200" y="195" text-anchor="middle" fill="#f1ece0" font-style="italic" font-weight="300" font-size="48" style="font-family: Fraunces, serif;">
+                £<tspan data-price-svg>120</tspan>
+              </text>
+              <text x="200" y="230" text-anchor="middle" fill="#c9a96e" font-size="12" letter-spacing="2">
+                <tspan data-unit-svg>/ YEAR</tspan>
+              </text>
+            </svg>
+          </div>
 
-        <!-- RIGHT · tier panel -->
-        <div class="hundred__panel">
-          <div class="hundred__toggle" data-tier-toggle data-reveal="up">
-            <button type="button" data-tier="annual"  aria-pressed="true">Annual</button>
-            <button type="button" data-tier="monthly" aria-pressed="false">Monthly</button>
+          <!-- RIGHT · tier panel -->
+          <div class="hundred__panel" style="text-align: left;">
+            <div style="margin-bottom: 2rem;">
+              <h2 style="font-size: clamp(2.5rem, 4vw, 4rem); text-transform: uppercase; line-height: 1;">Subscribe to the<br><em class="gold">100 club.</em></h2>
+            </div>
+            
+            <div class="hundred__toggle" data-tier-toggle data-reveal="up" style="margin-bottom: 2rem; display:inline-flex; border:1px solid rgba(255,255,255,0.2); border-radius:50px; padding:0.25rem;">
+              <button type="button" data-tier="annual" aria-pressed="true" style="background:#fff; color:#000; padding:0.5rem 1.5rem; border-radius:50px; border:none; font-weight:600; cursor:pointer; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em;">Annual</button>
+              <button type="button" data-tier="monthly" aria-pressed="false" style="background:transparent; color:#fff; padding:0.5rem 1.5rem; border-radius:50px; border:none; font-weight:600; cursor:pointer; font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em;">Monthly</button>
+            </div>
+            
+            <div class="hundred__price" data-reveal="up" data-reveal-delay="0.1" style="font-size: 2.5rem; font-weight: 300; margin-bottom: 0.5rem;">
+              <span data-price>£120</span> <span data-unit style="font-size:1rem; opacity:0.6;">/ year</span>
+            </div>
+            
+            <p class="hundred__note" data-note data-reveal="up" data-reveal-delay="0.2" style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">
+              12 monthly draws · cancel anytime at renewal
+            </p>
+            
+            <div data-reveal="up" data-reveal-delay="0.3" style="margin: 2rem 0;">
+              <a href="#" class="magnetic" data-join-hundred data-tier="annual" style="background:#c9a96e; padding: 1.25rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem; font-weight: 600; display:inline-block; color: #000; transition: transform 0.3s;">
+                <span data-join-label>Subscribe Now</span>
+              </a>
+            </div>
+            
+            <ul class="hundred__bullets" data-reveal="stagger" style="color: rgba(255,255,255,0.6); line-height: 1.8; font-weight: 300; font-size: 1rem; padding-left: 1.25rem;">
+              <li>One entry per subscription per monthly draw.</li>
+              <li>100% of funds directly support welfare work.</li>
+              <li>Winners drawn live and notified by email.</li>
+              <li>Managed securely via Stripe — pause or cancel any time.</li>
+            </ul>
           </div>
-          <div class="hundred__price" data-reveal="up" data-reveal-delay="0.1">
-            <span data-price>£120</span>
-            <span data-unit>/ year</span>
-          </div>
-          <p class="hundred__note" data-note data-reveal="up" data-reveal-delay="0.2">
-            12 monthly draws · cancel anytime at renewal
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPECTATIONS BLOCK (Grid) -->
+    <section style="background: #050505; padding: 20vh 5vw;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        
+        <div class="fade-in" style="margin-bottom: 8rem; text-align: center;">
+          <div class="scene__chapter" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">Why it matters</div>
+          <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 1;">
+            Every subscription is <br>
+            <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">Someone's safety net.</em>
+          </h2>
+          <p class="fade-in" style="max-width: 600px; margin: 3rem auto 0; font-size: 1.25rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
+            The 100 Club is our single most reliable source of income. It lets us plan ahead — and say yes when members need us.
           </p>
-          <div data-reveal="up" data-reveal-delay="0.3" style="margin: 2rem 0;">
-            <a href="#" class="cine-btn cine-btn--solid magnetic" data-join-hundred data-tier="annual" style="border:1px solid #fff; padding: 1.25rem 2rem; border-radius:50px; text-transform:uppercase; font-size:0.9rem; font-weight: 600; transition: all 0.3s; display:inline-block; color: #fff;">
-              <span data-join-label>Subscribe · £120 / year</span>
-            </a>
-          </div>
-          <ul class="hundred__bullets" data-reveal="stagger" style="color: rgba(255,255,255,0.6); line-height: 1.8; font-weight: 300; font-size: 0.95rem;">
-            <li>One entry per subscription per monthly draw.</li>
-            <li>100% of funds directly support welfare work.</li>
-            <li>Winners drawn live and notified by email.</li>
-            <li>Managed securely via Stripe — you can pause or cancel any time.</li>
-          </ul>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+          
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">01</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Confidential Welfare</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Funds direct financial support for members facing hardship.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">02</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Regular Check-ins</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Keeps the phone line warm — so no one is forgotten.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">03</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Practical Advocacy</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Helps us navigate grants and pensions on members' behalf.</p>
+          </article>
+
         </div>
       </div>
+    </section>
 
-      <div style="margin-top: 5rem;">
-        <span class="scene__chapter fade-in">Why it matters</span>
-        <h2 class="fade-in" style="font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 2rem;">Every subscription is <br><em class="gold">someone's safety net.</em></h2>
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">The 100 Club is our single most reliable source of income. It lets us plan ahead — and say yes when members need us.</p>
-      </div>
-
-      <div class="pillars">
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">01</span>
-          <h3>Confidential welfare</h3>
-          <p style="margin-bottom:0">Funds direct financial support for members facing hardship.</p>
-        </article>
-        
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">02</span>
-          <h3>Regular check-ins</h3>
-          <p style="margin-bottom:0">Keeps the phone line warm — so no one is forgotten.</p>
-        </article>
-        
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">03</span>
-          <h3>Practical advocacy</h3>
-          <p style="margin-bottom:0">Helps us navigate grants and pensions on members' behalf.</p>
-        </article>
+    <!-- JOIN CTA BLOCK -->
+    <section class="club-hundred" style="height: 60vh;">
+      <div class="club-bg parallax-img" style="background-image: url('club_cheers.png'); filter: brightness(0.3) blur(2px);"></div>
+      <div class="club-content" style="text-align: center; padding: 0 2rem;">
+        <h2 style="font-size: clamp(2.5rem, 4vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 1.5rem;">
+          Questions?<br>
+          <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">We're here.</em>
+        </h2>
+        <div class="fade-in-up" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;">
+          <a href="mailto:info@ukttbs.co.uk?subject=100%20Club%20enquiry" class="magnetic" style="border: 1px solid rgba(255,255,255,0.3); padding: 1rem 3rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">Email the Society</a>
+        </div>
       </div>
     </section>
+
   </main>
 
   <section class="parallax-footer">
@@ -162,9 +201,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
-  
+  <script src="app.js"></script>
+
   <script src="/assets/js/config.js"></script>
   <script type="module" src="/assets/js/hundred-club.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>

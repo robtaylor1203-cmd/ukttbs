@@ -5,17 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us - UKTTBS</title>
   <meta name="description" content="A charitable organisation dedicated to supporting everyone who has worked within the UK tea trade.">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="About Us - UKTTBS">
-  <meta property="og:description" content="A charitable organisation dedicated to supporting everyone who has worked within the UK tea trade.">
-  <meta property="og:image" content="panel1.png">
-
   <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-
 <body class="loading">
 
   <div class="preloader"><div class="counter">0%</div></div>
@@ -49,56 +41,83 @@
   </div>
 
   <main>
-    <section class="sub-hero">
+    <!-- MASSIVE HERO -->
+    <section class="hero" style="height: 100vh;">
       <div class="hero-bg" style="background-image: url('panel1.png');"></div>
       <div class="hero-content">
         <h1 class="hero-title">
-          <div class="line"><span class="hero-word">Our</span></div>
-          <div class="line"><span class="hero-word">History</span></div>
+          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">Our History</span></div>
         </h1>
-        <p class="fade-in">Established 1962</p>
+        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">Established 1962</p>
+        <div class="scroll-indicator fade-in"><div class="scroll-dot"></div></div>
       </div>
     </section>
 
-    <section class="page-content">
-      <span class="scene__chapter fade-in">About us · Est. 1962</span>
-      <h2 class="fade-in">We make a living by what we get, <br><em class="gold">but we make a life by what we give.</em></h2>
-      <p class="fade-in" style="opacity:0;transform:translateY(20px);">— Winston Churchill</p>
+    <!-- TYPOGRAPHY INTERSTITIAL -->
+    <section style="background: #020202; padding: 25vh 5vw; text-align: center;">
+      <div class="scene__chapter fade-in" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">About us · Est. 1962</div>
+      <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); line-height: 1.1; text-transform: uppercase;">
+        We make a living by what we get,<br>
+        <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">but we make a life by what we give.</em>
+      </h2>
+      <p class="fade-in" style="max-width: 600px; margin: 3rem auto 0; font-size: 1.25rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
+        — Winston Churchill
+      </p>
+    </section>
 
-      <div style="margin-top: 5rem;">
-        <span class="scene__chapter fade-in">Chapter 01 · Our purpose</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">A lifetime of dedication <em class="gold">deserves a lifetime of care.</em></h2>
-
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">The UK Tea Trade Benevolent Society is a charitable organisation dedicated to supporting everyone who has worked within the UK tea trade. We understand that a lifetime of dedication to this unique industry can sometimes lead to unexpected challenges later in life.</p>
-        
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">Whether you are currently active in the trade or have long since retired, our commitment is simple: ensure that you are not left to face hardships alone. At our core, we offer more than just financial aid — we offer community, compassion, and practical support.</p>
-        
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">We conduct regular well-being checks to ensure our members are healthy, secure, and connected with others who share a passion for the tea trade. We provide hands-on assistance through the sometimes-complex process of applying for government grants, pensions, and other financial support — helping you navigate these systems with clarity and confidence.</p>
-        
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">When life brings unexpected difficulties, the Society steps in with direct financial support to help members manage hard times. We believe in the power of a caring community to uplift its members.</p>
+    <!-- MISSION BLOCK -->
+    <section class="club-hundred" style="height: 100vh;">
+      <div class="club-bg parallax-img" style="background-image: url('panel3.png'); filter: brightness(0.4);"></div>
+      <div class="club-content" style="max-width: 1000px; margin: 0 auto; text-align: center; px: 2rem;">
+        <div class="scene__chapter fade-in-up" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Chapter 01 · Our purpose</div>
+        <h2 style="font-size: clamp(2rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 2rem;">
+          A lifetime of dedication<br>
+          <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">deserves a lifetime of care.</em>
+        </h2>
+        <div class="fade-in-up" style="display: flex; flex-direction: column; gap: 1.5rem; text-align: center;">
+          <p style="font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.8); max-width: 800px; margin: 0 auto; line-height: 1.8">
+            The UK Tea Trade Benevolent Society is a charitable organisation dedicated to supporting everyone who has worked within the UK tea trade. We understand that a lifetime of dedication to this unique industry can sometimes lead to unexpected challenges later in life.
+          </p>
+          <p style="font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.8); max-width: 800px; margin: 0 auto; line-height: 1.8">
+            Whether you are currently active in the trade or have long since retired, our commitment is simple: ensure that you are not left to face hardships alone. At our core, we offer more than just financial aid — we offer community, compassion, and practical support.
+          </p>
+        </div>
       </div>
+    </section>
 
-      <div class="pillars">
-        <span class="scene__chapter fade-in">Chapter 02 · Three pillars</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 3rem;">How we <em class="gold">help.</em></h2>
+    <!-- PILLARS BLOCK (Grid) -->
+    <section style="background: #050505; padding: 20vh 5vw;">
+      <div style="max-width: 1200px; margin: 0 auto;">
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">01 · Well-being</span>
-          <h3>Regular check-ins</h3>
-          <p style="margin-bottom:0">A friendly voice and a listening ear — so no one is left isolated.</p>
-        </article>
+        <div class="fade-in" style="margin-bottom: 8rem; text-align: center;">
+          <div class="scene__chapter" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">Chapter 02 · Three pillars</div>
+          <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 1;">
+            How we <br>
+            <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">help.</em>
+          </h2>
+        </div>
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">02 · Advocacy</span>
-          <h3>Navigating the system</h3>
-          <p style="margin-bottom:0">Hands-on help applying for grants, pensions and council support.</p>
-        </article>
-        
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">03 · Relief</span>
-          <h3>Direct financial aid</h3>
-          <p style="margin-bottom:0">Confidential support when unexpected hardship strikes.</p>
-        </article>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+          
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">01 · Well-being</span>
+            <h3 style="font-size: 2rem; font-weight: 600; margin-bottom: 1.5rem; color: #fff;">Regular check-ins</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">A friendly voice and a listening ear — so no one is left isolated.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">02 · Advocacy</span>
+            <h3 style="font-size: 2rem; font-weight: 600; margin-bottom: 1.5rem; color: #fff;">Navigating the system</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Hands-on help applying for grants, pensions and council support.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">03 · Relief</span>
+            <h3 style="font-size: 2rem; font-weight: 600; margin-bottom: 1.5rem; color: #fff;">Direct financial aid</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Confidential support when unexpected hardship strikes.</p>
+          </article>
+
+        </div>
       </div>
     </section>
   </main>

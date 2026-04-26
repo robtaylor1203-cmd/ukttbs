@@ -5,16 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Team - UKTTBS</title>
   <meta name="description" content="Meet the volunteer trustees who guide the UK Tea Trade Benevolent Society.">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="The Team - UKTTBS">
-  <meta property="og:description" content="Meet the volunteer trustees who guide the UK Tea Trade Benevolent Society.">
-  <meta property="og:image" content="panel5.png">
-
   <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-
 <body class="loading">
 
   <div class="preloader"><div class="counter">0%</div></div>
@@ -48,69 +41,105 @@
   </div>
 
   <main>
-    <section class="sub-hero">
-      <div class="hero-bg" style="background-image: url('panel5.png');"></div>
+    <!-- MASSIVE HERO -->
+    <section class="hero" style="height: 100vh;">
+      <div class="hero-bg" style="background-image: url('panel5.png'); filter: brightness(0.7);"></div>
       <div class="hero-content">
         <h1 class="hero-title">
-          <div class="line"><span class="hero-word">The</span></div>
-          <div class="line"><span class="hero-word">Team</span></div>
+          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">The Team</span></div>
         </h1>
-        <p class="fade-in">Our Trustees</p>
+        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">Our Trustees</p>
+        <div class="scroll-indicator fade-in"><div class="scroll-dot"></div></div>
       </div>
     </section>
 
-    <section class="page-content">
-      <span class="scene__chapter fade-in">Our trustees</span>
-      <h2 class="fade-in">Volunteers. Tea people. <br><em class="gold">Quiet champions.</em></h2>
-      <p class="fade-in" style="opacity:0;transform:translateY(20px);">The UKTTBS is steered by a small, unpaid board of trustees drawn from across the industry — past and present.</p>
+    <!-- TYPOGRAPHY INTERSTITIAL -->
+    <section style="background: #020202; padding: 25vh 5vw; text-align: center;">
+      <div class="scene__chapter fade-in" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">Our trustees</div>
+      <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); line-height: 1.1; text-transform: uppercase;">
+        Volunteers. Tea people.<br>
+        <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">Quiet champions.</em>
+      </h2>
+      <p class="fade-in" style="max-width: 600px; margin: 3rem auto 0; font-size: 1.25rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
+        The UKTTBS is steered by a small, unpaid board of trustees drawn from across the industry — past and present.
+      </p>
+    </section>
 
-      <div class="pillars">
-        <span class="scene__chapter fade-in">The board</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 3rem;">Who we <em class="gold">are.</em></h2>
+    <!-- ROSTER GRID -->
+    <section style="background: #050505; padding: 20vh 5vw;">
+      <div style="max-width: 1200px; margin: 0 auto;">
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Chair</span>
-          <h3>Chair of Trustees</h3>
-          <p style="margin-bottom:0">Oversees the Society's governance, strategy and its faithfulness to the mission.</p>
-        </article>
+        <div class="fade-in" style="margin-bottom: 8rem; text-align: center;">
+          <div class="scene__chapter" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">The board</div>
+          <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 1;">
+            Who we <br>
+            <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">are.</em>
+          </h2>
+        </div>
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Treasurer</span>
-          <h3>Honorary Treasurer</h3>
-          <p style="margin-bottom:0">Guards every pound — so every pound reaches the people who need it.</p>
-        </article>
-        
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Secretary</span>
-          <h3>Honorary Secretary</h3>
-          <p style="margin-bottom:0">Keeps the Society running smoothly between meetings and events.</p>
-        </article>
-        
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Welfare Lead</span>
-          <h3>Trustee · Welfare</h3>
-          <p style="margin-bottom:0">First point of contact for members reaching out for support.</p>
-        </article>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem;">
+          
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; text-align: center; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: #111; border: 1px solid rgba(201,169,110,0.3); margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; color: #c9a96e;"><i class="ri-user-star-line" style="font-size: 1.5rem;"></i></div>
+            <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Chair of Trustees</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 1.5rem;">Chair</span>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1rem;">Oversees the Society's governance, strategy and its faithfulness to the mission.</p>
+          </article>
 
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Events Lead</span>
-          <h3>Trustee · Events</h3>
-          <p style="margin-bottom:0">Runs the spring and autumn parties — the social pulse of the Society.</p>
-        </article>
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; text-align: center; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: #111; border: 1px solid rgba(201,169,110,0.3); margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; color: #c9a96e;"><i class="ri-safe-2-line" style="font-size: 1.5rem;"></i></div>
+            <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Honorary Treasurer</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 1.5rem;">Treasurer</span>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1rem;">Guards every pound — so every pound reaches the people who need it.</p>
+          </article>
 
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">Membership Lead</span>
-          <h3>Trustee · Membership</h3>
-          <p style="margin-bottom:0">Keeps the 100 Club turning, and welcomes new members to the community.</p>
-        </article>
-      </div>
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; text-align: center; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: #111; border: 1px solid rgba(201,169,110,0.3); margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; color: #c9a96e;"><i class="ri-draft-line" style="font-size: 1.5rem;"></i></div>
+            <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Honorary Secretary</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 1.5rem;">Secretary</span>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1rem;">Keeps the Society running smoothly between meetings and events.</p>
+          </article>
 
-      <div style="margin-top: 5rem; text-align: center;">
-        <span class="scene__chapter fade-in">Get in touch</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">Interested in helping <em class="gold">steer the Society?</em></h2>
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">We always welcome conversations with people from across the trade who might consider joining the board.</p>
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; text-align: center; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: #111; border: 1px solid rgba(201,169,110,0.3); margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; color: #c9a96e;"><i class="ri-heart-pulse-line" style="font-size: 1.5rem;"></i></div>
+            <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Trustee · Welfare</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 1.5rem;">Welfare Lead</span>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1rem;">First point of contact for members reaching out for support.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; text-align: center; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: #111; border: 1px solid rgba(201,169,110,0.3); margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; color: #c9a96e;"><i class="ri-calendar-event-line" style="font-size: 1.5rem;"></i></div>
+            <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Trustee · Events</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 1.5rem;">Events Lead</span>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1rem;">Runs the spring and autumn parties — the social pulse of the Society.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; text-align: center; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: #111; border: 1px solid rgba(201,169,110,0.3); margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; color: #c9a96e;"><i class="ri-group-line" style="font-size: 1.5rem;"></i></div>
+            <h3 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Trustee · Membership</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 1.5rem;">Membership Lead</span>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1rem;">Keeps the 100 Club turning, and welcomes new members to the community.</p>
+          </article>
+
+        </div>
       </div>
     </section>
+
+    <!-- JOIN CTA BLOCK -->
+    <section class="club-hundred" style="height: 60vh;">
+      <div class="club-bg parallax-img" style="background-image: url('panel5.png'); filter: brightness(0.3) blur(2px);"></div>
+      <div class="club-content" style="text-align: center; padding: 0 2rem;">
+        <h2 style="font-size: clamp(2.5rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 1.5rem;">
+          Interested in helping<br>
+          <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">steer the Society?</em>
+        </h2>
+        <p class="fade-in-up" style="font-size: 1.2rem; font-weight: 300; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 3rem;">
+          We always welcome conversations with people from across the trade who might consider joining the board.
+        </p>
+        <a href="mailto:info@ukttbs.co.uk" class="magnetic fade-in-up" style="display:inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 1rem 3rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">Email the Society</a>
+      </div>
+    </section>
+
   </main>
 
   <section class="parallax-footer">
