@@ -275,10 +275,71 @@
       </div>
     </section>
 
+    <!-- PRICING CTA — split-screen -->
+    <section style="background: #020202; padding: 8vh 5vw;">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <div class="fade-in" style="text-align: center; margin-bottom: 3rem;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 1.5rem;">Choose your plan</span>
+          <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; text-transform: uppercase; line-height: 1.1;">
+            Two ways to<br>
+            <span style="color: #c9a96e;">make a difference.</span>
+          </h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <!-- MONTHLY -->
+          <div class="fade-in" style="position: relative; padding: 3rem 2.5rem; border: 1px solid rgba(201,169,110,0.2); border-radius: 12px; background: rgba(201,169,110,0.03); transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(201,169,110,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(201,169,110,0.2)'">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 1.5rem;">Monthly Direct Debit</span>
+            <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span style="font-size: 3.5rem; font-weight: 800; color: #fff; line-height: 1;">£10</span>
+              <span style="font-size: 1rem; color: rgba(255,255,255,0.4);">/ month</span>
+            </div>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem; margin-bottom: 2rem;">
+              Spread the cost. Cancel or pause anytime from your account — no lock-in, no hassle.
+            </p>
+            <ul style="padding-left: 1.25rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 2; font-size: 0.9rem; margin-bottom: 2rem;">
+              <li>Entered into <strong style="color: #fff;">every</strong> monthly draw</li>
+              <li>Managed securely via Stripe</li>
+              <li>100% goes to welfare</li>
+            </ul>
+            <a href="#" class="magnetic" data-join-hundred data-tier="monthly" style="display: block; text-align: center; background: #c9a96e; color: #000; padding: 1.1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; transition: transform 0.3s;">
+              <span data-join-label>Subscribe — £10/mo</span>
+            </a>
+          </div>
+
+          <!-- ANNUAL -->
+          <div class="fade-in" style="position: relative; padding: 3rem 2.5rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.08)'">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; text-transform: uppercase;">Annual Payment</span>
+              <span style="background: rgba(201,169,110,0.15); color: #c9a96e; font-size: 0.7rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.05em;">Best value</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span style="font-size: 3.5rem; font-weight: 800; color: #fff; line-height: 1;">£120</span>
+              <span style="font-size: 1rem; color: rgba(255,255,255,0.4);">/ year</span>
+            </div>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem; margin-bottom: 2rem;">
+              One payment, twelve draws. Renews annually — we'll remind you before it's due.
+            </p>
+            <ul style="padding-left: 1.25rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 2; font-size: 0.9rem; margin-bottom: 2rem;">
+              <li>Entered into <strong style="color: #fff;">every</strong> monthly draw</li>
+              <li>Single secure Stripe payment</li>
+              <li>100% goes to welfare</li>
+            </ul>
+            <a href="#" class="magnetic" data-join-hundred data-tier="annual" style="display: block; text-align: center; background: #fff; color: #000; padding: 1.1rem; border-radius: 50px; text-transform: uppercase; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; transition: transform 0.3s;">
+              <span data-join-label>Pay £120 — join now</span>
+            </a>
+          </div>
+        </div>
+
+        <p class="fade-in" style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: rgba(255,255,255,0.3);">
+          <i class="ri-lock-line" style="margin-right: 0.35rem;"></i> Payments processed securely by Stripe. We never see your card details.
+        </p>
+      </div>
+    </section>
 
   </main>
 
-  <section class="parallax-footer">
+  <section class="parallax-footer" style="min-height: 30vh;">
     <div class="footer-bg" style="background-image: url('club_cheers.png');"></div>
     <div class="parallax-footer-content">
       <h2 class="uppercase">Rooted in 1962.</h2>
