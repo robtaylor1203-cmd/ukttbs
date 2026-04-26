@@ -20,7 +20,7 @@ if(clubSplitText) gsap.set(clubSplitText.chars, { y: 110 });
 if(footerSplitText) gsap.set(footerSplitText.chars, { y: 110 });
 
 // For Horizontal huge titles, we will split them inline so they stagger wildly:
-const hugeTitles = document.querySelectorAll('.huge-title');
+const hugeTitles = document.querySelectorAll('.panel .huge-title');
 const hugeSplits = [];
 if(hugeTitles.length) {
   hugeTitles.forEach(title => {
