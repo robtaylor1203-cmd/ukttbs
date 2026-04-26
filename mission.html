@@ -24,9 +24,9 @@
 
   <nav class="navbar fade-in">
     <div class="logo"><a href="index.html" class="magnetic">UKTTBS.</a></div>
-    <button class="menu-toggle magnetic" aria-label="Toggle menu">
+    <div class="menu-toggle magnetic" aria-label="Toggle menu">
       <div class="hamburger"><span></span><span></span></div>
-    </button>
+    </div>
   </nav>
 
   <div class="menu-overlay">
@@ -48,61 +48,100 @@
   </div>
 
   <main>
-    <section class="sub-hero">
+    <!-- MASSIVE HERO -->
+    <section class="hero" style="height: 100vh;">
       <div class="hero-bg" style="background-image: url('panel2.png');"></div>
       <div class="hero-content">
         <h1 class="hero-title">
           <div class="line"><span class="hero-word">The</span></div>
           <div class="line"><span class="hero-word">Trade</span></div>
         </h1>
-        <p class="fade-in">Mission & Vision</p>
+        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">Mission & Vision</p>
+        <div class="scroll-indicator fade-in"><div class="scroll-dot"></div></div>
       </div>
     </section>
 
-    <section class="page-content">
-      <span class="scene__chapter fade-in">Mission · Vision · Values</span>
-      <h2 class="fade-in">Quiet principles, <em class="gold">steadily kept.</em></h2>
-      <p class="fade-in" style="opacity:0;transform:translateY(20px);">The short version of who we are — and what we stand for.</p>
+    <!-- TYPOGRAPHY INTERSTITIAL -->
+    <section style="background: #020202; padding: 25vh 5vw; text-align: center;">
+      <div class="scene__chapter fade-in" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">Mission · Vision · Values</div>
+      <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); line-height: 1.1; text-transform: uppercase;">
+        Quiet principles,<br>
+        <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">steadily kept.</em>
+      </h2>
+      <p class="fade-in" style="max-width: 600px; margin: 3rem auto 0; font-size: 1.25rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
+        The short version of who we are — and what we stand for.
+      </p>
+    </section>
 
-      <div style="margin-top: 5rem;">
-        <span class="scene__chapter fade-in">Chapter 01 · Mission</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">To ensure no one who has served the UK tea trade is <em class="gold">left to face hardship alone.</em></h2>
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">We are the safety net and the friendly voice for people whose working lives have been given to tea.</p>
+    <!-- MISSION BLOCK (Dark Parallax) -->
+    <section class="club-hundred" style="height: 100vh;">
+      <div class="club-bg parallax-img" style="background-image: url('panel3.png'); filter: brightness(0.4);"></div>
+      <div class="club-content" style="max-width: 1000px; margin: 0 auto; text-align: center; px: 2rem;">
+        <div class="scene__chapter fade-in-up" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Chapter 01 · Mission</div>
+        <h2 style="font-size: clamp(2rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 2rem;">
+          To ensure no one who has served is<br>
+          <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">left to face hardship alone.</em>
+        </h2>
+        <p class="fade-in-up" style="font-size: 1.2rem; font-weight: 300; color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto;">
+          We are the safety net and the friendly voice for people whose working lives have been given to tea.
+        </p>
       </div>
+    </section>
 
-      <div style="margin-top: 5rem;">
-        <span class="scene__chapter fade-in">Chapter 02 · Vision</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 2rem;">A connected, caring tea community — <br><em class="gold">from first shift to final years.</em></h2>
-        <p class="fade-in" style="opacity:0;transform:translateY(20px);">A network that protects, supports and celebrates the people who have built the trade's rich heritage.</p>
+    <!-- VISION BLOCK (Light Parallax or Solid Black) -->
+    <section class="club-hundred" style="height: 100vh; background: #050505;">
+      <div class="club-bg parallax-img" style="background-image: url('hero-estate.png'); opacity: 0.2; filter: grayscale(100%);"></div>
+      <div class="club-content" style="max-width: 1000px; margin: 0 auto; text-align: center; px: 2rem;">
+        <div class="scene__chapter fade-in-up" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Chapter 02 · Vision</div>
+        <h2 style="font-size: clamp(2rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 2rem;">
+          A connected, caring community —<br>
+          <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">from first shift to final years.</em>
+        </h2>
+        <p class="fade-in-up" style="font-size: 1.2rem; font-weight: 300; color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto;">
+          A network that protects, supports and celebrates the people who have built the trade's rich heritage.
+        </p>
       </div>
+    </section>
 
-      <div class="pillars">
-        <span class="scene__chapter fade-in">Chapter 03 · Values</span>
-        <h2 class="fade-in" style="font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 3rem;">Four things we <em class="gold">will not compromise on.</em></h2>
+    <!-- VALUES BLOCK (Grid) -->
+    <section style="background: #020202; padding: 20vh 5vw;">
+      <div style="max-width: 1200px; margin: 0 auto;">
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">01</span>
-          <h3>Dignity</h3>
-          <p style="margin-bottom:0">Help is offered quietly, respectfully, and without judgement.</p>
-        </article>
+        <div class="fade-in" style="margin-bottom: 8rem; text-align: center;">
+          <div class="scene__chapter" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">Chapter 03 · Values</div>
+          <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 1;">
+            Uncompromising <br>
+            <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">standards.</em>
+          </h2>
+        </div>
         
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">02</span>
-          <h3>Confidentiality</h3>
-          <p style="margin-bottom:0">Your story stays between us. Always.</p>
-        </article>
-        
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">03</span>
-          <h3>Community</h3>
-          <p style="margin-bottom:0">We believe belonging is half the medicine.</p>
-        </article>
-        
-        <article class="pillar fade-in" style="opacity:0;transform:translateY(20px);">
-          <span class="pillar__num">04</span>
-          <h3>Stewardship</h3>
-          <p style="margin-bottom:0">Every pound is spent with care — for now and for those who follow.</p>
-        </article>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+          
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">01</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Dignity</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Help is offered quietly, respectfully, and without judgement.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">02</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Confidentiality</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Your story stays between us. Always.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">03</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Community</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">We believe belonging is half the medicine.</p>
+          </article>
+
+          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">04</span>
+            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Stewardship</h3>
+            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Every pound is spent with care — for now and for those who follow.</p>
+          </article>
+
+        </div>
       </div>
     </section>
   </main>
