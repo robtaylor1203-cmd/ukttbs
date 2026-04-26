@@ -348,10 +348,12 @@ function initScrollAnims() {
   // Parallax Footer
   gsap.fromTo(".footer-bg", { y: "-20%" }, { y: "20%", ease: "none", scrollTrigger: { trigger: ".parallax-footer", start: "top bottom", end: "bottom top", scrub: true } });
   
-  gsap.to(footerSplitText.chars, {
-    y: 0, stagger: 0.05, duration: 0.8, ease: "power4.out",
-    scrollTrigger: { trigger: ".parallax-footer", start: "top 80%", toggleActions: "play none none reverse" }
-  });
+  if (footerSplitText) {
+    gsap.to(footerSplitText.chars, {
+      y: 0, stagger: 0.05, duration: 0.8, ease: "power4.out",
+      scrollTrigger: { trigger: ".parallax-footer", start: "top 80%", toggleActions: "play none none reverse" }
+    });
+  }
 }
 
 // ==========================================
@@ -359,6 +361,7 @@ function initScrollAnims() {
 // ==========================================
 function initShareHub() {
   const shareBtn = document.querySelector('.share-btn');
+  if(!shareBtn) return;
   const modal = document.querySelector('.share-modal');
   let open = false;
 
