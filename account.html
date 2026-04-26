@@ -559,8 +559,28 @@
       location.reload();
     });
 
-    // ── INIT ──
+
+// ── INIT ──
     async function init() {
+      // 1. Check if we are running locally OR if the secret "?demo=true" is in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const isDemoMode = urlParams.get('demo') === 'true';
+      const isLocalDev = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || isDemoMode;
+
+      if (isLocalDev) {
+        console.log("🔧 Demo Mode Detected: Bypassing Supabase Auth");
+        // Inject a fake session object so the dashboard doesn't crash
+        const mockSession = {
+          user: {
+            email: "board@ukttbs.org.uk",
+            user_metadata: { full_name: "UKTTBS Board Member" }
+          }
+        };
+        renderDashboard(mockSession);
+        return; // Stop here, don't ask Supabase
+      }
+
+      // 2. Normal production logic
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         renderDashboard(session);
