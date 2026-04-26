@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thank you · UK Tea Trade Benevolent Society</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <meta name="theme-color" content="#0b120e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  <main>
+    <section class="section">
+      <div class="container container--narrow center">
+        <div class="success-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="eyebrow">Thank you</span>
+        <h1 id="heading">Payment received.</h1>
+        <p class="lede" id="body">A confirmation is on its way to your inbox. You can view everything in your account area whenever you need it.</p>
+        <div class="flex flex-wrap gap-2 center" style="justify-content:center;margin-top:1.5rem">
+          <a class="btn btn--lg" href="/account.html">Go to my account</a>
+          <a class="btn btn--ghost btn--lg" href="/">Back to home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
+      <nav class="site-foot__links" aria-label="Footer">
+        <a href="/about.html">About</a>
+        <a href="/events.html">Events</a>
+        <a href="/100-club.html">100 Club</a>
+        <a href="/raffle.html">Raffle</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:info@ukttbs.co.uk">Contact</a>
+      </nav>
+      <div class="site-foot__meta">
+        © 1962–<span id="foot-year"></span> · Charity 208709
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script>
+    const kind = new URLSearchParams(location.search).get("kind");
+    const titles = {
+      tickets:      ["You're in — see you there!", "Your event tickets are confirmed. We'll email them to you shortly. Please bring your confirmation on the night."],
+      raffle:       ["Good luck!", "Your raffle tickets are in the draw. Winners will be contacted after the event — best of luck!"],
+      hundred_club: ["Welcome to the 100 Club!", "Your subscription is active. You'll be entered into every monthly draw from here on. Thank you for supporting the Society."],
+    };
+    if (kind && titles[kind]) {
+      document.getElementById("heading").textContent = titles[kind][0];
+      document.getElementById("body").textContent = titles[kind][1];
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The 100 Club · UK Tea Trade Benevolent Society</title>
+  <meta name="description" content="Subscribe to the UKTTBS 100 Club — a members' lottery that funds our welfare work.">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/cinematic.css">
+  <link rel="stylesheet" href="/assets/css/scenes.css">
+  <meta name="theme-color" content="#0b120e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body data-cine>
+
+  <main>
+
+    <!-- =========================================================
+         SCENE 1 — 100 CLUB HERO + ORBIT + TIER TOGGLE
+         ========================================================= -->
+    <section class="scene" data-scene="hundred-cta" style="min-height:100vh;display:flex;align-items:center">
+      <div class="parallax" aria-hidden="true">
+        <div class="parallax__layer" data-depth="0.06" style="background:radial-gradient(1100px 700px at 50% 55%, rgba(201,169,110,0.16) 0%, transparent 70%)"></div>
+        <div class="parallax__layer parallax__layer--fog" data-depth="0.14"></div>
+      </div>
+
+      <div class="scene__inner cap-container">
+
+        <header style="text-align:center;margin-bottom:clamp(2rem,5vh,3.5rem)">
+          <span class="scene__chapter" data-reveal="up">The 100 Club · members' lottery</span>
+          <h1 class="cine-display" data-reveal="words">
+            Win every month. <em class="gold">Give every day.</em>
+          </h1>
+        </header>
+
+        <div class="hundred-stage">
+
+          <!-- LEFT · orbit visual -->
+          <div class="hundred__orbit" data-reveal="fade">
+            <svg viewBox="0 0 400 400" width="100%" height="100%" aria-hidden="true">
+              <defs>
+                <radialGradient id="orbitGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#c9a96e" stop-opacity="0.3"/>
+                  <stop offset="70%" stop-color="#c9a96e" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <circle cx="200" cy="200" r="180" fill="url(#orbitGlow)"/>
+              <circle class="orbit__ring" cx="200" cy="200" r="160"
+                      fill="none" stroke="#c9a96e" stroke-width="1"
+                      stroke-dasharray="3 8" opacity="0.5"/>
+              <circle class="orbit__ring" cx="200" cy="200" r="120"
+                      fill="none" stroke="#c9a96e" stroke-width="1"
+                      stroke-dasharray="2 6" opacity="0.3"/>
+
+              <!-- Dots on outer ring -->
+              <g class="orbit__dots">
+                <circle class="orbit__dot" cx="360" cy="200" r="4" fill="#c9a96e"/>
+                <circle class="orbit__dot" cx="200" cy="40"  r="4" fill="#c9a96e" opacity="0.7"/>
+                <circle class="orbit__dot" cx="40"  cy="200" r="4" fill="#c9a96e" opacity="0.5"/>
+                <circle class="orbit__dot" cx="200" cy="360" r="4" fill="#c9a96e" opacity="0.8"/>
+              </g>
+
+              <!-- Centre label -->
+              <text x="200" y="195" text-anchor="middle"
+                    fill="#f1ece0" font-family="Fraunces, serif"
+                    font-style="italic" font-weight="300" font-size="48">
+                £<tspan data-price-svg>120</tspan>
+              </text>
+              <text x="200" y="230" text-anchor="middle"
+                    fill="#817c70" font-family="JetBrains Mono, monospace"
+                    font-size="12" letter-spacing="2">
+                <tspan data-unit-svg>/ YEAR</tspan>
+              </text>
+            </svg>
+          </div>
+
+          <!-- RIGHT · tier panel -->
+          <div class="hundred__panel">
+
+            <div class="hundred__toggle" data-tier-toggle data-reveal="up">
+              <button type="button" data-tier="annual"  aria-pressed="true">Annual</button>
+              <button type="button" data-tier="monthly" aria-pressed="false">Monthly</button>
+            </div>
+
+            <div class="hundred__price" data-reveal="up" data-reveal-delay="0.1">
+              <span data-price>£120</span>
+              <span data-unit>/ year</span>
+            </div>
+
+            <p class="hundred__note" data-note data-reveal="up" data-reveal-delay="0.2">
+              12 monthly draws · cancel anytime at renewal
+            </p>
+
+            <div data-reveal="up" data-reveal-delay="0.3">
+              <a href="#" class="cine-btn cine-btn--solid"
+                 data-join-hundred
+                 data-tier="annual"
+                 data-magnetic="0.3">
+                <span data-join-label>Subscribe · £120 / year</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+
+            <ul class="hundred__bullets" data-reveal="stagger">
+              <li>One entry per subscription per monthly draw.</li>
+              <li>100% of funds directly support welfare work.</li>
+              <li>Winners drawn live and notified by email.</li>
+              <li>Managed securely via Stripe — you can pause or cancel any time.</li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 2 — WHY THE 100 CLUB MATTERS
+         ========================================================= -->
+    <section class="scene" data-scene="reveals">
+      <div class="scene__inner cap-container">
+        <header style="max-width:720px;margin-bottom:clamp(2rem,5vh,4rem)">
+          <span class="scene__chapter" data-reveal="up">Why it matters</span>
+          <h2 class="cine-display" data-reveal="words">
+            Every subscription is <em class="gold">someone's safety net.</em>
+          </h2>
+          <p class="cine-lede" data-reveal="up" data-reveal-delay="0.1">
+            The 100 Club is our single most reliable source of income.
+            It lets us plan ahead — and say yes when members need us.
+          </p>
+        </header>
+        <div class="pillars" data-reveal="stagger">
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">01</span>
+            <h3>Confidential welfare</h3>
+            <p>Funds direct financial support for members facing hardship.</p>
+          </article>
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">02</span>
+            <h3>Regular check-ins</h3>
+            <p>Keeps the phone line warm — so no one is forgotten.</p>
+          </article>
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">03</span>
+            <h3>Practical advocacy</h3>
+            <p>Helps us navigate grants and pensions on members' behalf.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 3 — CLOSING
+         ========================================================= -->
+    <section class="scene scene--short scene--center" data-scene="reveals">
+      <div class="scene__inner">
+        <h2 class="cine-display" data-reveal="words">Questions? <em class="gold">We're here.</em></h2>
+        <div style="margin-top:2.5rem" data-reveal="up" data-reveal-delay="0.15">
+          <a class="cine-btn" href="mailto:info@ukttbs.co.uk?subject=100%20Club%20enquiry" data-magnetic="0.25">
+            <span>Email the Society</span><span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
+      <nav class="site-foot__links" aria-label="Footer">
+        <a href="/about.html">About</a>
+        <a href="/events.html">Events</a>
+        <a href="/100-club.html">100 Club</a>
+        <a href="/raffle.html">Raffle</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:info@ukttbs.co.uk">Contact</a>
+      </nav>
+      <div class="site-foot__meta">
+        © 1962–<span id="foot-year"></span> · Charity 208709
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/hundred-club.js"></script>
+</body>
+</html>

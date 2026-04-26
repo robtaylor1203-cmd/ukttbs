@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Inject runtime config
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+          STRIPE_PUBLISHABLE_KEY: ${{ vars.STRIPE_PUBLISHABLE_KEY }}
+          PAYPAL_DONATE_URL: ${{ vars.PAYPAL_DONATE_URL }}
+        run: |
+          cat > assets/js/config.js <<EOF
+          window.UKTTBS_CONFIG = {
+            SUPABASE_URL: "${SUPABASE_URL}",
+            SUPABASE_ANON_KEY: "${SUPABASE_ANON_KEY}",
+            STRIPE_PUBLISHABLE_KEY: "${STRIPE_PUBLISHABLE_KEY}",
+            PAYPAL_DONATE_URL: "${PAYPAL_DONATE_URL}",
+            FEATURES: { tickets: true, raffle: true, hundredClub: true, accounts: true },
+            RAFFLE_WINDOW: { opensHoursBefore: 168, closesHoursAfterStart: 4 }
+          };
+          EOF
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

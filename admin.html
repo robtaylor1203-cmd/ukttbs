@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · UK Tea Trade Benevolent Society</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <meta name="theme-color" content="#0b120e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body>
+
+  <main>
+    <section class="section admin-hero">
+      <div class="container">
+        <span class="eyebrow">Internal</span>
+        <h1 style="font-size:clamp(2.5rem, 2rem + 2vw, 4rem)">Admin</h1>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+
+        <!-- Signed-out state -->
+        <div data-view="signed-out" class="hidden">
+          <div class="card" style="max-width:520px">
+            <h3 class="mt-0">Staff sign-in</h3>
+            <p class="muted">Admin access is restricted to authorised trustees and staff.</p>
+            <div id="signin-mount"></div>
+          </div>
+        </div>
+
+        <!-- Not-an-admin state -->
+        <div data-view="not-admin" class="hidden">
+          <div class="alert alert--error">
+            <strong>Access denied.</strong> This account is signed in but not authorised for admin access.
+          </div>
+          <button class="btn btn--ghost" data-signout><span>Sign out</span></button>
+        </div>
+
+        <!-- Admin UI -->
+        <div data-view="admin" class="hidden">
+          <div class="admin-toolbar">
+            <p class="muted" style="margin:0">Signed in as <strong data-email>—</strong></p>
+            <button class="btn btn--ghost btn--sm" data-signout><span>Sign out</span></button>
+          </div>
+
+          <!-- EVENTS -->
+          <div class="admin-toolbar">
+            <h2 style="margin:0">Events</h2>
+            <button class="btn" data-new-event><span>+ New event</span></button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr><th>Event</th><th>Price</th><th>Raffle</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody data-events>
+              <tr><td colspan="5" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+
+          <!-- ORDERS -->
+          <h2 style="margin-top:4rem">Recent orders</h2>
+          <table class="table">
+            <thead>
+              <tr><th>Date</th><th>Email</th><th>Item</th><th>Qty</th><th>Amount</th><th>Status</th></tr>
+            </thead>
+            <tbody data-orders>
+              <tr><td colspan="6" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+
+          <!-- SUBSCRIPTIONS -->
+          <h2 style="margin-top:4rem">100 Club subscribers</h2>
+          <table class="table">
+            <thead>
+              <tr><th>Member</th><th>Tier</th><th>Renews</th><th>Status</th></tr>
+            </thead>
+            <tbody data-subs>
+              <tr><td colspan="4" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Event form dialog -->
+  <dialog id="event-dialog">
+    <div class="dialog__body">
+      <h2 data-title>New event</h2>
+      <form id="event-form">
+        <div class="form-grid">
+          <label class="span-2">Title
+            <input name="title" required placeholder="Spring Cocktail Party">
+          </label>
+          <label>Slug (URL)
+            <input name="slug" placeholder="auto-from-title">
+          </label>
+          <label>Status
+            <select name="status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+              <option value="archived">Archived</option>
+            </select>
+          </label>
+          <label class="span-2">Description
+            <textarea name="description" placeholder="Short blurb for the listing"></textarea>
+          </label>
+          <label>Venue
+            <input name="venue" placeholder="The Ivy Asia, St Paul's">
+          </label>
+          <label>City
+            <input name="city" placeholder="London">
+          </label>
+          <label>Starts
+            <input name="starts_at" type="datetime-local" required>
+          </label>
+          <label>Ends (optional)
+            <input name="ends_at" type="datetime-local">
+          </label>
+          <label>Ticket price (£)
+            <input name="ticket_price" type="number" min="0" step="0.01" value="75">
+          </label>
+          <label>Tickets available (blank = unlimited)
+            <input name="tickets_available" type="number" min="0" step="1">
+          </label>
+          <label class="span-2 check">
+            <input type="checkbox" name="raffle_enabled" checked>
+            Raffle enabled for this event
+          </label>
+          <label class="span-2">Image URL (optional)
+            <input name="image_url" type="url" placeholder="https://…">
+          </label>
+        </div>
+      </form>
+    </div>
+    <div class="dialog__footer">
+      <button type="button" class="btn btn--ghost" onclick="document.getElementById('event-dialog').close()"><span>Cancel</span></button>
+      <button type="submit" form="event-form" class="btn"><span>Save</span></button>
+    </div>
+  </dialog>
+
+  <!-- Raffle dialog -->
+  <dialog id="raffle-dialog">
+    <div class="dialog__body">
+      <h2 data-title>Raffle</h2>
+      <div data-entries-list><p class="muted">Loading…</p></div>
+      <div data-winner></div>
+    </div>
+    <div class="dialog__footer">
+      <button type="button" class="btn btn--ghost" onclick="document.getElementById('raffle-dialog').close()"><span>Close</span></button>
+      <button type="button" class="btn" data-draw><span>🎲 Draw a winner</span></button>
+    </div>
+  </dialog>
+
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
+      <nav class="site-foot__links" aria-label="Footer">
+        <a href="/about.html">About</a>
+        <a href="/events.html">Events</a>
+        <a href="/100-club.html">100 Club</a>
+        <a href="/raffle.html">Raffle</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:info@ukttbs.co.uk">Contact</a>
+      </nav>
+      <div class="site-foot__meta">
+        © 1962–<span id="foot-year"></span> · Charity 208709
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/admin.js"></script>
+</body>
+</html>

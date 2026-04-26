@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your account · UK Tea Trade Benevolent Society</title>
+  <meta name="description" content="Sign in to your UKTTBS member account.">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <meta name="theme-color" content="#0b120e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body>
+  <main>
+    <section class="section">
+      <div class="container container--narrow">
+        <div data-signed-out>
+          <span class="eyebrow">Member account</span>
+          <h1>Sign in</h1>
+          <p class="lede">Access your tickets, raffle entries, 100 Club subscription and AGM notices.</p>
+          <div class="card mt-4" id="signin-mount"></div>
+        </div>
+
+        <div data-signed-in class="hidden">
+          <span class="eyebrow">Member account</span>
+          <h1>Welcome back.</h1>
+          <p class="lede">Signed in as <strong data-email>—</strong></p>
+
+          <div class="grid grid--2 mt-4">
+            <div class="card">
+              <h3 class="mt-0">Your tickets &amp; raffle entries</h3>
+              <div data-orders><p class="muted">Loading…</p></div>
+            </div>
+            <div class="card card--gold">
+              <h3 class="mt-0">100 Club membership</h3>
+              <div data-hundred-status><p class="muted">Loading…</p></div>
+              <a class="btn btn--ghost mt-2 hidden" data-portal-link href="#">Manage billing</a>
+            </div>
+          </div>
+
+          <button class="btn btn--ghost mt-4" data-signout>Sign out</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
+      <nav class="site-foot__links" aria-label="Footer">
+        <a href="/about.html">About</a>
+        <a href="/events.html">Events</a>
+        <a href="/100-club.html">100 Club</a>
+        <a href="/raffle.html">Raffle</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:info@ukttbs.co.uk">Contact</a>
+      </nav>
+      <div class="site-foot__meta">
+        © 1962–<span id="foot-year"></span> · Charity 208709
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script type="module">
+    import { supabase, formatEventDate, formatMoney } from "/assets/js/supabase.js";
+    import { mountSignIn, signOut, getSession } from "/assets/js/auth.js";
+
+    const signedOut = document.querySelector("[data-signed-out]");
+    const signedIn  = document.querySelector("[data-signed-in]");
+
+    async function render() {
+      const session = await getSession();
+      if (!session) {
+        signedOut.classList.remove("hidden");
+        signedIn.classList.add("hidden");
+        mountSignIn(document.getElementById("signin-mount"));
+        return;
+      }
+      signedOut.classList.add("hidden");
+      signedIn.classList.remove("hidden");
+      document.querySelector("[data-email]").textContent = session.user.email;
+
+      // Orders / tickets / raffle
+      const { data: orders } = await supabase
+        .from("orders")
+        .select("id, kind, created_at, amount_pence, quantity, status, event:events(title, starts_at)")
+        .eq("status", "paid")
+        .order("created_at", { ascending: false })
+        .limit(20);
+
+      const ordersEl = document.querySelector("[data-orders]");
+      if (!orders || orders.length === 0) {
+        ordersEl.innerHTML = `<p class="muted">You haven't purchased anything yet. <a href="/events.html">Browse events →</a></p>`;
+      } else {
+        ordersEl.innerHTML = orders.map(o => `
+          <div style="display:flex;justify-content:space-between;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--hairline)">
+            <div>
+              <strong>${o.kind === "tickets" ? "Tickets" : o.kind === "raffle" ? "Raffle" : "100 Club"}</strong>
+              ${o.event ? `<div class="muted" style="font-size:.85rem">${o.event.title} — ${formatEventDate(o.event.starts_at)}</div>` : ""}
+              <div class="muted" style="font-size:.8rem">${new Date(o.created_at).toLocaleDateString("en-GB")}</div>
+            </div>
+            <div style="text-align:right">
+              <strong>${formatMoney(o.amount_pence)}</strong>
+              <div class="muted" style="font-size:.85rem">×${o.quantity}</div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      // 100 Club subscription
+      const { data: sub } = await supabase
+        .from("subscriptions")
+        .select("tier, status, current_period_end, stripe_customer_portal_url")
+        .eq("status", "active")
+        .maybeSingle();
+
+      const sEl = document.querySelector("[data-hundred-status]");
+      const portal = document.querySelector("[data-portal-link]");
+      if (sub) {
+        sEl.innerHTML = `
+          <p class="mb-0"><strong>Active</strong> — ${sub.tier} plan</p>
+          <p class="muted" style="font-size:.85rem">Renews ${new Date(sub.current_period_end).toLocaleDateString("en-GB")}</p>
+        `;
+        if (sub.stripe_customer_portal_url) {
+          portal.classList.remove("hidden");
+          portal.href = sub.stripe_customer_portal_url;
+        }
+      } else {
+        sEl.innerHTML = `<p class="muted">Not yet a member. <a href="/100-club.html">Join the 100 Club →</a></p>`;
+      }
+    }
+
+    document.querySelector("[data-signout]")?.addEventListener("click", signOut);
+    supabase.auth.onAuthStateChange(() => render());
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+/* Cinematic, animation, and parallax CSS removed for redesign. */
+// ...existing code...
+/* ---------------------------------------------------------------
+  Lenis smooth scroll — required resets
+  --------------------------------------------------------------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* ---------------------------------------------------------------
+  Custom cursor (desktop + fine-pointer only)
+  --------------------------------------------------------------- */
+@media (pointer: fine) {
+  body[data-cine] { cursor: none; }
+  body[data-cine] a, body[data-cine] button,
+  body[data-cine] [role="button"], body[data-cine] input,
+  body[data-cine] select, body[data-cine] textarea,
+  body[data-cine] label { cursor: none; }
+}
+
+.cursor {
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor__dot {
+  position: absolute; top: 0; left: 0;
+  width: var(--cursor-size); height: var(--cursor-size);
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+  transition: width 260ms var(--cursor-ease),
+              height 260ms var(--cursor-ease),
+              background 260ms var(--cursor-ease),
+              opacity 260ms var(--cursor-ease);
+}
+.cursor__ring {
+  position: absolute; top: 0; left: 0;
+  width: var(--cursor-ring); height: var(--cursor-ring);
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  transform: translate(-50%, -50%) scale(1);
+  transition: width 320ms var(--cursor-ease),
+              height 320ms var(--cursor-ease),
+              border-color 260ms var(--cursor-ease),
+              opacity 260ms var(--cursor-ease),
+              transform 260ms var(--cursor-ease);
+  opacity: 0.55;
+}
+.cursor[data-state="hover"]  .cursor__dot  { width: 4px; height: 4px; }
+.cursor[data-state="hover"]  .cursor__ring { width: calc(var(--cursor-ring) * 1.9); height: calc(var(--cursor-ring) * 1.9); opacity: 0.9; }
+.cursor[data-state="press"]  .cursor__ring { transform: translate(-50%, -50%) scale(0.88); }
+.cursor[data-state="hidden"] { opacity: 0; }
+.cursor[data-label]::after {
+  content: attr(data-label);
+  position: absolute; left: 50%; top: 110%;
+  transform: translateX(-50%);
+  min-width: 40px; min-height: 18px;
+  padding: 0.2em 0.7em;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+  transition: opacity 200ms var(--cursor-ease);
+  z-index: 2;
+}
+.cursor[data-state="label"]::after,
+.cursor[data-state="hover"][data-label]::after { opacity: 1; }
+@media (pointer: coarse) { .cursor { display: none; } body[data-cine] { cursor: auto; } }
+@media (prefers-reduced-motion: reduce) { .cursor { display: none; } body[data-cine] { cursor: auto; } }
+
+/* ---------------------------------------------------------------
+  Scene section scaffolding (pinned, parallax, etc)
+  --------------------------------------------------------------- */
+/* ...existing code... */
+/* =============================================================
+   UKTTBS · Cinematic layer
+   Global scaffolding for Lenis smooth scroll, scene sections,
+   parallax layers, custom cursor, grain, and page transitions.
+
+   Scoped by <body data-cine> so commerce-only pages opt out.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   Lenis smooth scroll — required resets
+   --------------------------------------------------------------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* ---------------------------------------------------------------
+   Custom cursor (desktop + fine-pointer only)
+   --------------------------------------------------------------- */
+@media (pointer: fine) {
+  body[data-cine] { cursor: none; }
+  body[data-cine] a, body[data-cine] button,
+  body[data-cine] [role="button"], body[data-cine] input,
+  body[data-cine] select, body[data-cine] textarea,
+  body[data-cine] label { cursor: none; }
+}
+
+.cursor {
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor__dot {
+  position: absolute; top: 0; left: 0;
+  width: var(--cursor-size); height: var(--cursor-size);
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+  transition: width 260ms var(--cursor-ease),
+              height 260ms var(--cursor-ease),
+              background 260ms var(--cursor-ease),
+              opacity 260ms var(--cursor-ease);
+}
+.cursor__ring {
+  position: absolute; top: 0; left: 0;
+  width: var(--cursor-ring); height: var(--cursor-ring);
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  transform: translate(-50%, -50%) scale(1);
+  transition: width 320ms var(--cursor-ease),
+              height 320ms var(--cursor-ease),
+              border-color 260ms var(--cursor-ease),
+              opacity 260ms var(--cursor-ease),
+              transform 260ms var(--cursor-ease);
+  opacity: 0.55;
+}
+
+/* Cursor states (toggled by cursor.js) */
+.cursor[data-state="hover"]  .cursor__dot  { width: 4px; height: 4px; }
+.cursor[data-state="hover"]  .cursor__ring { width: calc(var(--cursor-ring) * 1.9); height: calc(var(--cursor-ring) * 1.9); opacity: 0.9; }
+.cursor[data-state="press"]  .cursor__ring { transform: translate(-50%, -50%) scale(0.88); }
+.cursor[data-state="hidden"] { opacity: 0; }
+.cursor[data-label]::after {
+  content: attr(data-label);
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 0.62rem; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--ink);
+  padding: 0.4rem 0.7rem; border-radius: 999px;
+  white-space: nowrap;
+  mix-blend-mode: normal;
+  opacity: 0;
+  transition: opacity 200ms var(--cursor-ease);
+}
+.cursor[data-state="label"]::after,
+.cursor[data-state="hover"][data-label]::after { opacity: 1; }
+
+/* Touch / reduced-motion / coarse pointers: hide the custom cursor */
+@media (pointer: coarse) { .cursor { display: none; } body[data-cine] { cursor: auto; } }
+@media (prefers-reduced-motion: reduce) { .cursor { display: none; } body[data-cine] { cursor: auto; } }
+
+/* ---------------------------------------------------------------
+   Scene stage — vertical cinematic flow
+   Every top-level section on scrollytelling pages uses .scene.
+   --------------------------------------------------------------- */
+body[data-cine] { background: var(--bg-deeper); }
+
+.scene {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  overflow: clip;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  color: var(--ink);
+}
+.scene--tall    { min-height: 140vh; }
+.scene--short   { min-height: 70vh; }
+.scene--center  { justify-content: center; text-align: center; }
+.scene__inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: clamp(4rem, 8vh, 8rem) clamp(1.25rem, 4vw, 3rem);
+  z-index: 2;
+}
+
+/* Scrims — fade scenes into each other so there are no hard seams */
+.scene::before,
+.scene::after {
+  content: "";
+  position: absolute; left: 0; right: 0;
+  height: 28vh;
+  pointer-events: none;
+  z-index: 3;
+}
+.scene::before { top: 0;    background: var(--scrim-top); }
+.scene::after  { bottom: 0; background: var(--scrim-bot); }
+.scene[data-scrim="off"]::before,
+.scene[data-scrim="off"]::after { display: none; }
+
+/* ---------------------------------------------------------------
+   Parallax layers — stacked absolute fills, moved by GSAP
+   <div class="parallax">
+     <div class="parallax__layer" data-depth="0.1">…</div>
+     <div class="parallax__layer" data-depth="0.4">…</div>
+   </div>
+   --------------------------------------------------------------- */
+.parallax {
+  position: absolute; inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: clip;
+}
+.parallax__layer {
+  position: absolute; inset: -10% 0;
+  width: 100%;
+  will-change: transform, filter, opacity;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+}
+.parallax__layer--fog {
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    var(--fog) 0%,
+    var(--fog-warm) 40%,
+    transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* ---------------------------------------------------------------
+   Grain overlay — filmic texture, GPU cheap
+   --------------------------------------------------------------- */
+.grain {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.94  0 0 0 0 0.92  0 0 0 0 0.88  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------------------------------------------------------------
+   Page transition overlay
+   Covers viewport on load/unload, emerald wash swipe.
+   --------------------------------------------------------------- */
+.page-wash {
+  position: fixed; inset: 0;
+  background: var(--emerald-wash);
+  z-index: 9998;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.page-wash[data-state="in"]  { animation: wash-out 900ms var(--ease-out) forwards; }
+.page-wash[data-state="out"] { animation: wash-in  600ms var(--ease-out) forwards; }
+
+@keyframes wash-out {
+  0%   { transform: translateY(0);      opacity: 1; }
+  60%  { transform: translateY(-100%);  opacity: 1; }
+  100% { transform: translateY(-100%);  opacity: 0; }
+}
+@keyframes wash-in {
+  0%   { transform: translateY(100%);   opacity: 1; }
+  100% { transform: translateY(0);      opacity: 1; }
+}
+
+/* ---------------------------------------------------------------
+   Text reveals — hooks consumed by split.js + gsap
+   --------------------------------------------------------------- */
+.line-mask { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.line-mask > .line-inner,
+.line-mask > .word,
+.line-mask > .char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.cine-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--fs-cine);
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  margin: 0;
+}
+.cine-display em,
+.cine-display .gold {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 300;
+}
+.cine-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--tea-300);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.cine-eyebrow::before {
+  content: "";
+  width: 28px; height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/* ---------------------------------------------------------------
+   Magnetic / interactive hooks
+   --------------------------------------------------------------- */
+.is-magnetic { display: inline-block; will-change: transform; }
+.is-interactive { cursor: pointer; }
+
+/* ---------------------------------------------------------------
+   Reveal fallback (matches main.js IntersectionObserver behaviour
+   for pages that don't opt into ScrollTrigger reveals)
+   --------------------------------------------------------------- */
+.reveal-cine { opacity: 0; transform: translateY(28px); }
+.reveal-cine.is-visible {
+  opacity: 1; transform: none;
+  transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+}
+
+/* ---------------------------------------------------------------
+   Reduced motion — disable the cinematic flourishes
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .parallax__layer { transform: none !important; filter: none !important; }
+  .grain { display: none; }
+  .page-wash { display: none; }
+}

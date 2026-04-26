@@ -1,0 +1,83 @@
+/* =============================================================
+   UKTTBS · Design tokens — professional dark editorial
+   ============================================================= */
+:root {
+  /* Surfaces — warm forest base, not clinical blue-black */
+  --bg:          #0b120e;
+  --bg-deeper:   #070c09;
+  --surface-1:   rgba(255, 251, 240, 0.035);
+  --surface-2:   rgba(255, 251, 240, 0.055);
+  --surface-3:   rgba(255, 251, 240, 0.085);
+  --hairline:    rgba(255, 251, 240, 0.08);
+  --hairline-strong: rgba(255, 251, 240, 0.16);
+
+  /* Ink — warm off-white, not icy */
+  --ink:         #f1ece0;
+  --ink-dim:     #c6bfb0;
+  --ink-mute:    #817c70;
+
+  /* Brand — muted sage + champagne, editorial not techno */
+  --tea-900:     #0e1f18;
+  --tea-700:     #254737;
+  --tea-500:     #4f7a63;
+  --tea-300:     #9fb8a2;   /* soft sage accent */
+  --tea-100:     #d7e1d5;
+
+  --gold:        #c9a96e;   /* champagne (1962 heritage) */
+  --gold-dim:    rgba(201, 169, 110, 0.6);
+
+  /* Restrained glow (used sparingly) */
+  --glow-accent: 0 8px 24px -14px rgba(159, 184, 162, 0.35);
+  --glow-soft:   0 24px 60px -30px rgba(0, 0, 0, 0.65);
+
+  /* Type */
+  --font-sans:    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Spacing */
+  --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
+  --sp-5: 1.5rem;  --sp-6: 2rem;   --sp-7: 3rem;   --sp-8: 4.5rem;  --sp-9: 7rem;
+
+  /* Radii */
+  --r-sm: 6px; --r-md: 10px; --r-lg: 18px; --r-xl: 28px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease:     cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Layout */
+  --container: 1280px;
+
+  /* Spotlight coords (updated by spotlight.js) */
+  --mx: 50%;
+  --my: 30%;
+
+  /* --- Atmospheric (cinematic layer) -------------------------- */
+  --fog:           rgba(215, 225, 213, 0.06);    /* cool mist */
+  --fog-warm:      rgba(201, 169, 110, 0.05);    /* amber haze */
+  --amber-glow:    rgba(201, 169, 110, 0.18);
+  --emerald-deep:  #0a1713;
+  --emerald-wash:  #0e1f18;
+  --scrim-top:     linear-gradient(180deg, rgba(7,12,9,0.85) 0%, rgba(7,12,9,0) 35%);
+  --scrim-bot:     linear-gradient(0deg,   rgba(7,12,9,0.9)  0%, rgba(7,12,9,0) 45%);
+  --grain-opacity: 0.06;
+
+  /* Cinematic display sizes */
+  --fs-cine:       clamp(3.5rem, 2rem + 7vw, 9.5rem);
+  --fs-hero:       clamp(2.75rem, 1.5rem + 5vw, 6.5rem);
+
+  /* Cursor */
+  --cursor-size:       10px;
+  --cursor-ring:       38px;
+  --cursor-ease:       cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

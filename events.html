@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events · UK Tea Trade Benevolent Society</title>
+  <meta name="description" content="Spring and Autumn cocktail parties — the highlights of the UK tea trade's social calendar.">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/cinematic.css">
+  <link rel="stylesheet" href="/assets/css/scenes.css">
+  <meta name="theme-color" content="#0b120e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body data-cine>
+
+  <main>
+
+    <!-- =========================================================
+         SCENE 1 — EVENTS HERO
+         ========================================================= -->
+    <section class="scene scene--center" data-scene="reveals" style="min-height:88vh">
+      <div class="parallax" aria-hidden="true">
+        <div class="parallax__layer" data-depth="0.1" style="background:radial-gradient(1000px 600px at 50% 55%, rgba(201,169,110,0.14) 0%, transparent 70%)"></div>
+        <div class="parallax__layer parallax__layer--fog" data-depth="0.18"></div>
+      </div>
+      <div class="scene__inner cap-container" style="text-align:center">
+        <span class="scene__chapter" data-reveal="up">Events · The social calendar</span>
+        <h1 class="cine-display" data-reveal="words">
+          Two parties a year. <em class="gold">One unforgettable community.</em>
+        </h1>
+        <p class="cine-lede" style="margin-inline:auto" data-reveal="up" data-reveal-delay="0.2">
+          Our Spring and Autumn cocktail parties are warm, informal
+          evenings that bring the UK tea trade together.
+        </p>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 2 — LIVE EVENTS LIST (hydrated by /assets/js/events.js)
+         ========================================================= -->
+    <section class="scene" data-scene="reveals" id="events-list">
+      <div class="scene__inner cap-container">
+        <header style="margin-bottom:clamp(2rem,5vh,4rem)">
+          <span class="scene__chapter" data-reveal="up">Upcoming</span>
+          <h2 class="cine-display" data-reveal="words">What's <em class="gold">next.</em></h2>
+        </header>
+
+        <div class="cine-events" data-events-list></div>
+
+        <div class="cine-events__empty" data-events-empty hidden>
+          <p class="cine-lede" style="margin:0">
+            No events announced just yet — check back soon, or
+            <a href="mailto:info@ukttbs.co.uk" style="color:var(--gold)">join the mailing list</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 3 — WHAT TO EXPECT
+         ========================================================= -->
+    <section class="scene" data-scene="reveals">
+      <div class="scene__inner cap-container">
+        <header style="max-width:720px;margin-bottom:clamp(2rem,5vh,4rem)">
+          <span class="scene__chapter" data-reveal="up">Chapter 02 · What to expect</span>
+          <h2 class="cine-display" data-reveal="words">Cocktails, canapés, <em class="gold">conversation.</em></h2>
+        </header>
+        <div class="pillars" data-reveal="stagger">
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">Spring</span>
+            <h3>April · London</h3>
+            <p>An elegant evening to kick off the year — bringing old friends together and welcoming new ones.</p>
+          </article>
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">Autumn</span>
+            <h3>October · London</h3>
+            <p>A warm, convivial gathering as the season turns — our busiest fundraising night of the year.</p>
+          </article>
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">Always</span>
+            <h3>In support of members</h3>
+            <p>Every ticket sold directly supports our welfare work. Come for the evening — stay for the cause.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 4 — CTA
+         ========================================================= -->
+    <section class="scene scene--short scene--center" data-scene="reveals">
+      <div class="scene__inner">
+        <h2 class="cine-display" data-reveal="words">Bring a friend. <em class="gold">Make a memory.</em></h2>
+        <div style="margin-top:2.5rem;display:inline-flex;gap:1rem;flex-wrap:wrap;justify-content:center" data-reveal="up" data-reveal-delay="0.2">
+          <a class="cine-btn cine-btn--solid" href="mailto:info@ukttbs.co.uk?subject=Event%20enquiry" data-magnetic="0.3">
+            <span>Enquire about tickets</span><span class="arrow">→</span>
+          </a>
+          <a class="cine-btn" href="/raffle.html" data-magnetic="0.25">
+            <span>Support via the raffle</span><span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
+      <nav class="site-foot__links" aria-label="Footer">
+        <a href="/about.html">About</a>
+        <a href="/events.html">Events</a>
+        <a href="/100-club.html">100 Club</a>
+        <a href="/raffle.html">Raffle</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:info@ukttbs.co.uk">Contact</a>
+      </nav>
+      <div class="site-foot__meta">
+        © 1962–<span id="foot-year"></span> · Charity 208709
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/events.js"></script>
+</body>
+</html>

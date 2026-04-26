@@ -1,0 +1,684 @@
+/* =============================================================
+   UKTTBS · Cinematic scenes — component styles
+   Built on top of design-tokens.css + cinematic.css.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   HERO — layered SVG parallax
+   --------------------------------------------------------------- */
+.hero-cine {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+  color: var(--ink);
+  background: var(--bg-deeper);
+}
+.hero-cine::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(1200px 700px at 50% 85%, rgba(11, 18, 14, 0) 0%, rgba(11, 18, 14, 0.85) 70%, rgba(7, 12, 9, 1) 100%),
+    linear-gradient(180deg, #0a1713 0%, #0b120e 60%);
+  z-index: 0;
+}
+.hero-cine .parallax { z-index: 1; }
+.hero-cine svg.parallax__art {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* Individual parallax layer tints */
+.parallax__layer--sky    { z-index: 1; inset: -15% 0 auto 0; height: 80%; }
+.parallax__layer--sun    { z-index: 2; }
+.parallax__layer--far    { z-index: 3; }
+.parallax__layer--mid    { z-index: 4; }
+.parallax__layer--near   { z-index: 5; }
+.parallax__layer--fog    { z-index: 6; inset: 20% 0 0 0; }
+.parallax__layer--leaf   { z-index: 7; inset: auto 0 -5% 0; height: 50%; }
+
+.hero-cine__inner {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: end center;
+  padding: 0 clamp(1.25rem, 4vw, 3rem) clamp(5rem, 14vh, 10rem);
+  text-align: center;
+  pointer-events: none;
+}
+.hero-cine__content {
+  max-width: 1100px;
+  pointer-events: auto;
+}
+.hero-cine__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--tea-300);
+  margin-bottom: clamp(1rem, 3vh, 2rem);
+}
+.hero-cine__meta span + span::before {
+  content: "";
+  display: inline-block;
+  width: 28px; height: 1px;
+  background: currentColor;
+  margin-right: 1rem;
+  vertical-align: middle;
+  opacity: 0.5;
+}
+.hero-cine__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--fs-cine);
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  margin: 0;
+  color: var(--ink);
+}
+.hero-cine__title .gold { color: var(--gold); font-style: italic; font-weight: 300; }
+.hero-cine__title .line-mask { margin-right: 0.15em; }
+.hero-cine__lede {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 0.9rem + 0.6vw, 1.45rem);
+  line-height: 1.5;
+  color: var(--ink-dim);
+  max-width: 640px;
+  margin: 1.5rem auto 2.25rem;
+  font-style: italic;
+}
+.hero-cine__cta {
+  display: inline-flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero-cine__cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.25rem, 3vh, 2rem);
+  transform: translateX(-50%);
+  z-index: 9;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  pointer-events: none;
+}
+.hero-cine__cue .line {
+  width: 1px; height: 40px;
+  background: linear-gradient(180deg, var(--ink-mute) 0%, transparent 100%);
+  transform-origin: top;
+  animation: cue-draw 2.6s var(--ease-out) infinite;
+}
+@keyframes cue-draw {
+  0%   { transform: scaleY(0); opacity: 0; }
+  30%  { transform: scaleY(1); opacity: 1; }
+  60%  { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; transform: translateY(30px) scaleY(1); }
+}
+
+/* ---------------------------------------------------------------
+   CINE BUTTONS — large, atmospheric
+   --------------------------------------------------------------- */
+.cine-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 280ms var(--ease-out), color 280ms var(--ease-out), border-color 280ms var(--ease-out), transform 280ms var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.cine-btn::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateY(101%);
+  transition: transform 380ms var(--ease-out);
+  z-index: -1;
+}
+.cine-btn:hover {
+  color: #1a1207;
+  border-color: var(--gold);
+}
+.cine-btn:hover::before { transform: translateY(0); }
+.cine-btn .arrow {
+  display: inline-block;
+  transition: transform 280ms var(--ease-out);
+}
+.cine-btn:hover .arrow { transform: translateX(4px); }
+.cine-btn--solid { background: var(--gold); color: #1a1207; border-color: var(--gold); }
+.cine-btn--solid::before { background: var(--ink); }
+.cine-btn--solid:hover { color: var(--bg); border-color: var(--ink); }
+
+/* ---------------------------------------------------------------
+   SCENE TYPOGRAPHY
+   --------------------------------------------------------------- */
+.scene h2.cine-display,
+.scene .cine-display {
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
+}
+.scene p.cine-lede,
+.scene .cine-lede {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.15rem, 0.95rem + 0.55vw, 1.6rem);
+  line-height: 1.5;
+  color: var(--ink-dim);
+  max-width: 62ch;
+  margin: 1.25rem 0 0;
+}
+.scene__chapter {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.scene__chapter::before {
+  content: "";
+  width: 32px; height: 1px;
+  background: currentColor; opacity: 0.6;
+}
+
+/* Thin hairline divider for sections */
+.cine-rule {
+  display: block;
+  width: 80px; height: 1px;
+  background: var(--hairline-strong);
+  margin: 2.5rem auto;
+}
+
+/* ---------------------------------------------------------------
+   CINE CARDS — 3D tilt host
+   --------------------------------------------------------------- */
+.cine-card {
+  position: relative;
+  padding: 2rem 1.75rem;
+  background: linear-gradient(180deg, rgba(255, 251, 240, 0.04), rgba(255, 251, 240, 0.015));
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  transition: border-color 320ms var(--ease-out), transform 320ms var(--ease-out);
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+.cine-card:hover { border-color: rgba(201, 169, 110, 0.35); }
+.cine-card .card-shine {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
+  mix-blend-mode: screen;
+  transition: background 200ms var(--ease-out);
+}
+.cine-card > * { transform: translateZ(40px); }
+
+/* Trustee / team tile */
+.cine-trustee {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+.cine-trustee__avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 35% 30%, rgba(159, 184, 162, 0.25), rgba(14, 31, 24, 0.6));
+  color: var(--tea-100);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  border: 1px solid var(--hairline);
+  margin-bottom: 0.75rem;
+}
+.cine-trustee__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.cine-trustee__role {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tea-300);
+  margin: 0.35rem 0 0.75rem;
+}
+.cine-trustee__bio {
+  font-size: 0.92rem;
+  color: var(--ink-mute);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------
+   MARQUEE — scrolling ribbon
+   --------------------------------------------------------------- */
+.marquee {
+  position: relative;
+  width: 100%;
+  overflow: clip;
+  padding: 2rem 0;
+  display: flex;
+}
+.marquee__track {
+  display: inline-flex;
+  gap: clamp(2rem, 5vw, 4rem);
+  white-space: nowrap;
+  will-change: transform;
+  flex-shrink: 0;
+}
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(2rem, 1rem + 3vw, 4rem);
+  letter-spacing: -0.02em;
+  color: var(--ink-dim);
+}
+.marquee__item + .marquee__item::before {
+  content: "·";
+  margin-right: clamp(1.5rem, 4vw, 3rem);
+  color: var(--gold);
+  opacity: 0.8;
+}
+.marquee--gold .marquee__item { color: var(--gold); }
+.marquee--muted .marquee__item { color: var(--ink-mute); font-size: clamp(1.2rem, 0.9rem + 1vw, 2rem); font-style: normal; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.25em; }
+
+/* ---------------------------------------------------------------
+   PILLAR GRID — used on What We Do / Mission / Values
+   --------------------------------------------------------------- */
+.pillars {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.pillar {
+  position: relative;
+  padding: 2.25rem 1.75rem;
+  border: 1px solid var(--hairline);
+  border-top: 1px solid var(--gold-dim);
+  background: linear-gradient(180deg, rgba(201, 169, 110, 0.04) 0%, transparent 40%);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.pillar__num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.25rem;
+  display: block;
+}
+.pillar h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1.1rem + 1vw, 2rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+  color: var(--ink);
+}
+.pillar p { margin: 0; color: var(--ink-dim); line-height: 1.65; }
+
+/* ---------------------------------------------------------------
+   EVENT LIST (cinematic)
+   --------------------------------------------------------------- */
+.cine-events { display: grid; gap: 1.25rem; }
+.cine-event {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: center;
+  padding: 2rem 1.75rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(255, 251, 240, 0.025), transparent);
+  transition: border-color 320ms var(--ease-out), transform 320ms var(--ease-out), background 320ms var(--ease-out);
+}
+.cine-event:hover {
+  border-color: var(--gold-dim);
+  background: linear-gradient(180deg, rgba(201, 169, 110, 0.08), transparent);
+}
+.cine-event__date {
+  text-align: center;
+  font-family: var(--font-display);
+}
+.cine-event__date .day {
+  font-size: clamp(2.5rem, 2rem + 1vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: block;
+}
+.cine-event__date .month {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.5rem;
+  display: block;
+}
+.cine-event h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1.15rem + 0.8vw, 2rem);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.cine-event__meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  margin: 0;
+}
+.cine-event__meta span + span::before {
+  content: "·"; margin: 0 0.55rem; color: var(--hairline-strong);
+}
+@media (max-width: 640px) {
+  .cine-event { grid-template-columns: auto 1fr; }
+  .cine-event > :last-child { grid-column: 1 / -1; }
+}
+
+/* ---------------------------------------------------------------
+   100 CLUB — interactive donation scene
+   --------------------------------------------------------------- */
+.hundred-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .hundred-stage { grid-template-columns: 1fr; }
+}
+.hundred__orbit {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 520px;
+  margin-inline: auto;
+}
+.hundred__orbit svg { width: 100%; height: 100%; overflow: visible; }
+.orbit__ring {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-dasharray: 1 4;
+  opacity: 0.7;
+}
+.orbit__dot {
+  fill: var(--gold);
+  filter: drop-shadow(0 0 14px rgba(201, 169, 110, 0.45));
+}
+.orbit__label {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; text-align: center;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.1;
+  pointer-events: none;
+}
+.orbit__label .big {
+  font-size: clamp(3rem, 2.5rem + 3vw, 5.5rem);
+  color: var(--gold);
+  display: block;
+}
+.orbit__label .sub {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.5rem;
+}
+
+.hundred__panel { max-width: 520px; }
+.hundred__toggle {
+  display: inline-flex;
+  padding: 4px;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+}
+.hundred__toggle button {
+  border: 0;
+  background: transparent;
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  font: 500 0.78rem/1 var(--font-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: background 240ms var(--ease-out), color 240ms var(--ease-out);
+}
+.hundred__toggle button[aria-pressed="true"] {
+  background: var(--gold);
+  color: #1a1207;
+}
+.hundred__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+}
+.hundred__price [data-price] {
+  font-size: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  line-height: 1;
+}
+.hundred__price [data-unit] {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.82rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.hundred__note {
+  color: var(--ink-mute);
+  font-size: 0.92rem;
+  margin: 1rem 0 2rem;
+}
+
+/* ---------------------------------------------------------------
+   QUOTE RIBBON (Testimonials scene)
+   --------------------------------------------------------------- */
+.cine-quote {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  padding: 3rem clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  background: linear-gradient(180deg, rgba(201, 169, 110, 0.04), rgba(255,251,240,0.015));
+  align-items: start;
+}
+.cine-quote__mark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(5rem, 4rem + 2vw, 7rem);
+  color: var(--gold);
+  line-height: 0.85;
+  margin: -0.5rem 0 0;
+}
+.cine-quote p {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.35rem, 1rem + 1vw, 2.1rem);
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+  letter-spacing: -0.01em;
+}
+.cine-quote cite {
+  display: inline-block;
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+@media (max-width: 640px) {
+  .cine-quote { grid-template-columns: 1fr; gap: 0.5rem; padding: 2rem 1.5rem; }
+}
+
+/* ---------------------------------------------------------------
+   FOOTER re-style on cinematic pages
+   --------------------------------------------------------------- */
+body[data-cine] .site-foot {
+  position: relative;
+  background: linear-gradient(180deg, var(--bg-deeper) 0%, #05090a 100%);
+  border-top: 1px solid var(--hairline);
+}
+
+/* ---------------------------------------------------------------
+   SMALL HELPERS / ADJUSTMENTS
+   --------------------------------------------------------------- */
+.stagger-list > * { display: block; }
+.cap-container {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+/* Lenis + pinned scenes need transform-safe children */
+body[data-cine] main { position: relative; }
+
+/* ---------------------------------------------------------------
+   ADDITIONAL COMPONENTS · team grid, quote variants, hundred bullets
+   --------------------------------------------------------------- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(1.25rem, 2vw, 2rem);
+}
+.cine-trustee { display: flex; flex-direction: column; gap: 0.5rem; }
+.cine-trustee__avatar {
+  width: 72px; height: 72px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  margin-bottom: 0.5rem;
+}
+.cine-trustee__name {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.25rem, 1rem + 0.5vw, 1.5rem);
+  margin: 0;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.cine-trustee__role {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+}
+.cine-trustee__bio {
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0.5rem 0 0;
+}
+
+.hundred__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  display: grid;
+  gap: 0.85rem;
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.hundred__bullets li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.hundred__bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.65em;
+  width: 10px; height: 1px;
+  background: var(--gold);
+}
+
+/* Quote BEM variants used on testimonials page */
+.cine-quote__body {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.35rem, 1rem + 1vw, 2.1rem);
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+  letter-spacing: -0.01em;
+}
+.cine-quote__cite {
+  display: inline-block;
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* Events listing empty state */
+.cine-events__empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  border: 1px dashed var(--hairline);
+  border-radius: var(--r-lg);
+}

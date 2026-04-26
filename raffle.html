@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Raffle · UK Tea Trade Benevolent Society</title>
+  <meta name="description" content="A little flutter for a very good cause — the UKTTBS annual raffle.">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/assets/css/cinematic.css">
+  <link rel="stylesheet" href="/assets/css/scenes.css">
+  <meta name="theme-color" content="#0b120e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body data-cine>
+
+  <main>
+
+    <!-- =========================================================
+         SCENE 1 — RAFFLE HERO
+         ========================================================= -->
+    <section class="scene scene--center" data-scene="reveals" style="min-height:92vh">
+      <div class="parallax" aria-hidden="true">
+        <div class="parallax__layer" data-depth="0.08" style="background:radial-gradient(900px 540px at 50% 55%, rgba(201,169,110,0.2) 0%, transparent 70%)"></div>
+        <div class="parallax__layer parallax__layer--fog" data-depth="0.18"></div>
+      </div>
+      <div class="scene__inner cap-container" style="text-align:center">
+        <span class="scene__chapter" data-reveal="up">The annual raffle</span>
+        <h1 class="cine-display" data-reveal="words">
+          A little flutter, <em class="gold">a lot of good.</em>
+        </h1>
+        <p class="cine-lede" style="margin-inline:auto" data-reveal="up" data-reveal-delay="0.2">
+          Our raffle is a highlight of each gathering — a few pounds per
+          ticket, with every penny fuelling our welfare work.
+        </p>
+        <div style="margin-top:2.5rem" data-reveal="up" data-reveal-delay="0.35">
+          <a class="cine-btn cine-btn--solid" href="#tickets" data-magnetic="0.3">
+            <span>Buy tickets</span><span class="arrow">↓</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 2 — HOW IT WORKS
+         ========================================================= -->
+    <section class="scene" data-scene="reveals">
+      <div class="scene__inner cap-container">
+        <header style="max-width:720px;margin-bottom:clamp(2rem,5vh,4rem)">
+          <span class="scene__chapter" data-reveal="up">How it works</span>
+          <h2 class="cine-display" data-reveal="words">Three steps. <em class="gold">That's it.</em></h2>
+        </header>
+        <div class="pillars" data-reveal="stagger">
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">01</span>
+            <h3>Choose your tickets</h3>
+            <p>Pick a bundle below. Every ticket gives you a fresh chance at winning.</p>
+          </article>
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">02</span>
+            <h3>Secure checkout</h3>
+            <p>Pay securely via Stripe. Your ticket numbers arrive by email, straight away.</p>
+          </article>
+          <article class="pillar" data-tilt>
+            <span class="pillar__num">03</span>
+            <h3>Drawn at our next event</h3>
+            <p>Winners are announced live at our Spring or Autumn party — and notified personally.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 3 — TICKET PURCHASE (hydrated by /assets/js/raffle.js)
+         ========================================================= -->
+    <section class="scene" data-scene="reveals" id="tickets">
+      <div class="scene__inner cap-container">
+        <header style="max-width:720px;margin-bottom:clamp(2rem,5vh,4rem)">
+          <span class="scene__chapter" data-reveal="up">Buy tickets</span>
+          <h2 class="cine-display" data-reveal="words">Make it count.</h2>
+        </header>
+        <div data-raffle data-reveal="up"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCENE 4 — CLOSING CTA
+         ========================================================= -->
+    <section class="scene scene--short scene--center" data-scene="reveals">
+      <div class="scene__inner">
+        <h2 class="cine-display" data-reveal="words">Prefer a regular gift? <em class="gold">Join the 100 Club.</em></h2>
+        <div style="margin-top:2.5rem" data-reveal="up" data-reveal-delay="0.2">
+          <a class="cine-btn cine-btn--solid" href="/100-club.html" data-magnetic="0.3">
+            <span>Explore the 100 Club</span><span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
+      <nav class="site-foot__links" aria-label="Footer">
+        <a href="/about.html">About</a>
+        <a href="/events.html">Events</a>
+        <a href="/100-club.html">100 Club</a>
+        <a href="/raffle.html">Raffle</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:info@ukttbs.co.uk">Contact</a>
+      </nav>
+      <div class="site-foot__meta">
+        © 1962–<span id="foot-year"></span> · Charity 208709
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/raffle.js"></script>
+</body>
+</html>

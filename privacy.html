@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy policy · UK Tea Trade Benevolent Society</title>
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <meta name="theme-color" content="#0b120e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body>
+  <main>
+    <section class="section">
+      <div class="container container--narrow">
+        <span class="eyebrow">Legal</span>
+        <h1>Privacy policy</h1>
+        <p class="muted">Last updated: <span data-updated></span></p>
+
+        <div class="stack-lg">
+          <div>
+            <h3>Who we are</h3>
+            <p>The UK Tea Trade Benevolent Society ("UKTTBS", "we", "our") is a UK charitable organisation, registered charity number 208709. Our registered address is Thompson House, 42–44 Dolben Street, London SE1 0UQ.</p>
+          </div>
+          <div>
+            <h3>What we collect</h3>
+            <ul>
+              <li><strong>Contact details</strong> (name, email) when you purchase tickets, enter the raffle, join the 100 Club, or contact us.</li>
+              <li><strong>Order &amp; subscription data</strong> via Stripe — we never see or store your card details.</li>
+              <li><strong>Account data</strong> (email, sign-in timestamps) held by our infrastructure provider Supabase.</li>
+              <li><strong>Aggregated analytics</strong> — anonymous website traffic data to help us improve the site.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>How we use it</h3>
+            <p>We use your data only to fulfil your purchases, administer your 100 Club membership, run the raffle draw, send you the Society's updates if you opt in, and meet our legal and charitable obligations.</p>
+          </div>
+          <div>
+            <h3>Who we share it with</h3>
+            <ul>
+              <li><strong>Stripe</strong> — to process payments securely.</li>
+              <li><strong>Supabase</strong> — to host our member database.</li>
+              <li><strong>HMRC / regulators</strong> — only where legally required.</li>
+            </ul>
+            <p>We never sell your data and we never share it for marketing.</p>
+          </div>
+          <div>
+            <h3>Your rights</h3>
+            <p>You can request a copy of your data, correct anything inaccurate, or ask us to delete your account at any time by emailing <a href="mailto:info@ukttbs.co.uk">info@ukttbs.co.uk</a>.</p>
+          </div>
+          <div>
+            <h3>Cookies</h3>
+            <p>This site uses only essential cookies to keep you signed in and to process payments. If we ever add analytics or marketing cookies in future, we'll ask for your consent first.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-foot">
+    <div class="container site-foot__inner">
+      <div class="site-foot__brand"><span class="gold">UK</span>TTBS</div>
+      <nav class="site-foot__links" aria-label="Footer">
+        <a href="/about.html">About</a>
+        <a href="/events.html">Events</a>
+        <a href="/100-club.html">100 Club</a>
+        <a href="/raffle.html">Raffle</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="mailto:info@ukttbs.co.uk">Contact</a>
+      </nav>
+      <div class="site-foot__meta">
+        © 1962–<span id="foot-year"></span> · Charity 208709
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("foot-year").textContent = new Date().getFullYear();</script>
+  <script src="/assets/js/config.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script>document.querySelector("[data-updated]").textContent = new Date().toLocaleDateString("en-GB", { year:"numeric", month:"long", day:"numeric" });</script>
+</body>
+</html>
