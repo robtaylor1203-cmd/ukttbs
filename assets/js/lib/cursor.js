@@ -36,16 +36,19 @@ export function initCursor() {
 
   // Targets that live inside the cursor we translate independently.
   const ring = cursor.querySelector(".cursor__ring");
-  const dot  = cursor.querySelector(".cursor__dot");
+  const dot = cursor.querySelector(".cursor__dot");
 
   // Position trackers — dot snaps, ring eases behind with quickTo.
-  const xDot  = gsap.quickTo(dot,  "x", { duration: 0.08, ease: "power3" });
-  const yDot  = gsap.quickTo(dot,  "y", { duration: 0.08, ease: "power3" });
-  const xRing = gsap.quickTo(ring, "x", { duration: 0.35, ease: "power3" });
-  const yRing = gsap.quickTo(ring, "y", { duration: 0.35, ease: "power3" });
+  // Set dot duration to 0 (or 0.02) for instant 1-to-1 mouse tracking
+  const xDot = gsap.quickTo(dot, "x", { duration: 0, ease: "none" });
+  const yDot = gsap.quickTo(dot, "y", { duration: 0, ease: "none" });
+
+  // Cut the ring duration in half so the trail is tighter
+  const xRing = gsap.quickTo(ring, "x", { duration: 0.15, ease: "power3" });
+  const yRing = gsap.quickTo(ring, "y", { duration: 0.15, ease: "power3" });
 
   const move = (e) => {
-    xDot(e.clientX);  yDot(e.clientY);
+    xDot(e.clientX); yDot(e.clientY);
     xRing(e.clientX); yRing(e.clientY);
   };
   window.addEventListener("pointermove", move, { passive: true });
@@ -77,7 +80,7 @@ export function initCursor() {
     cursor.setAttribute("data-state", "default");
   });
   document.addEventListener("pointerdown", () => cursor.setAttribute("data-state", "press"));
-  document.addEventListener("pointerup",   () => cursor.setAttribute("data-state", "default"));
+  document.addEventListener("pointerup", () => cursor.setAttribute("data-state", "default"));
 
   // Magnetic effect — pulls element toward cursor on hover.
   const magnets = document.querySelectorAll("[data-magnetic]");
@@ -100,8 +103,8 @@ function setupMagnet(el) {
   const yTo = gsap.quickTo(el, "y", { duration: 0.4, ease: "power3" });
   el.addEventListener("pointermove", (e) => {
     const r = el.getBoundingClientRect();
-    const cx = r.left + r.width  / 2;
-    const cy = r.top  + r.height / 2;
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
     xTo((e.clientX - cx) * strength);
     yTo((e.clientY - cy) * strength);
   });
