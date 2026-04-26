@@ -4,20 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The 100 Club - UKTTBS</title>
-  <meta name="description" content="Subscribe to the UKTTBS 100 Club — a members' lottery that funds our welfare work.">
-
+  <meta name="description" content="Subscribe to the UKTTBS 100 Club — a members' lottery that funds our welfare work. Win prizes monthly.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="The 100 Club - UKTTBS">
   <meta property="og:description" content="Subscribe to the UKTTBS 100 Club — a members' lottery that funds our welfare work.">
   <meta property="og:image" content="club_cheers.png">
 
-  <!-- Keep specific scene styles for the 100 club SVG widget -->
   <link rel="stylesheet" href="/assets/css/scenes.css">
   <link rel="stylesheet" href="style.css">
-  
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-
 <body class="loading">
 
   <div class="preloader"><div class="counter">0%</div></div>
@@ -51,9 +47,9 @@
   </div>
 
   <main>
-    <!-- MASSIVE HERO -->
+    <!-- HERO -->
     <section class="hero" style="height: 100vh;">
-      <div class="hero-bg" style="background-image: url('club_cheers.png'); filter: brightness(0.6);"></div>
+      <div class="hero-bg" style="background-image: url('club_cheers.png');"></div>
       <div class="hero-content">
         <h1 class="hero-title">
           <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">The 100 Club</span></div>
@@ -63,13 +59,53 @@
       </div>
     </section>
 
-    <!-- WIDGET INTEGRATION (LUXURY SECTION) -->
-    <section class="club-hundred" style="height: auto; min-height: 60vh; background: #020202; padding-top: 15vh; padding-bottom: 15vh;" id="join">
-      <div class="club-bg parallax-img" style="background-image: url('panel3.png'); opacity: 0.1; filter: grayscale(100%);"></div>
-      <div class="club-content" style="max-width: 1200px; margin: 0 auto; px: 2rem;">
-        
+    <!-- HOW IT WORKS — editorial intro -->
+    <section style="background: #020202; padding: 10vh 5vw;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <span class="fade-in" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem;">What is it</span>
+        <h2 class="fade-in" style="font-size: clamp(2.5rem, 4.5vw, 4rem); font-weight: 800; text-transform: uppercase; line-height: 1.1; margin-bottom: 2rem;">
+          A lottery with<br>
+          <span style="color: #c9a96e;">a purpose.</span>
+        </h2>
+        <p class="fade-in" style="font-size: 1.15rem; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.9; max-width: 700px; margin-bottom: 1.5rem;">
+          The 100 Club is the Society's monthly prize draw. For a small annual or monthly subscription, you're entered into every draw — and every penny of your subscription goes directly to our welfare fund. No overheads, no admin fees, no catch.
+        </p>
+        <p class="fade-in" style="font-size: 1.15rem; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.9; max-width: 700px;">
+          It's the single most consistent source of income we have. It lets us plan ahead, say yes when members need us, and keep the phone line warm all year round.
+        </p>
+      </div>
+    </section>
+
+    <!-- STAT COUNTERS -->
+    <section style="background: #050505; padding: 6vh 5vw;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div class="stat-row fade-in">
+          <div class="stat-item">
+            <div class="stat-item__number">12</div>
+            <div class="stat-item__label">draws per year</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__number">100%</div>
+            <div class="stat-item__label">to welfare</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__number">£10</div>
+            <div class="stat-item__label">per month</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__number">60+</div>
+            <div class="stat-item__label">years of care</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBSCRIBE WIDGET -->
+    <section class="club-hundred" style="height: auto; min-height: auto; background: #020202; padding: 8vh 5vw;" id="join">
+      <div class="club-bg parallax-img" style="background-image: url('panel3.png'); opacity: 0.08; filter: grayscale(100%);"></div>
+      <div class="club-content" style="max-width: 1100px; margin: 0 auto;">
         <div class="hundred-stage fade-in-up">
-          <!-- LEFT · orbit visual -->
+          <!-- LEFT: orbit visual -->
           <div class="hundred__orbit" data-reveal="fade">
             <svg viewBox="0 0 400 400" width="100%" height="100%" aria-hidden="true">
               <defs>
@@ -96,7 +132,7 @@
             </svg>
           </div>
 
-          <!-- RIGHT · tier panel -->
+          <!-- RIGHT: tier panel -->
           <div class="hundred__panel" style="text-align: left;">
             <div style="margin-bottom: 2rem;">
               <h2 style="font-size: clamp(2.5rem, 4vw, 4rem); text-transform: uppercase; line-height: 1;">Subscribe to the<br><em class="gold">100 club.</em></h2>
@@ -132,59 +168,131 @@
       </div>
     </section>
 
-    <!-- EXPECTATIONS BLOCK (Grid) -->
+    <!-- WHY IT MATTERS — emotional statement -->
     <section style="background: #050505; padding: 8vh 5vw;">
-      <div style="max-width: 1200px; margin: 0 auto;">
-        
-        <div class="fade-in" style="margin-bottom: 3rem; text-align: center;">
-          <div class="scene__chapter" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">Why it matters</div>
-          <h2 class="huge-title" style="font-size: clamp(3rem, 6vw, 6rem); text-transform: uppercase; line-height: 1;">
-            Every subscription is <br>
-            <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">Someone's safety net.</em>
+      <div style="max-width: 1000px; margin: 0 auto;">
+
+        <div class="fade-in" style="text-align: center; margin-bottom: 4rem;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 2rem;">Why it matters</span>
+          <h2 style="font-size: clamp(2.5rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1;">
+            Every subscription is<br>
+            <span style="color: #c9a96e;">someone's safety net.</span>
           </h2>
-          <p class="fade-in" style="max-width: 600px; margin: 3rem auto 0; font-size: 1.25rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
-            The 100 Club is our single most reliable source of income. It lets us plan ahead — and say yes when members need us.
+          <p style="max-width: 600px; margin: 2rem auto 0; font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.6);">
+            The 100 Club is our single most reliable source of income. While events come twice a year, your subscription works twelve months a year — quietly funding the welfare calls, the emergency grants, and the regular check-ins that keep our community whole.
           </p>
         </div>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
-          
-          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">01</span>
-            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Confidential Welfare</h3>
-            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Funds direct financial support for members facing hardship.</p>
-          </article>
 
-          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">02</span>
-            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Regular Check-ins</h3>
-            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Keeps the phone line warm — so no one is forgotten.</p>
-          </article>
+        <!-- WHERE THE MONEY GOES — visual breakdown -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+          <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
+            <i class="ri-heart-pulse-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
+            <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Confidential Welfare</h4>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Direct financial support for members facing unexpected hardship — boiler repairs, funeral costs, emergency bills.</p>
+          </div>
 
-          <article class="fade-in" style="padding: 4rem 3rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; transition: transform 0.4s ease, background 0.4s ease;" onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(-10px)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.transform='translateY(0)';">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9a96e; display:block; margin-bottom: 3rem;">03</span>
-            <h3 style="font-size: 2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 1.5rem; color: #fff;">Practical Advocacy</h3>
-            <p style="color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.8; font-size: 1.1rem;">Helps us navigate grants and pensions on members' behalf.</p>
-          </article>
+          <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
+            <i class="ri-phone-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
+            <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Regular Check-ins</h4>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Keeping the phone line warm so no one is forgotten. A friendly voice, a doorstep visit, a quiet act of care.</p>
+          </div>
 
+          <div class="fade-in" style="padding: 2.5rem 2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; text-align: center; transition: transform 0.4s, border-color 0.4s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(201,169,110,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'">
+            <i class="ri-file-list-3-line" style="font-size: 2.5rem; color: #c9a96e; display: block; margin-bottom: 1.25rem;"></i>
+            <h4 style="color: #fff; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem;">Practical Advocacy</h4>
+            <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Navigating grants, pensions, council support and benefits applications on behalf of members who need guidance.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW THE DRAW WORKS — step by step -->
+    <section style="background: #020202; padding: 8vh 5vw;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <span class="fade-in" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 3rem;">How the draw works</span>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+          <div class="fade-in" style="display: grid; grid-template-columns: 50px 1fr; gap: 1.5rem; align-items: start;">
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.2); display: flex; align-items: center; justify-content: center; color: #c9a96e; font-weight: 700;">1</div>
+            <div>
+              <h4 style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">Subscribe</h4>
+              <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Choose annual or monthly. Payment is handled securely by Stripe — we never see your card details.</p>
+            </div>
+          </div>
+          <div class="fade-in" style="display: grid; grid-template-columns: 50px 1fr; gap: 1.5rem; align-items: start;">
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.2); display: flex; align-items: center; justify-content: center; color: #c9a96e; font-weight: 700;">2</div>
+            <div>
+              <h4 style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">Automatic entry</h4>
+              <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">Your subscription gives you one ticket in every monthly draw. No need to re-enter — you're in automatically.</p>
+            </div>
+          </div>
+          <div class="fade-in" style="display: grid; grid-template-columns: 50px 1fr; gap: 1.5rem; align-items: start;">
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.2); display: flex; align-items: center; justify-content: center; color: #c9a96e; font-weight: 700;">3</div>
+            <div>
+              <h4 style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">Winner drawn</h4>
+              <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">A winner is drawn each month and notified personally by email. Simple, fair, and transparent.</p>
+            </div>
+          </div>
+          <div class="fade-in" style="display: grid; grid-template-columns: 50px 1fr; gap: 1.5rem; align-items: start;">
+            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.2); display: flex; align-items: center; justify-content: center; color: #c9a96e; font-weight: 700;">4</div>
+            <div>
+              <h4 style="color: #fff; font-weight: 600; margin-bottom: 0.5rem;">Funds go to work</h4>
+              <p style="color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.7; font-size: 0.95rem;">100% of your subscription goes to welfare. Prize money comes from a separate fund — your contribution is never diluted.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- JOIN CTA BLOCK -->
-    <section class="club-hundred" style="min-height: 40vh; padding: 10vh 0;">
-      <div class="club-bg parallax-img" style="background-image: url('club_cheers.png'); filter: brightness(0.3) blur(2px);"></div>
+    <!-- FAQ ACCORDION -->
+    <section style="background: #050505; padding: 8vh 5vw;">
+      <div style="max-width: 700px; margin: 0 auto;">
+        <span class="fade-in" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 3rem;">Common questions</span>
+
+        <div class="fade-in">
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item__q">How much does it cost? <i class="ri-add-line"></i></div>
+            <div class="faq-item__a"><p>£120 per year (paid annually) or £10 per month. Both give you one entry per draw — 12 chances to win each year.</p></div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item__q">Can anyone join? <i class="ri-add-line"></i></div>
+            <div class="faq-item__a"><p>Yes — the 100 Club is open to anyone, whether or not you've worked in the tea trade. Friends, family and supporters are all welcome.</p></div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item__q">How are winners chosen? <i class="ri-add-line"></i></div>
+            <div class="faq-item__a"><p>Winners are selected by a verified random draw each month. The draw is supervised by a trustee and winners are notified directly by email.</p></div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item__q">Can I cancel? <i class="ri-add-line"></i></div>
+            <div class="faq-item__a"><p>Absolutely. You can pause or cancel your subscription at any time from your account page, or by contacting us. No awkward phone calls, no questions asked.</p></div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item__q">Where exactly does my money go? <i class="ri-add-line"></i></div>
+            <div class="faq-item__a"><p>Every penny goes to the Society's welfare fund. Trustees are unpaid volunteers and our overheads are negligible. Your subscription directly supports members of the trade.</p></div>
+          </div>
+          <div class="faq-item" onclick="this.classList.toggle('open')">
+            <div class="faq-item__q">Is it tax deductible? <i class="ri-add-line"></i></div>
+            <div class="faq-item__a"><p>The 100 Club subscription is a lottery entry, not a donation, so it is not eligible for Gift Aid. However, it is still a tremendously effective way to support the Society.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="club-hundred" style="min-height: 40vh; padding: 8vh 0;">
+      <div class="club-bg parallax-img" style="background-image: url('club_cheers.png'); filter: brightness(0.25);"></div>
       <div class="club-content" style="text-align: center; padding: 0 2rem;">
-        <h2 style="font-size: clamp(2.5rem, 4vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 1.5rem;">
+        <h2 class="fade-in-up" style="font-size: clamp(2rem, 4vw, 3.5rem); text-transform: uppercase; line-height: 1.15; margin-bottom: 1.5rem;">
           Questions?<br>
           <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">We're here.</em>
         </h2>
-        <div class="fade-in-up" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;">
-          <a href="mailto:info@ukttbs.co.uk?subject=100%20Club%20enquiry" class="magnetic" style="border: 1px solid rgba(255,255,255,0.3); padding: 1rem 3rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; font-size: 0.9rem; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">Email the Society</a>
+        <div class="fade-in-up" style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+          <a href="#join" class="magnetic" style="border: 1px solid #fff; padding: 1rem 2.5rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #000; background: #fff; font-size: 0.85rem; font-weight: 600;">Subscribe now</a>
+          <a href="mailto:info@ukttbs.co.uk?subject=100%20Club%20enquiry" class="magnetic" style="border: 1px solid rgba(255,255,255,0.25); padding: 1rem 2.5rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; font-size: 0.85rem; transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='transparent'">Email the Society</a>
         </div>
       </div>
     </section>
-
   </main>
 
   <section class="parallax-footer">
@@ -196,11 +304,10 @@
     </div>
   </section>
 
-  <!-- GSAP & Lenis -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="app.js"></script>
 
   <script src="/assets/js/config.js"></script>
