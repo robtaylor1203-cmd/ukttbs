@@ -9,8 +9,10 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <style>
     /* ── ACCOUNT PAGE STYLES ── */
-    .acct-shell { display: flex; min-height: 100vh; background: #020202; }
-    .acct-sidebar { width: 280px; background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
+    /* Reserve space at the top for the global fixed navbar so the sidebar
+       user info and the UKTTBS logo never overlap. */
+    .acct-shell { display: flex; min-height: 100vh; background: #020202; padding-top: 110px; }
+    .acct-sidebar { width: 280px; background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; position: sticky; top: 110px; height: calc(100vh - 110px); display: flex; flex-direction: column; }
     /* Hide sidebar brand — the global navbar already shows the UKTTBS logo top-left, so this avoided duplicate. */
     .acct-sidebar__brand { display: none; }
     .acct-sidebar__user { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
