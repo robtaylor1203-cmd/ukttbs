@@ -9,10 +9,13 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <style>
     /* ── ACCOUNT PAGE STYLES ── */
-    /* Reserve space at the top for the global fixed navbar so the sidebar
-       user info and the UKTTBS logo never overlap. */
-    .acct-shell { display: flex; min-height: 100vh; background: #020202; padding-top: 110px; }
-    .acct-sidebar { width: 280px; background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; position: sticky; top: 110px; height: calc(100vh - 110px); display: flex; flex-direction: column; }
+    /* Use a slim, account-specific navbar so the dashboard sits close to the
+       top instead of under the marketing site's tall hero navbar. */
+    body.account-page .navbar { padding: 1rem 2rem; }
+    body.account-page .navbar .logo a { font-size: 1.5rem; }
+    /* Reserve just enough room for the slim navbar above the dashboard. */
+    .acct-shell { display: flex; min-height: 100vh; background: #020202; padding-top: 72px; }
+    .acct-sidebar { width: 280px; background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; position: sticky; top: 72px; height: calc(100vh - 72px); display: flex; flex-direction: column; }
     /* Hide sidebar brand — the global navbar already shows the UKTTBS logo top-left, so this avoided duplicate. */
     .acct-sidebar__brand { display: none; }
     .acct-sidebar__user { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -25,7 +28,7 @@
     .acct-signout { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
     .acct-signout button { background: none; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); padding: 0.6rem 1.5rem; border-radius: 50px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.3s; width: 100%; }
     .acct-signout button:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
-    .acct-main { flex: 1; padding: 3rem 4rem; overflow-y: auto; }
+    .acct-main { flex: 1; padding: 2rem 4rem 3rem; overflow-y: auto; }
     .acct-panel { display: none; }
     .acct-panel.active { display: block; }
     .acct-header { margin-bottom: 2.5rem; }
@@ -148,7 +151,7 @@
     }
   </style>
 </head>
-<body class="loading">
+<body class="loading account-page">
 
   <div class="preloader"><div class="counter">0%</div></div>
   <div class="film-grain"></div>
