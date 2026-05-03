@@ -89,7 +89,9 @@
       /* Tighten the global fixed navbar so the logo sits flush in the top-left corner */
       .navbar { padding: 1rem 1.25rem; }
 
-      .acct-shell { flex-direction: column; }
+      /* Reset the desktop top-padding on mobile — the sticky tab bar and main
+         content provide their own offsets, so we don't want a giant gap. */
+      .acct-shell { flex-direction: column; padding-top: 0; }
       /* Push the dashboard sidebar below the fixed navbar so they don't overlap */
       .acct-sidebar {
         width: 100%;
