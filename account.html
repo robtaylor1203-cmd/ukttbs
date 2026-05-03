@@ -436,10 +436,29 @@
             resetBtn();
             return;
           }
-          // Session present → auth state change will render the dashboard.
+          // Session present → fall through to membership check + dashboard render below.
+          if (await ensureUkttbsMember(data.session)) {
+            renderDashboard(data.session);
+          } else {
+            await showNotAMember();
+            resetBtn();
+          }
         } else {
-          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
           if (error) throw error;
+          // Don't rely on onAuthStateChange — drive the dashboard render directly so
+          // the button never gets stuck on "Signing in…" if the event handler is slow.
+          if (data?.session) {
+            if (await ensureUkttbsMember(data.session)) {
+              renderDashboard(data.session);
+            } else {
+              await showNotAMember();
+              resetBtn();
+            }
+          } else {
+            showMsg('Sign-in succeeded but no session was returned. Please reload the page.');
+            resetBtn();
+          }
         }
       } catch (err) {
         showMsg(err.message || 'Authentication failed.');
