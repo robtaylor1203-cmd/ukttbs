@@ -25,7 +25,8 @@ const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
 
 const admin = createClient(
   Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  { db: { schema: "ukttbs" } } // pinned to ukttbs schema — never touch other apps' data
 );
 
 Deno.serve(async (req) => {

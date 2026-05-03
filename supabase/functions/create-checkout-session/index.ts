@@ -44,18 +44,36 @@ Deno.serve(async (req) => {
     if (auth?.startsWith("Bearer ")) {
       const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
         global: { headers: { Authorization: auth } },
+        db: { schema: "ukttbs" },
       });
       const { data } = await sb.auth.getUser();
       if (data.user) {
         userId = data.user.id;
         email = data.user.email ?? undefined;
       }
+
+      // Hard-stop: only UKTTBS members may create checkout sessions.
+      // (auth.users is shared with another app on this Supabase project.)
+      if (userId) {
+        const { data: profile } = await sb
+          .from("profiles")
+          .select("id, is_ukttbs_member")
+          .eq("id", userId)
+          .maybeSingle();
+        if (!profile || !profile.is_ukttbs_member) {
+          return new Response(
+            JSON.stringify({ error: "This account is not a UKTTBS member." }),
+            { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+      }
     }
 
-    // Admin client for writes
+    // Admin (service-role) client for writes — pinned to ukttbs schema.
     const admin = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      { db: { schema: "ukttbs" } }
     );
 
     let session: Stripe.Checkout.Session;

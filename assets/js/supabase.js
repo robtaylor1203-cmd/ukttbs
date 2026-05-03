@@ -5,8 +5,13 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const cfg = window.UKTTBS_CONFIG || {};
 
+// IMPORTANT: This Supabase project is shared with another app, so all
+// UKTTBS tables live in a dedicated `ukttbs` Postgres schema. Pinning
+// the client here ensures we can never accidentally read/write the
+// other project's `public` tables.
 export const supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, {
   auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  db: { schema: "ukttbs" },
 });
 
 /** Format a Date (or ISO string) as e.g. "Sat 14 March 2026, 7:00pm". */

@@ -11,8 +11,8 @@
     /* ── ACCOUNT PAGE STYLES ── */
     .acct-shell { display: flex; min-height: 100vh; background: #020202; }
     .acct-sidebar { width: 280px; background: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
-    .acct-sidebar__brand { padding: 0 1.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .acct-sidebar__brand a { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; }
+    /* Hide sidebar brand — the global navbar already shows the UKTTBS logo top-left, so this avoided duplicate. */
+    .acct-sidebar__brand { display: none; }
     .acct-sidebar__user { padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .acct-sidebar__user strong { color: #fff; display: block; font-size: 0.95rem; margin-bottom: 0.25rem; }
     .acct-sidebar__user span { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
@@ -84,14 +84,63 @@
     .login-error { background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.2); color: #ef9a9a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 1rem; display: none; }
 
     @media (max-width: 900px) {
+      /* Tighten the global fixed navbar so the logo sits flush in the top-left corner */
+      .navbar { padding: 1rem 1.25rem; }
+
       .acct-shell { flex-direction: column; }
-      .acct-sidebar { width: 100%; height: auto; position: relative; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
+      /* Push the dashboard sidebar below the fixed navbar so they don't overlap */
+      .acct-sidebar {
+        width: 100%;
+        height: auto;
+        position: sticky;
+        top: 64px;
+        z-index: 90;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        margin-top: 64px;
+        background: rgba(10,10,10,0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
       .acct-sidebar__brand, .acct-sidebar__user { display: none; }
-      .acct-nav { display: flex; gap: 0; padding: 0; overflow-x: auto; }
-      .acct-nav li a { padding: 0.7rem 1rem; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; font-size: 0.8rem; }
+      .acct-nav {
+        display: flex;
+        gap: 0;
+        padding: 0;
+        margin: 0;
+        flex: 1;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .acct-nav::-webkit-scrollbar { display: none; }
+      .acct-nav li a {
+        padding: 0.55rem 0.85rem;
+        white-space: nowrap;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        font-size: 0.8rem;
+      }
+      .acct-nav li a i { font-size: 1rem; }
       .acct-nav li a.active { border-bottom-color: #c9a96e; }
-      .acct-signout { border: none; padding: 0.5rem; }
-      .acct-main { padding: 2rem 1.5rem; }
+      /* Compact sign-out into an icon-only pill so it doesn't overlap the hamburger */
+      .acct-signout { border: none; padding: 0; flex-shrink: 0; }
+      .acct-signout button {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 50%;
+        font-size: 0;
+        position: relative;
+      }
+      .acct-signout button::before {
+        content: "\ec57"; /* ri-logout-box-r-line */
+        font-family: "remixicon";
+        font-size: 1.05rem;
+        line-height: 1;
+      }
+      .acct-main { padding: 1.5rem 1.25rem; }
     }
   </style>
 </head>
@@ -117,8 +166,9 @@
         <li><a href="mission.html" class="magnetic" data-img="panel2.png"><span class="nav-num">02</span> The Trade</a></li>
         <li><a href="ethics.html" class="magnetic" data-img="panel3.png"><span class="nav-num">03</span> Ethics</a></li>
         <li><a href="events.html" class="magnetic" data-img="panel4.png"><span class="nav-num">04</span> Events</a></li>
-        <li><a href="team.html" class="magnetic" data-img="panel5.png"><span class="nav-num">05</span> The Team</a></li>
-        <li><a href="100-club.html" class="magnetic" data-img="club_cheers.png"><span class="nav-num">06</span> 100 Club</a></li>
+        <li><a href="raffle.html" class="magnetic" data-img="panel4.png"><span class="nav-num">05</span> Raffle</a></li>
+        <li><a href="team.html" class="magnetic" data-img="panel5.png"><span class="nav-num">06</span> The Team</a></li>
+        <li><a href="100-club.html" class="magnetic" data-img="club_cheers.png"><span class="nav-num">07</span> 100 Club</a></li>
       </ul>
       <div class="nav-footer">
         <a href="account.html" class="magnetic">My Account</a>
@@ -356,7 +406,12 @@
         let result;
         if (isSignUp) {
           const name = document.getElementById('login-name').value;
-          result = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
+          // Tag the signup so the DB trigger only mirrors UKTTBS users into ukttbs.profiles.
+          result = await supabase.auth.signUp({
+            email,
+            password,
+            options: { data: { full_name: name, app: 'ukttbs' } }
+          });
         } else {
           result = await supabase.auth.signInWithPassword({ email, password });
         }
@@ -559,17 +614,42 @@
       location.reload();
     });
 
+    // Verify the signed-in user is actually a UKTTBS member.
+    // Because this Supabase project is shared with another app, we must
+    // NEVER let someone into the dashboard just because they have a valid
+    // session — they must also have a row in ukttbs.profiles.
+    async function ensureUkttbsMember(session) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('id, is_ukttbs_member')
+        .eq('id', session.user.id)
+        .maybeSingle();
+      if (error) {
+        console.error('Membership check failed', error);
+        return false;
+      }
+      return !!(data && data.is_ukttbs_member);
+    }
+
+    async function showNotAMember() {
+      await supabase.auth.signOut();
+      const errEl = document.getElementById('login-error');
+      errEl.textContent = 'This account is not registered with UKTTBS. Please create a UKTTBS account to continue.';
+      errEl.style.display = 'block';
+      document.getElementById('login-overlay').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+    }
+
 
 // ── INIT ──
     async function init() {
-      // 1. Check if we are running locally OR if the secret "?demo=true" is in the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const isDemoMode = urlParams.get('demo') === 'true';
-      const isLocalDev = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' || isDemoMode;
+      // Demo mode is restricted to localhost only — never on a deployed host.
+      const host = window.location.hostname;
+      const isLocalHost = host === '127.0.0.1' || host === 'localhost';
+      const isDemoMode = isLocalHost && new URLSearchParams(window.location.search).get('demo') === 'true';
 
-      if (isLocalDev) {
-        console.log("🔧 Demo Mode Detected: Bypassing Supabase Auth");
-        // Inject a fake session object so the dashboard doesn't crash
+      if (isDemoMode) {
+        console.log("🔧 Demo Mode (localhost only): Bypassing Supabase Auth");
         const mockSession = {
           user: {
             email: "board@ukttbs.org.uk",
@@ -577,21 +657,25 @@
           }
         };
         renderDashboard(mockSession);
-        return; // Stop here, don't ask Supabase
+        return;
       }
 
-      // 2. Normal production logic
+      // Normal production logic
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        renderDashboard(session);
+        if (await ensureUkttbsMember(session)) {
+          renderDashboard(session);
+        } else {
+          await showNotAMember();
+        }
       } else {
         document.getElementById('login-overlay').style.display = 'flex';
         document.getElementById('dashboard').style.display = 'none';
       }
     }
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) renderDashboard(session);
+    supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session && await ensureUkttbsMember(session)) renderDashboard(session);
     });
 
     init();

@@ -9,9 +9,9 @@
  * and your overrides will be picked up if present.
  */
 window.UKTTBS_CONFIG = {
-  // Supabase project
-  SUPABASE_URL: "https://YOUR-PROJECT-REF.supabase.co",
-  SUPABASE_ANON_KEY: "YOUR-PUBLIC-ANON-KEY",
+  // Supabase project — UKTTBS dedicated instance
+  SUPABASE_URL: "https://kidwhcpxqeighhqcbhmt.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpZHdoY3B4cWVpZ2hocWNiaG10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyODEzNTgsImV4cCI6MjA5MTg1NzM1OH0.aaXJP9WxYXW4pFudz08mfeecQak9_M56CJlXWlUVtTY",
 
   // Stripe publishable key (pk_live_... or pk_test_...)
   STRIPE_PUBLISHABLE_KEY: "pk_test_REPLACE_ME",

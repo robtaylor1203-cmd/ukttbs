@@ -12,7 +12,11 @@ export async function getSession() {
 export async function signInWithEmail(email, redirectTo = `${location.origin}/account.html`) {
   return supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: redirectTo },
+    options: {
+      emailRedirectTo: redirectTo,
+      // Tag the user as a UKTTBS signup so the DB trigger creates a ukttbs.profiles row.
+      data: { app: "ukttbs" },
+    },
   });
 }
 
