@@ -102,9 +102,77 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       }
     }
   } else if (kind === "hundred_club") {
-    // Subscription events will follow shortly — just ensure the profile has the customer id.
-    if (userId && session.customer && typeof session.customer === "string") {
-      await admin.from("profiles").update({ stripe_customer_id: session.customer }).eq("id", userId);
+    const tier = session.metadata?.tier === "annual" ? "annual" : "monthly";
+
+    if (tier === "annual") {
+      // One-off annual payment: mark order paid and create / extend a
+      // subscriptions row with a 1-year period (no Stripe subscription id).
+      const orderId = session.metadata?.order_id;
+      if (orderId) {
+        await admin
+          .from("orders")
+          .update({
+            status: "paid",
+            email,
+            stripe_payment_intent_id:
+              typeof session.payment_intent === "string" ? session.payment_intent : null,
+          })
+          .eq("id", orderId);
+      }
+
+      if (userId) {
+        const now = new Date();
+        const periodEnd = new Date(now);
+        periodEnd.setFullYear(periodEnd.getFullYear() + 1);
+
+        // Try to extend an existing active annual record; otherwise insert.
+        const { data: existing } = await admin
+          .from("subscriptions")
+          .select("id, current_period_end")
+          .eq("user_id", userId)
+          .eq("tier", "annual")
+          .eq("status", "active")
+          .maybeSingle();
+
+        if (existing) {
+          const base = existing.current_period_end
+            ? new Date(existing.current_period_end)
+            : now;
+          const extended = base > now ? base : now;
+          extended.setFullYear(extended.getFullYear() + 1);
+          await admin
+            .from("subscriptions")
+            .update({
+              current_period_end: extended.toISOString(),
+              updated_at: now.toISOString(),
+            })
+            .eq("id", existing.id);
+        } else {
+          await admin.from("subscriptions").insert({
+            user_id: userId,
+            tier: "annual",
+            status: "active",
+            current_period_start: now.toISOString(),
+            current_period_end: periodEnd.toISOString(),
+          });
+        }
+
+        if (session.customer && typeof session.customer === "string") {
+          await admin
+            .from("profiles")
+            .update({ stripe_customer_id: session.customer })
+            .eq("id", userId);
+        }
+      }
+    } else {
+      // Monthly: subscription events will follow shortly — just ensure the
+      // profile has the customer id linked.
+      if (userId && session.customer && typeof session.customer === "string") {
+        await admin
+          .from("profiles")
+          .update({ stripe_customer_id: session.customer })
+          .eq("id", userId);
+      }
     }
   }
 }

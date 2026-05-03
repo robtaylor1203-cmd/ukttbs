@@ -136,23 +136,68 @@ Deno.serve(async (req) => {
 
     } else if (kind === "hundred_club") {
       const tier = body.tier === "annual" ? "annual" : "monthly";
-      const price = tier === "annual"
-        ? Deno.env.get("HUNDRED_CLUB_ANNUAL_PRICE_ID")
-        : Deno.env.get("HUNDRED_CLUB_MONTHLY_PRICE_ID");
-      if (!price) throw new Error("100 Club price not configured");
 
-      session = await stripe.checkout.sessions.create({
-        mode: "subscription",
-        customer_email: email,
-        line_items: [{ price, quantity: 1 }],
-        success_url,
-        cancel_url,
-        metadata: { kind, tier, user_id: userId ?? "" },
-        subscription_data: {
+      if (tier === "monthly") {
+        // Recurring monthly subscription via a Stripe Price.
+        const price = Deno.env.get("HUNDRED_CLUB_MONTHLY_PRICE_ID");
+        if (!price) throw new Error("100 Club monthly price not configured");
+
+        session = await stripe.checkout.sessions.create({
+          mode: "subscription",
+          customer_email: email,
+          line_items: [{ price, quantity: 1 }],
+          success_url,
+          cancel_url,
           metadata: { kind, tier, user_id: userId ?? "" },
-        },
-        allow_promotion_codes: true,
-      });
+          subscription_data: {
+            metadata: { kind, tier, user_id: userId ?? "" },
+          },
+          allow_promotion_codes: true,
+        });
+      } else {
+        // Annual is a ONE-OFF £120 payment (not a recurring subscription).
+        // The webhook will create a subscriptions row with a 1-year period.
+        const annualPence = Number(Deno.env.get("HUNDRED_CLUB_ANNUAL_PENCE") ?? "12000");
+
+        // Pre-create a pending order so we can correlate via metadata.
+        const { data: order, error: orderErr } = await admin
+          .from("orders")
+          .insert({
+            user_id: userId,
+            email: email ?? "pending@ukttbs.org.uk",
+            kind: "hundred_club",
+            quantity: 1,
+            amount_pence: annualPence,
+            status: "pending",
+          })
+          .select("id")
+          .single();
+        if (orderErr) throw orderErr;
+
+        session = await stripe.checkout.sessions.create({
+          mode: "payment",
+          customer_email: email,
+          line_items: [
+            {
+              quantity: 1,
+              price_data: {
+                currency: "gbp",
+                unit_amount: annualPence,
+                product_data: { name: "UKTTBS 100 Club — Annual membership" },
+              },
+            },
+          ],
+          success_url,
+          cancel_url,
+          metadata: { kind, tier, order_id: order.id, user_id: userId ?? "" },
+          payment_intent_data: {
+            metadata: { kind, tier, order_id: order.id, user_id: userId ?? "" },
+          },
+          allow_promotion_codes: true,
+        });
+
+        await admin.from("orders").update({ stripe_session_id: session.id }).eq("id", order.id);
+      }
 
     } else {
       throw new Error(`Unknown checkout kind: ${kind}`);
