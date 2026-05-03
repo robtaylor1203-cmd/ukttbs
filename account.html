@@ -485,35 +485,34 @@
           if (!resp.ok) {
             throw new Error(payload.error_description || payload.msg || payload.error || 'Invalid login credentials');
           }
-          // Hand the tokens to the supabase-js client so the rest of the app
-          // (RLS-aware queries, the JWT, onAuthStateChange) sees them.
-          await withTimeout('setSession', supabase.auth.setSession({
-            access_token: payload.access_token,
-            refresh_token: payload.refresh_token,
-          }), 8000);
-          const session = {
-            access_token: payload.access_token,
-            refresh_token: payload.refresh_token,
-            user: payload.user,
-          };
-          console.log('[handleAuth] signIn result', { hasSession: !!session });
-
-          if (!session?.user) {
-            showMsg('Sign-in succeeded but no session was returned. Please reload the page.');
-            resetBtn();
-            clearTimeout(watchdog);
-            return;
+          // Persist the session in the exact format supabase-js expects, then
+          // reload. We deliberately do NOT call supabase.auth.setSession()
+          // because GoTrueClient's internal queue has been observed to wedge
+          // (`setSession timed out`). On reload, the client reads the token
+          // from storage during construction — no queue, no lock, no hang.
+          try {
+            const ref = (cfg.SUPABASE_URL || '').match(/https?:\/\/([^.]+)\./)?.[1];
+            if (!ref) throw new Error('Could not derive project ref from SUPABASE_URL');
+            const expiresAt = Math.floor(Date.now() / 1000) + (payload.expires_in || 3600);
+            const session = {
+              access_token: payload.access_token,
+              token_type: payload.token_type || 'bearer',
+              expires_in: payload.expires_in,
+              expires_at: expiresAt,
+              refresh_token: payload.refresh_token,
+              user: payload.user,
+            };
+            localStorage.setItem(`sb-${ref}-auth-token`, JSON.stringify(session));
+          } catch (storageErr) {
+            console.error('[handleAuth] failed to persist session', storageErr);
+            throw storageErr;
           }
-          const isMember = await withTimeout('membership check', ensureUkttbsMember(session));
-          console.log('[handleAuth] member?', isMember);
-          if (isMember) {
-            clearTimeout(watchdog);
-            await renderDashboardSafe(session);
-          } else {
-            clearTimeout(watchdog);
-            await showNotAMember();
-            resetBtn();
-          }
+          console.log('[handleAuth] session stored, reloading');
+          clearTimeout(watchdog);
+          // Reload to let supabase-js pick up the new session cleanly. init()
+          // will then run, find the session, and render the dashboard.
+          location.reload();
+          return;
         }
       } catch (err) {
         console.error('[handleAuth] error', err);
