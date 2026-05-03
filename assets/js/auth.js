@@ -1,27 +1,47 @@
 /**
- * Authentication helpers — wraps Supabase Auth.
- * Uses magic-link email sign-in (no passwords to manage).
+ * Authentication helpers for non-account pages (admin, checkout return, etc.)
+ *
+ * NOTE: account.html owns the primary sign-in flow and writes our self-managed
+ * session via direct REST. These helpers are read-only conveniences — they
+ * never call into supabase.auth.* (GoTrueClient is dormant; see supabase.js).
  */
-import { supabase, $ } from "./supabase.js";
+import { supabase, $, getStoredSession, clearStoredSession } from "./supabase.js";
 
 export async function getSession() {
-  const { data } = await supabase.auth.getSession();
-  return data.session;
+  return getStoredSession();
 }
 
 export async function signInWithEmail(email, redirectTo = `${location.origin}/account.html`) {
-  return supabase.auth.signInWithOtp({
-    email,
-    options: {
-      emailRedirectTo: redirectTo,
-      // Tag the user as a UKTTBS signup so the DB trigger creates a ukttbs.profiles row.
+  // Magic-link via direct REST. We only use this on legacy mount points; the
+  // canonical sign-in path is the password form on account.html.
+  const cfg = window.UKTTBS_CONFIG || {};
+  return fetch(`${cfg.SUPABASE_URL}/auth/v1/otp`, {
+    method: "POST",
+    headers: { apikey: cfg.SUPABASE_ANON_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      create_user: true,
       data: { app: "ukttbs" },
-    },
+      options: { emailRedirectTo: redirectTo },
+    }),
   });
 }
 
 export async function signOut() {
-  await supabase.auth.signOut();
+  const session = getStoredSession();
+  const cfg = window.UKTTBS_CONFIG || {};
+  if (session) {
+    try {
+      fetch(`${cfg.SUPABASE_URL}/auth/v1/logout`, {
+        method: "POST",
+        headers: {
+          apikey: cfg.SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      }).catch(() => {});
+    } catch (_) { /* ignore */ }
+  }
+  clearStoredSession();
   location.href = "/";
 }
 

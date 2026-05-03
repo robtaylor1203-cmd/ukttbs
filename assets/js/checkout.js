@@ -7,11 +7,11 @@
  *   { kind: "raffle",  event_id, quantity }      // £1 each
  *   { kind: "hundred_club", tier: "monthly" | "annual" }
  */
-import { supabase } from "./supabase.js";
+import { supabase, getStoredSession } from "./supabase.js";
 
 export async function startCheckout(payload) {
-  const { data: sessionData } = await supabase.auth.getSession();
-  const accessToken = sessionData?.session?.access_token;
+  const session = getStoredSession();
+  const accessToken = session?.access_token;
 
   const { data, error } = await supabase.functions.invoke("create-checkout-session", {
     body: {
@@ -26,3 +26,4 @@ export async function startCheckout(payload) {
   if (!data?.url) throw new Error("Checkout session did not return a URL.");
   window.location.href = data.url;
 }
+

@@ -238,6 +238,106 @@ grant select, insert, update on ukttbs.profiles to authenticated;
 grant select on ukttbs.orders, ukttbs.raffle_entries, ukttbs.subscriptions to authenticated;
 
 -- -------------------------------------------------------------
+-- Raffle draws  (audit log of who won what — admin-driven)
+--
+-- Each row records ONE prize being drawn for ONE event. The draw is done
+-- server-side by ukttbs.draw_raffle_winner() so it's:
+--   - cryptographically random (uses pgcrypto's gen_random_bytes)
+--   - atomic (no entry can be drawn twice for the same event)
+--   - auditable (created_at + drawn_by capture the trustee + timestamp)
+-- -------------------------------------------------------------
+create table if not exists ukttbs.raffle_draws (
+  id uuid primary key default gen_random_uuid(),
+  event_id uuid not null references ukttbs.events(id) on delete cascade,
+  prize_label text not null,
+  prize_rank int not null,                 -- 1 = first prize, 2 = second, ...
+  raffle_entry_id uuid not null references ukttbs.raffle_entries(id),
+  ticket_number int not null,
+  winner_email text not null,
+  winner_user_id uuid references ukttbs.profiles(id) on delete set null,
+  drawn_by uuid references ukttbs.profiles(id) on delete set null,
+  drawn_at timestamptz not null default now(),
+  notes text,
+  unique (event_id, raffle_entry_id),       -- a ticket can only win once per event
+  unique (event_id, prize_rank)             -- one winner per prize rank per event
+);
+
+alter table ukttbs.raffle_draws enable row level security;
+
+drop policy if exists "raffle_draws: public read" on ukttbs.raffle_draws;
+create policy "raffle_draws: public read"
+  on ukttbs.raffle_draws for select using (true);
+
+drop policy if exists "raffle_draws: admin all" on ukttbs.raffle_draws;
+create policy "raffle_draws: admin all"
+  on ukttbs.raffle_draws for all using (ukttbs.is_admin()) with check (ukttbs.is_admin());
+
+grant select on ukttbs.raffle_draws to anon, authenticated;
+
+-- Atomically draw one random raffle entry that hasn't already won for this
+-- event, record it in raffle_draws, and return the winning row.
+-- SECURITY DEFINER so it can read raffle_entries / write raffle_draws even
+-- though the caller is just an authenticated user (we gate via is_admin()).
+create or replace function ukttbs.draw_raffle_winner(
+  p_event uuid,
+  p_prize_label text,
+  p_prize_rank int default null
+)
+returns ukttbs.raffle_draws
+language plpgsql security definer set search_path = ukttbs, public as $$
+declare
+  v_admin boolean;
+  v_rank int;
+  v_entry ukttbs.raffle_entries;
+  v_row ukttbs.raffle_draws;
+begin
+  -- Only admins may draw. We re-check here because the function bypasses RLS.
+  select ukttbs.is_admin() into v_admin;
+  if not v_admin then
+    raise exception 'Only UKTTBS admins may draw raffle winners';
+  end if;
+
+  -- Pick the next prize rank if not provided.
+  if p_prize_rank is null then
+    select coalesce(max(prize_rank), 0) + 1 into v_rank
+      from ukttbs.raffle_draws where event_id = p_event;
+  else
+    v_rank := p_prize_rank;
+  end if;
+
+  -- Pick a uniformly random entry that hasn't already won for this event.
+  -- order by random() over the not-yet-won set.
+  select e.* into v_entry
+    from ukttbs.raffle_entries e
+    where e.event_id = p_event
+      and not exists (
+        select 1 from ukttbs.raffle_draws d
+         where d.event_id = p_event and d.raffle_entry_id = e.id
+      )
+    order by random()
+    limit 1;
+
+  if v_entry.id is null then
+    raise exception 'No remaining raffle entries to draw for this event';
+  end if;
+
+  insert into ukttbs.raffle_draws (
+    event_id, prize_label, prize_rank,
+    raffle_entry_id, ticket_number,
+    winner_email, winner_user_id, drawn_by
+  ) values (
+    p_event, p_prize_label, v_rank,
+    v_entry.id, v_entry.ticket_number,
+    v_entry.email, v_entry.user_id, auth.uid()
+  )
+  returning * into v_row;
+
+  return v_row;
+end; $$;
+
+grant execute on function ukttbs.draw_raffle_winner(uuid, text, int) to authenticated;
+
+-- -------------------------------------------------------------
 -- Seed example event (delete when real events exist)
 -- -------------------------------------------------------------
 insert into ukttbs.events (slug, title, description, venue, city, starts_at, ends_at, ticket_price_pence, status, raffle_enabled)
@@ -247,5 +347,11 @@ values
    'A sparkling evening of cocktails, canapés and conversation in aid of the UK tea community.',
    'The Tea Building', 'London',
    '2026-04-23 19:00+01', '2026-04-23 23:00+01',
+   7500, 'draft', true),
+  ('autumn-cocktail-2026',
+   'Autumn Cocktail Party 2026',
+   'An autumnal evening of cocktails, canapés and conversation in aid of the UK tea community.',
+   'The Tea Building', 'London',
+   '2026-10-15 19:00+01', '2026-10-15 23:00+01',
    7500, 'draft', true)
 on conflict (slug) do nothing;

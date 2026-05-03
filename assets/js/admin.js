@@ -168,15 +168,23 @@ async function openRaffleDialog(ev) {
   dialog.querySelector("[data-draw]").onclick = () => drawWinner(ev.id, data);
 }
 
-function drawWinner(_eventId, entries) {
+function drawWinner(eventId, entries) {
   if (!entries.length) return;
-  const winner = entries[Math.floor(Math.random() * entries.length)];
   const out = $("#raffle-dialog [data-winner]");
-  out.innerHTML = `
-    <div class="alert alert--success">
-      <strong>Winner:</strong> ticket <code>#${String(winner.ticket_number).padStart(4, "0")}</code> — ${esc(winner.email)}
-    </div>
-  `;
+  const label = prompt('Prize label (e.g. "First prize — Hamper")', 'Prize');
+  if (!label) return;
+  out.innerHTML = `<p class="muted">Drawing…</p>`;
+  supabase.rpc('draw_raffle_winner', { p_event: eventId, p_prize_label: label, p_prize_rank: null })
+    .then(({ data, error }) => {
+      if (error) { out.innerHTML = `<div class="alert alert--error">${esc(error.message)}</div>`; return; }
+      out.innerHTML = `
+        <div class="alert alert--success">
+          <strong>Prize ${data.prize_rank} — ${esc(data.prize_label)}</strong><br>
+          Winning ticket <code>#${String(data.ticket_number).padStart(4, '0')}</code> — ${esc(data.winner_email)}
+          <p class="muted" style="font-size:.8rem;margin-top:.5rem">Recorded ${new Date(data.drawn_at).toLocaleString('en-GB')}</p>
+        </div>
+      `;
+    });
 }
 
 /* ------------------------------ ORDERS ------------------------------ */
@@ -234,5 +242,4 @@ function toLocalInput(iso) {
 $("[data-new-event]")?.addEventListener("click", () => openEventDialog(null));
 $("#event-form")?.addEventListener("submit", saveEvent);
 $("[data-signout]")?.addEventListener("click", signOut);
-supabase.auth.onAuthStateChange(() => init());
 init();

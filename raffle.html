@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Raffle - UKTTBS</title>
-  <meta name="description" content="A little flutter for a very good cause — the UKTTBS annual raffle.">
+  <meta name="description" content="A little flutter for a very good cause — the UKTTBS Spring & Autumn raffles.">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Raffle - UKTTBS">
-  <meta property="og:description" content="A little flutter for a very good cause — the UKTTBS annual raffle.">
+  <meta property="og:description" content="A little flutter for a very good cause — the UKTTBS Spring & Autumn raffles.">
   <meta property="og:image" content="nav_club.png">
 
   <link rel="stylesheet" href="style.css">
@@ -54,9 +54,9 @@
       <div class="hero-bg" style="background-image: url('nav_club.png'); filter: brightness(0.6);"></div>
       <div class="hero-content">
         <h1 class="hero-title">
-          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">Annual Raffle</span></div>
+          <div class="line" style="overflow:visible;"><span class="hero-word" style="font-size: clamp(3rem, 8vw, 8rem); white-space: nowrap;">The Raffle</span></div>
         </h1>
-        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">A little flutter, a lot of good.</p>
+        <p class="fade-in" style="letter-spacing: 0.2em; text-transform: uppercase;">Drawn live at our Spring & Autumn cocktail parties.</p>
         <div class="scroll-indicator fade-in"><div class="scroll-dot"></div></div>
       </div>
     </section>
@@ -100,14 +100,48 @@
     <!-- BUY TICKETS BLOCK -->
     <section class="club-hundred" style="height: auto; min-height: 60vh; background: #050505; padding-top: 15vh; padding-bottom: 15vh;">
       <div class="club-bg parallax-img" style="background-image: url('panel1.png'); opacity: 0.1; filter: grayscale(100%);"></div>
-      <div class="club-content" style="max-width: 1000px; margin: 0 auto; text-align: center; px: 2rem;">
-        <div class="scene__chapter fade-in-up" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Buy tickets</div>
-        <h2 style="font-size: clamp(2rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 5rem;">
-          Make it <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">count.</em>
+      <div class="club-content" style="max-width: 1100px; margin: 0 auto; text-align: center; padding: 0 2rem;">
+        <div class="scene__chapter fade-in-up" style="margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); text-transform: uppercase;">Buy tickets — £1 each</div>
+        <h2 style="font-size: clamp(2rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1.1; margin-bottom: 4rem;">
+          Pick your <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">draw.</em>
         </h2>
-        
-        <!-- Live Data Hydration Hook -->
-        <div data-raffle class="fade-in-up" style="margin-bottom: 2rem; text-align:left;"></div>
+
+        <!-- Live Data Hydration Hook — populated by raffle.js with cards
+             for every upcoming raffle-enabled event (typically Spring + Autumn).
+             Each card opens the shared purchase modal pre-filled with that
+             event's id. Supports ?event=<slug> deep links from QR codes. -->
+        <div data-raffle class="fade-in-up" style="text-align:left;">
+          <p style="text-align:center; color: rgba(255,255,255,0.4);">Loading current raffles…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT'S DRAWN -->
+    <section style="background: #020202; padding: 10vh 5vw;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div class="fade-in" style="margin-bottom: 3rem; text-align: center;">
+          <div class="scene__chapter" style="margin-bottom: 1.5rem; font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;">How it's drawn</div>
+          <h2 class="huge-title" style="font-size: clamp(2.4rem, 5vw, 4.5rem); text-transform: uppercase; line-height: 1;">
+            Fair, recorded, <em class="gold" style="font-family: Fraunces, serif; font-weight: 300; font-style: italic; color: #c9a96e;">live.</em>
+          </h2>
+        </div>
+        <div style="color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.85; font-size: 1.05rem;">
+          <p style="margin-bottom: 1.25rem;">
+            Every ticket sold — whether bought online in advance or from a QR code dotted around the venue — is logged
+            against your account in our central database, with a unique sequential ticket number. There are no paper
+            stubs to lose and no double-counting.
+          </p>
+          <p style="margin-bottom: 1.25rem;">
+            On the night, a Trustee runs the draw from the admin console. The system uses a cryptographically random
+            pick across <em>all</em> entries that haven't already won, records the result in an immutable audit log
+            (with the time, the prize, and the Trustee who drew it), and the winning ticket number is announced from
+            the stage. If you're in the room your name is called; if you're not, we'll be in touch the next morning.
+          </p>
+          <p style="margin: 0;">
+            Two draws each year — at the Spring and Autumn cocktail parties — with proceeds going directly to UKTTBS
+            welfare.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -145,5 +179,52 @@
 
   <script src="/assets/js/config.js"></script>
   <script type="module" src="/assets/js/raffle.js"></script>
+
+  <!-- RAFFLE PURCHASE MODAL (shared by all event cards) -->
+  <div class="glass-overlay" id="modal-raffle" onclick="if(event.target===this)this.classList.remove('active')">
+    <div class="glass-modal" style="max-width: 520px;">
+      <button class="glass-modal__close" onclick="this.closest('.glass-overlay').classList.remove('active')"><i class="ri-close-line"></i></button>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #c9a96e; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 1rem;">Raffle Tickets</span>
+      <h2 id="raffle-modal-title" style="font-size: 1.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem; color: #fff;">Win prizes, support welfare</h2>
+      <p id="raffle-modal-subtitle" class="muted" style="margin-bottom: 1.5rem; font-size: 0.9rem;">—</p>
+
+      <input type="hidden" id="raffle-event-id" value="">
+
+      <!-- Quantity -->
+      <div style="margin-bottom: 1.5rem;">
+        <label style="font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">Number of tickets</label>
+        <div style="display: flex; align-items: center; gap: 0;">
+          <button type="button" id="raffle-qty-dec" style="width: 48px; height: 48px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: 1.25rem; cursor: pointer; border-radius: 8px 0 0 8px;">−</button>
+          <input type="number" id="raffle-qty" value="5" min="1" max="100" style="width: 80px; height: 48px; text-align: center; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-left: none; border-right: none; color: #fff; font-size: 1.1rem; font-weight: 600;">
+          <button type="button" id="raffle-qty-inc" style="width: 48px; height: 48px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: 1.25rem; cursor: pointer; border-radius: 0 8px 8px 0;">+</button>
+        </div>
+      </div>
+
+      <!-- Price breakdown -->
+      <div style="background: rgba(255,255,255,0.04); padding: 1.25rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Price per ticket</span>
+          <span style="color: #fff; font-weight: 500;">£1.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Quantity</span>
+          <span style="color: #fff; font-weight: 500;" id="raffle-qty-display">5</span>
+        </div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between;">
+          <span style="color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.85rem;">Total</span>
+          <span style="color: #c9a96e; font-weight: 700; font-size: 1.25rem;" id="raffle-total">£5.00</span>
+        </div>
+      </div>
+
+      <p style="color: rgba(255,255,255,0.35); font-size: 0.8rem; margin-bottom: 1.5rem;">
+        <i class="ri-lock-line" style="margin-right: 0.25rem;"></i> Secure checkout via Stripe. Tickets logged to your account and drawn live at the event.
+      </p>
+
+      <button id="raffle-buy-btn" type="button" style="width: 100%; background: #c9a96e; color: #000; padding: 1.1rem; border: none; border-radius: 50px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; cursor: pointer; transition: opacity 0.3s;">
+        Buy 5 tickets — £5.00
+      </button>
+      <p id="raffle-modal-msg" class="muted" style="margin-top: 1rem; font-size: 0.85rem; display: none;"></p>
+    </div>
+  </div>
 </body>
 </html>
