@@ -402,25 +402,46 @@
       btn.textContent = isSignUp ? 'Creating…' : 'Signing in…';
       errEl.style.display = 'none';
 
+      const resetBtn = () => {
+        btn.disabled = false;
+        btn.textContent = isSignUp ? 'Create account' : 'Sign in';
+      };
+      const showMsg = (text, isError = true) => {
+        errEl.textContent = text;
+        errEl.style.background = isError ? '' : 'rgba(76,175,80,0.1)';
+        errEl.style.borderColor = isError ? '' : 'rgba(76,175,80,0.25)';
+        errEl.style.color = isError ? '' : '#a5d6a7';
+        errEl.style.display = 'block';
+      };
+
       try {
-        let result;
         if (isSignUp) {
           const name = document.getElementById('login-name').value;
           // Tag the signup so the DB trigger only mirrors UKTTBS users into ukttbs.profiles.
-          result = await supabase.auth.signUp({
+          const { data, error } = await supabase.auth.signUp({
             email,
             password,
-            options: { data: { full_name: name, app: 'ukttbs' } }
+            options: {
+              data: { full_name: name, app: 'ukttbs' },
+              emailRedirectTo: location.origin + '/account.html',
+            }
           });
+          if (error) throw error;
+
+          // If email confirmation is required, no session is returned — tell the user.
+          if (!data.session) {
+            showMsg(`Account created. Check ${email} for a confirmation link to finish signing in.`, false);
+            resetBtn();
+            return;
+          }
+          // Session present → auth state change will render the dashboard.
         } else {
-          result = await supabase.auth.signInWithPassword({ email, password });
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
         }
-        if (result.error) throw result.error;
       } catch (err) {
-        errEl.textContent = err.message || 'Authentication failed.';
-        errEl.style.display = 'block';
-        btn.disabled = false;
-        btn.textContent = isSignUp ? 'Create account' : 'Sign in';
+        showMsg(err.message || 'Authentication failed.');
+        resetBtn();
       }
     };
 
@@ -619,16 +640,29 @@
     // NEVER let someone into the dashboard just because they have a valid
     // session — they must also have a row in ukttbs.profiles.
     async function ensureUkttbsMember(session) {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('id, is_ukttbs_member')
-        .eq('id', session.user.id)
-        .maybeSingle();
-      if (error) {
-        console.error('Membership check failed', error);
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('id, is_ukttbs_member')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        if (error) {
+          console.error('Membership check failed', error);
+          // Schema not run / not exposed — surface a useful error instead of a dead page.
+          if (/schema|not found|relation|404/i.test(error.message || '')) {
+            const errEl = document.getElementById('login-error');
+            if (errEl) {
+              errEl.textContent = 'Database not initialised yet. Run supabase/schema.sql and add `ukttbs` to Exposed schemas.';
+              errEl.style.display = 'block';
+            }
+          }
+          return false;
+        }
+        return !!(data && data.is_ukttbs_member);
+      } catch (err) {
+        console.error('Membership check threw', err);
         return false;
       }
-      return !!(data && data.is_ukttbs_member);
     }
 
     async function showNotAMember() {
