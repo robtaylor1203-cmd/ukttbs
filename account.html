@@ -383,7 +383,7 @@
 
   <script src="/assets/js/config.js"></script>
   <script type="module">
-    import { supabase, formatEventDate, formatMoney } from "/assets/js/supabase.js";
+    import { supabase, formatEventDate, formatMoney, getStoredSession, setStoredSession, clearStoredSession } from "/assets/js/supabase.js";
 
     let isSignUp = false;
 
@@ -435,41 +435,56 @@
         new Promise((_, rej) => setTimeout(() => rej(new Error(label + ' timed out after ' + ms + 'ms')), ms))
       ]);
 
+      // All auth goes via direct REST. We never touch supabase.auth.*
+      const cfg = window.UKTTBS_CONFIG || {};
+      const persist = (payload) => {
+        const expiresAt = Math.floor(Date.now() / 1000) + (payload.expires_in || 3600);
+        setStoredSession({
+          access_token: payload.access_token,
+          token_type: payload.token_type || 'bearer',
+          expires_in: payload.expires_in,
+          expires_at: expiresAt,
+          refresh_token: payload.refresh_token,
+          user: payload.user,
+        });
+      };
+
       try {
         if (isSignUp) {
           const name = document.getElementById('login-name').value;
-          console.log('[handleAuth] signUp start');
-          const { data, error } = await withTimeout('signUp', supabase.auth.signUp({
-            email,
-            password,
-            options: {
-              data: { full_name: name, app: 'ukttbs' },
-              emailRedirectTo: location.origin + '/account.html',
+          console.log('[handleAuth] signUp start (direct REST)');
+          const resp = await withTimeout('signUp', fetch(
+            `${cfg.SUPABASE_URL}/auth/v1/signup`,
+            {
+              method: 'POST',
+              headers: {
+                'apikey': cfg.SUPABASE_ANON_KEY,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email,
+                password,
+                data: { full_name: name, app: 'ukttbs' },
+              }),
             }
-          }));
-          console.log('[handleAuth] signUp result', { hasSession: !!data?.session, error });
-          if (error) throw error;
-
-          if (!data.session) {
+          ));
+          const payload = await resp.json().catch(() => ({}));
+          if (!resp.ok) {
+            throw new Error(payload.error_description || payload.msg || payload.error || 'Sign-up failed');
+          }
+          if (!payload.access_token) {
+            // Email confirmation required.
             showMsg(`Account created. Check ${email} for a confirmation link to finish signing in.`, false);
             resetBtn();
             clearTimeout(watchdog);
             return;
           }
-          if (await withTimeout('membership check', ensureUkttbsMember(data.session))) {
-            clearTimeout(watchdog);
-            await renderDashboardSafe(data.session);
-          } else {
-            clearTimeout(watchdog);
-            await showNotAMember();
-            resetBtn();
-          }
+          persist(payload);
+          clearTimeout(watchdog);
+          location.reload();
+          return;
         } else {
           console.log('[handleAuth] signIn start (direct REST)');
-          // Bypass supabase-js GoTrueClient entirely — go straight to the
-          // Supabase auth REST endpoint. This avoids any internal lock/queue
-          // state that has been observed to wedge on second sign-in attempts.
-          const cfg = window.UKTTBS_CONFIG || {};
           const resp = await withTimeout('signIn', fetch(
             `${cfg.SUPABASE_URL}/auth/v1/token?grant_type=password`,
             {
@@ -485,32 +500,9 @@
           if (!resp.ok) {
             throw new Error(payload.error_description || payload.msg || payload.error || 'Invalid login credentials');
           }
-          // Persist the session in the exact format supabase-js expects, then
-          // reload. We deliberately do NOT call supabase.auth.setSession()
-          // because GoTrueClient's internal queue has been observed to wedge
-          // (`setSession timed out`). On reload, the client reads the token
-          // from storage during construction — no queue, no lock, no hang.
-          try {
-            const ref = (cfg.SUPABASE_URL || '').match(/https?:\/\/([^.]+)\./)?.[1];
-            if (!ref) throw new Error('Could not derive project ref from SUPABASE_URL');
-            const expiresAt = Math.floor(Date.now() / 1000) + (payload.expires_in || 3600);
-            const session = {
-              access_token: payload.access_token,
-              token_type: payload.token_type || 'bearer',
-              expires_in: payload.expires_in,
-              expires_at: expiresAt,
-              refresh_token: payload.refresh_token,
-              user: payload.user,
-            };
-            localStorage.setItem(`sb-${ref}-auth-token`, JSON.stringify(session));
-          } catch (storageErr) {
-            console.error('[handleAuth] failed to persist session', storageErr);
-            throw storageErr;
-          }
+          persist(payload);
           console.log('[handleAuth] session stored, reloading');
           clearTimeout(watchdog);
-          // Reload to let supabase-js pick up the new session cleanly. init()
-          // will then run, find the session, and render the dashboard.
           location.reload();
           return;
         }
@@ -537,12 +529,14 @@
       }
     }
 
-    window.ssoLogin = async function(provider) {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: { redirectTo: location.origin + '/account.html' }
-      });
-      if (error) alert(error.message);
+    window.ssoLogin = function(provider) {
+      // Redirect straight to Supabase's OAuth start endpoint. We don't go
+      // through supabase.auth.signInWithOAuth because we're keeping the
+      // GoTrueClient idle. The provider redirects back with tokens in the
+      // URL hash, which we'll handle on the next page load.
+      const cfg = window.UKTTBS_CONFIG || {};
+      const redirect = encodeURIComponent(location.origin + '/account.html');
+      location.href = `${cfg.SUPABASE_URL}/auth/v1/authorize?provider=${encodeURIComponent(provider)}&redirect_to=${redirect}`;
     };
 
     // ── NAVIGATION ──
@@ -708,30 +702,67 @@
     // ── SETTINGS ──
     window.saveProfile = async function() {
       const name = document.querySelector('[data-settings-name]').value;
-      await supabase.auth.updateUser({ data: { full_name: name } });
+      const session = getStoredSession();
+      if (!session) return;
+      const cfg = window.UKTTBS_CONFIG || {};
+      const resp = await fetch(`${cfg.SUPABASE_URL}/auth/v1/user`, {
+        method: 'PUT',
+        headers: {
+          'apikey': cfg.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: { full_name: name } }),
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        alert(err.msg || err.error_description || 'Failed to update profile.');
+        return;
+      }
+      const updated = await resp.json().catch(() => null);
+      if (updated) setStoredSession({ ...session, user: updated });
       document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = name);
       document.querySelector('[data-user-name-main]').textContent = name;
       alert('Profile updated.');
     };
 
     window.resetPassword = async function() {
-      const { data: { session } } = await supabase.auth.getSession();
+      const session = getStoredSession();
       if (!session) return;
-      await supabase.auth.resetPasswordForEmail(session.user.email, { redirectTo: location.origin + '/account.html' });
+      const cfg = window.UKTTBS_CONFIG || {};
+      await fetch(`${cfg.SUPABASE_URL}/auth/v1/recover`, {
+        method: 'POST',
+        headers: {
+          'apikey': cfg.SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: session.user.email,
+          redirect_to: location.origin + '/account.html',
+        }),
+      });
       alert('Password reset email sent.');
     };
 
     // ── SIGN OUT ──
-    // Belt-and-braces: never await supabase.auth.signOut() — if the
-    // GoTrueClient state machine wedges (rare but observed), the user would
-    // be stuck forever. Fire the request, wipe local storage, then reload.
+    // We manage the session ourselves; signing out is just clearing storage
+    // and reloading. We also fire-and-forget a /auth/v1/logout so the
+    // refresh token is revoked server-side.
     function hardSignOut() {
-      try { supabase.auth.signOut(); } catch (_) { /* ignore */ }
-      try {
-        Object.keys(localStorage)
-          .filter(k => k.startsWith('sb-') || k.includes('supabase'))
-          .forEach(k => localStorage.removeItem(k));
-      } catch (_) { /* ignore */ }
+      const session = getStoredSession();
+      const cfg = window.UKTTBS_CONFIG || {};
+      if (session) {
+        try {
+          fetch(`${cfg.SUPABASE_URL}/auth/v1/logout`, {
+            method: 'POST',
+            headers: {
+              'apikey': cfg.SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${session.access_token}`,
+            },
+          }).catch(() => {});
+        } catch (_) { /* ignore */ }
+      }
+      clearStoredSession();
       location.reload();
     }
     document.querySelector('[data-signout]')?.addEventListener('click', hardSignOut);
@@ -767,8 +798,7 @@
     }
 
     async function showNotAMember() {
-      // Don't await — supabase.auth.signOut() can hang in pathological cases.
-      try { supabase.auth.signOut(); } catch (_) { /* ignore */ }
+      clearStoredSession();
       const errEl = document.getElementById('login-error');
       errEl.textContent = 'This account is not registered with UKTTBS. Please create a UKTTBS account to continue.';
       errEl.style.display = 'block';
@@ -796,34 +826,8 @@
         return;
       }
 
-      // Normal production logic.
-      // Bypass supabase.auth.getSession() entirely — read the persisted
-      // session directly from localStorage. GoTrueClient's getSession() has
-      // been observed to wedge on the very first call after construction.
-      let session = null;
-      try {
-        const cfg = window.UKTTBS_CONFIG || {};
-        const ref = (cfg.SUPABASE_URL || '').match(/https?:\/\/([^.]+)\./)?.[1];
-        if (ref) {
-          const raw = localStorage.getItem(`sb-${ref}-auth-token`);
-          if (raw) {
-            const parsed = JSON.parse(raw);
-            // gotrue-js sometimes wraps the session: { currentSession, expiresAt }
-            const s = parsed?.currentSession || parsed;
-            if (s && s.access_token && s.user) {
-              const exp = s.expires_at || 0;
-              if (exp * 1000 > Date.now() - 60_000) {
-                session = s;
-              } else {
-                console.warn('[init] persisted session has expired, ignoring');
-                localStorage.removeItem(`sb-${ref}-auth-token`);
-              }
-            }
-          }
-        }
-      } catch (e) {
-        console.error('[init] failed to read session from storage', e);
-      }
+      // Normal production logic — read our self-managed session.
+      const session = getStoredSession();
       console.log('[init] session from storage?', !!session);
 
       if (session) {
@@ -837,10 +841,6 @@
         document.getElementById('dashboard').style.display = 'none';
       }
     }
-
-    supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session && await ensureUkttbsMember(session)) renderDashboard(session);
-    });
 
     init();
   </script>
