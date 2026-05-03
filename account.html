@@ -796,8 +796,36 @@
         return;
       }
 
-      // Normal production logic
-      const { data: { session } } = await supabase.auth.getSession();
+      // Normal production logic.
+      // Bypass supabase.auth.getSession() entirely — read the persisted
+      // session directly from localStorage. GoTrueClient's getSession() has
+      // been observed to wedge on the very first call after construction.
+      let session = null;
+      try {
+        const cfg = window.UKTTBS_CONFIG || {};
+        const ref = (cfg.SUPABASE_URL || '').match(/https?:\/\/([^.]+)\./)?.[1];
+        if (ref) {
+          const raw = localStorage.getItem(`sb-${ref}-auth-token`);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            // gotrue-js sometimes wraps the session: { currentSession, expiresAt }
+            const s = parsed?.currentSession || parsed;
+            if (s && s.access_token && s.user) {
+              const exp = s.expires_at || 0;
+              if (exp * 1000 > Date.now() - 60_000) {
+                session = s;
+              } else {
+                console.warn('[init] persisted session has expired, ignoring');
+                localStorage.removeItem(`sb-${ref}-auth-token`);
+              }
+            }
+          }
+        }
+      } catch (e) {
+        console.error('[init] failed to read session from storage', e);
+      }
+      console.log('[init] session from storage?', !!session);
+
       if (session) {
         if (await ensureUkttbsMember(session)) {
           renderDashboard(session);
