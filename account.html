@@ -627,33 +627,96 @@
           `).join('') + '</tbody></table>';
       }
 
-      // Raffle panel
+      // Raffle panel — individual tickets with numbers + timestamps so members
+      // can show them on screen during the live draw call.
       const raffleEl = document.querySelector('[data-raffle-content]');
-      if (raffleOrders.length === 0) {
+      const { data: rentries } = await supabase
+        .from("raffle_entries")
+        .select("id, ticket_number, created_at, event:events(id, title, starts_at)")
+        .order("created_at", { ascending: false });
+
+      const entries = rentries || [];
+      // Group entries by event so members see one card per draw with all
+      // their numbers underneath.
+      const grouped = entries.reduce((acc, e) => {
+        const key = e.event?.id || 'unknown';
+        if (!acc[key]) acc[key] = { event: e.event, items: [] };
+        acc[key].items.push(e);
+        return acc;
+      }, {});
+      const groups = Object.values(grouped);
+
+      // Refresh the headline counter so it reflects entries actually issued
+      // (paid + processed by webhook), not just paid orders awaiting fulfilment.
+      if (entries.length > 0) {
+        document.querySelector('[data-stat-tickets]').textContent = entries.length;
+      }
+
+      if (groups.length === 0) {
         raffleEl.innerHTML = `
           <div class="join-cta">
             <div class="join-cta__text">
               <h4>No raffle entries yet</h4>
-              <p>Enter the raffle at our next event for a chance to win fantastic prizes. Every ticket is just £1.</p>
+              <p>Tickets for the next Spring or Autumn cocktail party draw are £1 each. Once you've bought, your numbers will appear here ready for the live call.</p>
             </div>
-            <a href="/events.html" style="padding: 0.7rem 1.5rem; background: #c9a96e; color: #000; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; white-space: nowrap;">Enter raffle</a>
+            <a href="/raffle.html" style="padding: 0.7rem 1.5rem; background: #c9a96e; color: #000; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; white-space: nowrap;">Buy raffle tickets</a>
           </div>`;
       } else {
+        const tsFmt = (iso) => {
+          const d = new Date(iso);
+          return d.toLocaleString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit',
+          });
+        };
+
         raffleEl.innerHTML = `
           <div class="acct-stat" style="margin-bottom: 2rem;">
-            <div><div class="acct-stat__num">${totalRaffleTickets}</div><div class="acct-stat__label">Total tickets</div></div>
-            <div><div class="acct-stat__num">${raffleOrders.length}</div><div class="acct-stat__label">Purchases</div></div>
+            <div><div class="acct-stat__num">${entries.length}</div><div class="acct-stat__label">Tickets in hand</div></div>
+            <div><div class="acct-stat__num">${groups.length}</div><div class="acct-stat__label">Draws entered</div></div>
           </div>
-          <div class="acct-card" style="padding: 0; overflow: hidden;">
-            <table class="acct-table"><thead><tr><th>Event</th><th>Tickets</th><th>Cost</th><th>Date</th></tr></thead><tbody>` +
-            raffleOrders.map(o => `
-              <tr>
-                <td>${o.event ? o.event.title : '—'}</td>
-                <td style="color: #fff; font-weight: 600;">×${o.quantity}</td>
-                <td>${formatMoney(o.amount_pence)}</td>
-                <td>${new Date(o.created_at).toLocaleDateString('en-GB')}</td>
-              </tr>
-            `).join('') + '</tbody></table></div>';
+          <p style="color: rgba(255,255,255,0.45); font-size: 0.9rem; margin-bottom: 1.5rem;">
+            <i class="ri-information-line" style="color: #c9a96e; margin-right: 0.35rem;"></i>
+            Have this page open during the live draw — the host will call out winning ticket numbers.
+          </p>
+        ` + groups.map(g => {
+          const ev = g.event;
+          const evDate = ev?.starts_at
+            ? new Date(ev.starts_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+            : '';
+          const sorted = g.items.slice().sort((a, b) => a.ticket_number - b.ticket_number);
+          return `
+            <div class="acct-card" style="padding: 0; overflow: hidden; margin-bottom: 1.5rem;">
+              <div style="padding: 1.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                  <h4 style="margin: 0 0 0.25rem; color: #fff; font-size: 1.05rem;">${ev?.title || 'Raffle'}</h4>
+                  ${evDate ? `<span style="color: rgba(255,255,255,0.45); font-size: 0.85rem;">${evDate}</span>` : ''}
+                </div>
+                <span class="acct-badge acct-badge--paid">${sorted.length} ticket${sorted.length === 1 ? '' : 's'}</span>
+              </div>
+              <div style="padding: 1.5rem 2rem;">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+                  ${sorted.map(t => `
+                    <span style="display: inline-block; padding: 0.5rem 0.85rem; background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3); color: #c9a96e; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.95rem;">#${String(t.ticket_number).padStart(4, '0')}</span>
+                  `).join('')}
+                </div>
+                <details style="font-size: 0.85rem; color: rgba(255,255,255,0.45);">
+                  <summary style="cursor: pointer; color: rgba(255,255,255,0.55);">Purchase timestamps</summary>
+                  <table class="acct-table" style="margin-top: 1rem;">
+                    <thead><tr><th>Ticket</th><th>Issued</th></tr></thead>
+                    <tbody>
+                      ${sorted.map(t => `
+                        <tr>
+                          <td style="font-family: 'JetBrains Mono', monospace; color: #c9a96e;">#${String(t.ticket_number).padStart(4, '0')}</td>
+                          <td>${tsFmt(t.created_at)}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </details>
+              </div>
+            </div>`;
+        }).join('');
       }
 
       // 100 Club
@@ -666,14 +729,21 @@
       document.querySelector('[data-stat-club]').textContent = sub ? 'Active' : '—';
       const hundredEl = document.querySelector('[data-hundred-content]');
       if (sub) {
+        const renewLabel = sub.tier === 'annual' ? 'Expires' : 'Renews';
+        const tierLabel = sub.tier === 'annual' ? 'Annual (one-off)' : 'Monthly';
+        const manageBtn = sub.stripe_customer_portal_url
+          ? `<a href="${sub.stripe_customer_portal_url}" style="padding: 0.7rem 1.5rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; color: #fff; font-size: 0.85rem; display: inline-block;">Manage billing</a>`
+          : (sub.tier === 'annual'
+              ? `<p style="margin: 0; font-size: 0.85rem; color: rgba(255,255,255,0.5);">No auto-renewal — we'll email you before your membership expires.</p>`
+              : '');
         hundredEl.innerHTML = `
           <div class="acct-card">
             <h4><i class="ri-checkbox-circle-line"></i> Active Membership</h4>
             <div class="acct-stat">
-              <div><div class="acct-stat__num" style="color: #c9a96e;">${sub.tier}</div><div class="acct-stat__label">Plan</div></div>
-              <div><div class="acct-stat__num">${new Date(sub.current_period_end).toLocaleDateString('en-GB')}</div><div class="acct-stat__label">Renews</div></div>
+              <div><div class="acct-stat__num" style="color: #c9a96e; font-size: 1.25rem;">${tierLabel}</div><div class="acct-stat__label">Plan</div></div>
+              <div><div class="acct-stat__num" style="font-size: 1.25rem;">${sub.current_period_end ? new Date(sub.current_period_end).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}</div><div class="acct-stat__label">${renewLabel}</div></div>
             </div>
-            ${sub.stripe_customer_portal_url ? `<a href="${sub.stripe_customer_portal_url}" style="padding: 0.7rem 1.5rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; color: #fff; font-size: 0.85rem; display: inline-block;">Manage billing</a>` : ''}
+            ${manageBtn}
           </div>`;
       } else {
         hundredEl.innerHTML = `
