@@ -5,12 +5,24 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const cfg = window.UKTTBS_CONFIG || {};
 
+// Defensive: clear any stale `lock:sb-*` Web Locks state from old tabs.
+// supabase-js v2 uses navigator.locks to coordinate auth across tabs; if a
+// previous tab crashed mid-sign-in, the next call to signInWithPassword can
+// hang forever waiting for the lock. Passing a custom non-blocking lock
+// avoids that class of deadlock entirely.
+const noopLock = async (_name, _acquireTimeout, fn) => fn();
+
 // IMPORTANT: This Supabase project is shared with another app, so all
 // UKTTBS tables live in a dedicated `ukttbs` Postgres schema. Pinning
 // the client here ensures we can never accidentally read/write the
 // other project's `public` tables.
 export const supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    lock: noopLock,
+  },
   db: { schema: "ukttbs" },
 });
 
