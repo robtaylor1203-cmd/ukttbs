@@ -465,23 +465,50 @@
             resetBtn();
           }
         } else {
-          console.log('[handleAuth] signIn start');
-          const { data, error } = await withTimeout('signIn',
-            supabase.auth.signInWithPassword({ email, password }));
-          console.log('[handleAuth] signIn result', { hasSession: !!data?.session, error });
-          if (error) throw error;
+          console.log('[handleAuth] signIn start (direct REST)');
+          // Bypass supabase-js GoTrueClient entirely — go straight to the
+          // Supabase auth REST endpoint. This avoids any internal lock/queue
+          // state that has been observed to wedge on second sign-in attempts.
+          const cfg = window.UKTTBS_CONFIG || {};
+          const resp = await withTimeout('signIn', fetch(
+            `${cfg.SUPABASE_URL}/auth/v1/token?grant_type=password`,
+            {
+              method: 'POST',
+              headers: {
+                'apikey': cfg.SUPABASE_ANON_KEY,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email, password }),
+            }
+          ));
+          const payload = await resp.json().catch(() => ({}));
+          if (!resp.ok) {
+            throw new Error(payload.error_description || payload.msg || payload.error || 'Invalid login credentials');
+          }
+          // Hand the tokens to the supabase-js client so the rest of the app
+          // (RLS-aware queries, the JWT, onAuthStateChange) sees them.
+          await withTimeout('setSession', supabase.auth.setSession({
+            access_token: payload.access_token,
+            refresh_token: payload.refresh_token,
+          }), 8000);
+          const session = {
+            access_token: payload.access_token,
+            refresh_token: payload.refresh_token,
+            user: payload.user,
+          };
+          console.log('[handleAuth] signIn result', { hasSession: !!session });
 
-          if (!data?.session) {
+          if (!session?.user) {
             showMsg('Sign-in succeeded but no session was returned. Please reload the page.');
             resetBtn();
             clearTimeout(watchdog);
             return;
           }
-          const isMember = await withTimeout('membership check', ensureUkttbsMember(data.session));
+          const isMember = await withTimeout('membership check', ensureUkttbsMember(session));
           console.log('[handleAuth] member?', isMember);
           if (isMember) {
             clearTimeout(watchdog);
-            await renderDashboardSafe(data.session);
+            await renderDashboardSafe(session);
           } else {
             clearTimeout(watchdog);
             await showNotAMember();
@@ -696,10 +723,19 @@
     };
 
     // ── SIGN OUT ──
-    document.querySelector('[data-signout]')?.addEventListener('click', async () => {
-      await supabase.auth.signOut();
+    // Belt-and-braces: never await supabase.auth.signOut() — if the
+    // GoTrueClient state machine wedges (rare but observed), the user would
+    // be stuck forever. Fire the request, wipe local storage, then reload.
+    function hardSignOut() {
+      try { supabase.auth.signOut(); } catch (_) { /* ignore */ }
+      try {
+        Object.keys(localStorage)
+          .filter(k => k.startsWith('sb-') || k.includes('supabase'))
+          .forEach(k => localStorage.removeItem(k));
+      } catch (_) { /* ignore */ }
       location.reload();
-    });
+    }
+    document.querySelector('[data-signout]')?.addEventListener('click', hardSignOut);
 
     // Verify the signed-in user is actually a UKTTBS member.
     // Because this Supabase project is shared with another app, we must
@@ -732,7 +768,8 @@
     }
 
     async function showNotAMember() {
-      await supabase.auth.signOut();
+      // Don't await — supabase.auth.signOut() can hang in pathological cases.
+      try { supabase.auth.signOut(); } catch (_) { /* ignore */ }
       const errEl = document.getElementById('login-error');
       errEl.textContent = 'This account is not registered with UKTTBS. Please create a UKTTBS account to continue.';
       errEl.style.display = 'block';
